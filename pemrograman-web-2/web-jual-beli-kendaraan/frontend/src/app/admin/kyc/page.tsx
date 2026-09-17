@@ -4,11 +4,16 @@ import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
 import type { Paginated, SellerProfile } from "@/lib/types";
 import StatusBadge from "@/components/StatusBadge";
+import ConfirmModal from "@/components/ConfirmModal";
+
+type PendingAction = { type: "approve" | "reject"; id: number };
 
 export default function AdminKycPage() {
   const [profiles, setProfiles] = useState<SellerProfile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pendingAction, setPendingAction] = useState<PendingAction | null>(null);
 
   async function loadProfiles() {
     setIsLoading(true);
@@ -22,31 +27,24 @@ export default function AdminKycPage() {
     loadProfiles();
   }, []);
 
-  async function handleApprove(id: number) {
-    if (!window.confirm("Setujui KYC seller ini?")) return;
-
+  async function runAction(action: PendingAction, values: Record<string, string>) {
     setActionError(null);
+    setIsSubmitting(true);
     try {
-      await apiFetch(`/api/admin/kyc/${id}`, { method: "PATCH", body: { status: "approved" } });
+      if (action.type === "approve") {
+        await apiFetch(`/api/admin/kyc/${action.id}`, { method: "PATCH", body: { status: "approved" } });
+      } else {
+        await apiFetch(`/api/admin/kyc/${action.id}`, {
+          method: "PATCH",
+          body: { status: "rejected", rejection_reason: values.reason },
+        });
+      }
+      setPendingAction(null);
       await loadProfiles();
     } catch {
-      setActionError("Gagal menyetujui KYC.");
-    }
-  }
-
-  async function handleReject(id: number) {
-    const reason = window.prompt("Alasan penolakan KYC:");
-    if (!reason) return;
-
-    setActionError(null);
-    try {
-      await apiFetch(`/api/admin/kyc/${id}`, {
-        method: "PATCH",
-        body: { status: "rejected", rejection_reason: reason },
-      });
-      await loadProfiles();
-    } catch {
-      setActionError("Gagal menolak KYC.");
+      setActionError(action.type === "approve" ? "Gagal menyetujui KYC." : "Gagal menolak KYC.");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -85,13 +83,13 @@ export default function AdminKycPage() {
 
               <div className="mt-4 flex gap-3">
                 <button
-                  onClick={() => handleApprove(profile.id)}
+                  onClick={() => setPendingAction({ type: "approve", id: profile.id })}
                   className="rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-500"
                 >
                   Setujui
                 </button>
                 <button
-                  onClick={() => handleReject(profile.id)}
+                  onClick={() => setPendingAction({ type: "reject", id: profile.id })}
                   className="rounded-md bg-red-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-500"
                 >
                   Tolak
@@ -100,6 +98,29 @@ export default function AdminKycPage() {
             </div>
           ))}
         </div>
+      )}
+
+      {pendingAction?.type === "approve" && (
+        <ConfirmModal
+          title="Setujui KYC"
+          message="Setujui KYC seller ini?"
+          confirmLabel="Setujui"
+          isSubmitting={isSubmitting}
+          onConfirm={(values) => runAction(pendingAction, values)}
+          onCancel={() => setPendingAction(null)}
+        />
+      )}
+
+      {pendingAction?.type === "reject" && (
+        <ConfirmModal
+          title="Tolak KYC"
+          message="Jelaskan alasan penolakan KYC ini."
+          fields={[{ name: "reason", label: "Alasan Penolakan", required: true }]}
+          confirmLabel="Tolak"
+          isSubmitting={isSubmitting}
+          onConfirm={(values) => runAction(pendingAction, values)}
+          onCancel={() => setPendingAction(null)}
+        />
       )}
     </div>
   );

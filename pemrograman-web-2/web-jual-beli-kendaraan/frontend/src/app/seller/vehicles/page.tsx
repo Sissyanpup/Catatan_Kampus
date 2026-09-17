@@ -6,11 +6,16 @@ import { apiFetch } from "@/lib/api";
 import { formatRupiah } from "@/lib/format";
 import type { Paginated, Vehicle } from "@/lib/types";
 import StatusBadge from "@/components/StatusBadge";
+import ConfirmModal from "@/components/ConfirmModal";
+
+type PendingAction = { type: "delete" | "submit-for-review"; id: number };
 
 export default function SellerVehiclesPage() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pendingAction, setPendingAction] = useState<PendingAction | null>(null);
 
   async function loadVehicles() {
     setIsLoading(true);
@@ -24,29 +29,27 @@ export default function SellerVehiclesPage() {
     loadVehicles();
   }, []);
 
-  async function handleDelete(id: number) {
-    if (!window.confirm("Hapus listing ini? Tindakan tidak bisa dibatalkan.")) return;
-
+  async function runAction(action: PendingAction) {
     setActionError(null);
+    setIsSubmitting(true);
     try {
-      await apiFetch(`/api/seller/vehicles/${id}`, { method: "DELETE" });
-      await loadVehicles();
-    } catch {
-      setActionError("Gagal menghapus listing.");
-    }
-  }
-
-  async function handleSubmitForReview(id: number) {
-    if (!window.confirm("Ajukan listing ini untuk direview admin?")) return;
-
-    setActionError(null);
-    try {
-      await apiFetch(`/api/seller/vehicles/${id}/submit-for-review`, { method: "POST" });
+      if (action.type === "delete") {
+        await apiFetch(`/api/seller/vehicles/${action.id}`, { method: "DELETE" });
+      } else {
+        await apiFetch(`/api/seller/vehicles/${action.id}/submit-for-review`, { method: "POST" });
+      }
+      setPendingAction(null);
       await loadVehicles();
     } catch (error) {
       setActionError(
-        error instanceof Error ? error.message : "Gagal mengajukan listing untuk review."
+        error instanceof Error
+          ? error.message
+          : action.type === "delete"
+            ? "Gagal menghapus listing."
+            : "Gagal mengajukan listing untuk review."
       );
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -100,13 +103,13 @@ export default function SellerVehiclesPage() {
                             Edit
                           </Link>
                           <button
-                            onClick={() => handleSubmitForReview(vehicle.id)}
+                            onClick={() => setPendingAction({ type: "submit-for-review", id: vehicle.id })}
                             className="text-emerald-700 underline"
                           >
                             Ajukan Review
                           </button>
                           <button
-                            onClick={() => handleDelete(vehicle.id)}
+                            onClick={() => setPendingAction({ type: "delete", id: vehicle.id })}
                             className="text-red-600 underline"
                           >
                             Hapus
@@ -120,6 +123,28 @@ export default function SellerVehiclesPage() {
             </tbody>
           </table>
         </div>
+      )}
+
+      {pendingAction?.type === "submit-for-review" && (
+        <ConfirmModal
+          title="Ajukan Review"
+          message="Ajukan listing ini untuk direview admin?"
+          confirmLabel="Ajukan"
+          isSubmitting={isSubmitting}
+          onConfirm={() => runAction(pendingAction)}
+          onCancel={() => setPendingAction(null)}
+        />
+      )}
+
+      {pendingAction?.type === "delete" && (
+        <ConfirmModal
+          title="Hapus Listing"
+          message="Hapus listing ini? Tindakan tidak bisa dibatalkan."
+          confirmLabel="Hapus"
+          isSubmitting={isSubmitting}
+          onConfirm={() => runAction(pendingAction)}
+          onCancel={() => setPendingAction(null)}
+        />
       )}
     </div>
   );

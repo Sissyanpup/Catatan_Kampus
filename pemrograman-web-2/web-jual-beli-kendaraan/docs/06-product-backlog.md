@@ -35,7 +35,7 @@
 
 - [x] Jalankan checklist performa 20 poin — lihat status per poin di [`02-tech-stack-arsitektur.md`](./02-tech-stack-arsitektur.md#2a-status-per-poin-sprint-5-diisi-2026-09-17) (17/20 selesai atau N/A untuk setup kelas ini; sisanya jadi TODO eksplisit, bukan diklaim selesai).
 - [ ] Lighthouse audit halaman katalog & detail kendaraan — belum jalan (perlu Chrome DevTools manual, lihat catatan poin #13 di `docs/02`).
-- [ ] Review UX konsisten dengan pola CRUD & confirm-dialog di [`04-activity-diagram-crud.md`](./04-activity-diagram-crud.md) — termasuk sisa halaman yang masih pakai `window.confirm`/`prompt` (`admin/kyc`, `admin/vehicles`, `seller/vehicles`, `seller/transactions/[id]`, `buyer/transactions/[id]`, dicatat sejak retro Sprint 4).
+- [x] Review UX konsisten dengan pola CRUD & confirm-dialog di [`04-activity-diagram-crud.md`](./04-activity-diagram-crud.md) — sisa 5 halaman (`admin/kyc`, `admin/vehicles`, `seller/vehicles`, `seller/transactions/[id]`, `buyer/transactions/[id]`) sudah diganti ke `ConfirmModal` in-app, tidak ada lagi `window.confirm`/`prompt` di codebase.
 - [ ] (Opsional) Terapkan tema visual AuraMotors — lihat [`05-desain-ui-auramotors.md`](./05-desain-ui-auramotors.md).
 
 ## Prioritas & Dependensi

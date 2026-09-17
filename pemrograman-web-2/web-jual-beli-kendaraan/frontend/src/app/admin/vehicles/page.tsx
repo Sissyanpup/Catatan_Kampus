@@ -5,6 +5,9 @@ import { apiFetch } from "@/lib/api";
 import { formatRupiah } from "@/lib/format";
 import type { Paginated, Vehicle, VehicleDetail } from "@/lib/types";
 import StatusBadge from "@/components/StatusBadge";
+import ConfirmModal from "@/components/ConfirmModal";
+
+type PendingAction = { type: "approve" | "reject"; id: number };
 
 export default function AdminVehiclesPage() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -12,6 +15,8 @@ export default function AdminVehiclesPage() {
   const [actionError, setActionError] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [detail, setDetail] = useState<VehicleDetail | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pendingAction, setPendingAction] = useState<PendingAction | null>(null);
 
   async function loadVehicles() {
     setIsLoading(true);
@@ -38,33 +43,25 @@ export default function AdminVehiclesPage() {
     setDetail(data);
   }
 
-  async function handleApprove(id: number) {
-    if (!window.confirm("Setujui listing ini agar tayang di katalog publik?")) return;
-
+  async function runAction(action: PendingAction, values: Record<string, string>) {
     setActionError(null);
+    setIsSubmitting(true);
     try {
-      await apiFetch(`/api/admin/vehicles/${id}`, { method: "PATCH", body: { status: "approved" } });
+      if (action.type === "approve") {
+        await apiFetch(`/api/admin/vehicles/${action.id}`, { method: "PATCH", body: { status: "approved" } });
+      } else {
+        await apiFetch(`/api/admin/vehicles/${action.id}`, {
+          method: "PATCH",
+          body: { status: "rejected", rejection_reason: values.reason },
+        });
+      }
+      setPendingAction(null);
       setExpandedId(null);
       await loadVehicles();
     } catch {
-      setActionError("Gagal menyetujui listing.");
-    }
-  }
-
-  async function handleReject(id: number) {
-    const reason = window.prompt("Alasan penolakan listing:");
-    if (!reason) return;
-
-    setActionError(null);
-    try {
-      await apiFetch(`/api/admin/vehicles/${id}`, {
-        method: "PATCH",
-        body: { status: "rejected", rejection_reason: reason },
-      });
-      setExpandedId(null);
-      await loadVehicles();
-    } catch {
-      setActionError("Gagal menolak listing.");
+      setActionError(action.type === "approve" ? "Gagal menyetujui listing." : "Gagal menolak listing.");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -131,13 +128,13 @@ export default function AdminVehiclesPage() {
 
               <div className="mt-4 flex gap-3">
                 <button
-                  onClick={() => handleApprove(vehicle.id)}
+                  onClick={() => setPendingAction({ type: "approve", id: vehicle.id })}
                   className="rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-500"
                 >
                   Setujui
                 </button>
                 <button
-                  onClick={() => handleReject(vehicle.id)}
+                  onClick={() => setPendingAction({ type: "reject", id: vehicle.id })}
                   className="rounded-md bg-red-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-500"
                 >
                   Tolak
@@ -146,6 +143,29 @@ export default function AdminVehiclesPage() {
             </div>
           ))}
         </div>
+      )}
+
+      {pendingAction?.type === "approve" && (
+        <ConfirmModal
+          title="Setujui Listing"
+          message="Setujui listing ini agar tayang di katalog publik?"
+          confirmLabel="Setujui"
+          isSubmitting={isSubmitting}
+          onConfirm={(values) => runAction(pendingAction, values)}
+          onCancel={() => setPendingAction(null)}
+        />
+      )}
+
+      {pendingAction?.type === "reject" && (
+        <ConfirmModal
+          title="Tolak Listing"
+          message="Jelaskan alasan penolakan listing ini."
+          fields={[{ name: "reason", label: "Alasan Penolakan", required: true }]}
+          confirmLabel="Tolak"
+          isSubmitting={isSubmitting}
+          onConfirm={(values) => runAction(pendingAction, values)}
+          onCancel={() => setPendingAction(null)}
+        />
       )}
     </div>
   );

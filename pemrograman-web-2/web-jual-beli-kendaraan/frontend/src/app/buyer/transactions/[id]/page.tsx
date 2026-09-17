@@ -8,6 +8,7 @@ import type { Transaction } from "@/lib/types";
 import PaymentStatusBadge from "@/components/PaymentStatusBadge";
 import EscrowStatusBadge from "@/components/EscrowStatusBadge";
 import TransactionStatusHistory from "@/components/TransactionStatusHistory";
+import ConfirmModal from "@/components/ConfirmModal";
 
 export default function BuyerTransactionDetailPage({
   params,
@@ -22,6 +23,7 @@ export default function BuyerTransactionDetailPage({
   const [error, setError] = useState<string | null>(null);
   const [disputeReason, setDisputeReason] = useState("");
   const [showDisputeForm, setShowDisputeForm] = useState(false);
+  const [showConfirmHandover, setShowConfirmHandover] = useState(false);
 
   async function loadTransaction() {
     try {
@@ -56,8 +58,6 @@ export default function BuyerTransactionDetailPage({
   }
 
   async function handleConfirmHandover() {
-    if (!window.confirm("Konfirmasi bahwa Anda sudah menerima kendaraan secara fisik?")) return;
-
     setIsSubmitting(true);
     setError(null);
     try {
@@ -66,6 +66,7 @@ export default function BuyerTransactionDetailPage({
         { method: "POST" }
       );
       setTransaction(data);
+      setShowConfirmHandover(false);
     } catch (err) {
       if (err instanceof ApiError) setError(err.message);
     } finally {
@@ -183,7 +184,7 @@ export default function BuyerTransactionDetailPage({
           <div className="mt-6 flex flex-wrap gap-3 border-t border-zinc-100 pt-4">
             {canConfirmHandover && (
               <button
-                onClick={handleConfirmHandover}
+                onClick={() => setShowConfirmHandover(true)}
                 disabled={isSubmitting}
                 className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500 disabled:opacity-60"
               >
@@ -254,6 +255,17 @@ export default function BuyerTransactionDetailPage({
             <TransactionStatusHistory entries={transaction.status_history} />
           </div>
         </div>
+      )}
+
+      {showConfirmHandover && (
+        <ConfirmModal
+          title="Konfirmasi Terima Kendaraan"
+          message="Konfirmasi bahwa Anda sudah menerima kendaraan secara fisik?"
+          confirmLabel="Konfirmasi"
+          isSubmitting={isSubmitting}
+          onConfirm={handleConfirmHandover}
+          onCancel={() => setShowConfirmHandover(false)}
+        />
       )}
     </div>
   );
