@@ -48,62 +48,62 @@ export default function RegisterPage() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-10">
-      <h1 className="text-xl font-semibold text-zinc-900">Daftar Akun</h1>
+      <h1 className="text-xl font-semibold text-on-surface">Daftar Akun</h1>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         <div>
-          <label className="block text-sm font-medium text-zinc-700">Nama</label>
+          <label className="block text-sm font-medium text-on-surface">Nama</label>
           <input
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
           />
-          {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name[0]}</p>}
+          {errors.name && <p className="mt-1 text-xs text-error">{errors.name[0]}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-zinc-700">Email</label>
+          <label className="block text-sm font-medium text-on-surface">Email</label>
           <input
             required
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
           />
-          {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email[0]}</p>}
+          {errors.email && <p className="mt-1 text-xs text-error">{errors.email[0]}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-zinc-700">Password</label>
+          <label className="block text-sm font-medium text-on-surface">Password</label>
           <input
             required
             type="password"
             minLength={8}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
           />
-          {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password[0]}</p>}
+          {errors.password && <p className="mt-1 text-xs text-error">{errors.password[0]}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-zinc-700">Konfirmasi Password</label>
+          <label className="block text-sm font-medium text-on-surface">Konfirmasi Password</label>
           <input
             required
             type="password"
             minLength={8}
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
           />
           {errors.password_confirmation && (
-            <p className="mt-1 text-xs text-red-600">{errors.password_confirmation[0]}</p>
+            <p className="mt-1 text-xs text-error">{errors.password_confirmation[0]}</p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-zinc-700">Daftar sebagai</label>
+          <label className="block text-sm font-medium text-on-surface">Daftar sebagai</label>
           <div className="mt-1 flex gap-4 text-sm">
             <label className="flex items-center gap-2">
               <input
@@ -122,23 +122,23 @@ export default function RegisterPage() {
               Seller
             </label>
           </div>
-          {errors.role && <p className="mt-1 text-xs text-red-600">{errors.role[0]}</p>}
+          {errors.role && <p className="mt-1 text-xs text-error">{errors.role[0]}</p>}
         </div>
 
-        {formError && <p className="text-sm text-red-600">{formError}</p>}
+        {formError && <p className="text-sm text-error">{formError}</p>}
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700 disabled:opacity-60"
+          className="w-full rounded-md bg-primary-container px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary disabled:opacity-60"
         >
           {isSubmitting ? "Memproses..." : "Daftar"}
         </button>
       </form>
 
-      <p className="mt-4 text-sm text-zinc-500">
+      <p className="mt-4 text-sm text-on-surface-muted">
         Sudah punya akun?{" "}
-        <Link href="/login" className="font-medium text-zinc-900">
+        <Link href="/login" className="font-medium text-on-surface">
           Masuk
         </Link>
       </p>

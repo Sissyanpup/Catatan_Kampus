@@ -1,26 +1,105 @@
 @import "tailwindcss";
 
+/*
+ * AuraMotors — tema "Obsidian & Champagne Gold" (lihat docs/05-desain-ui-auramotors.md).
+ * Token warna/radius di bawah dipetakan dari `!-- Design System --.html`. Dark mode
+ * adalah tema tetap aplikasi ini (bukan cuma preferensi sistem) — marketplace kendaraan
+ * mewah, bukan produk konsumer umum yang butuh light mode.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-background: #121315;
+  --color-surface: #121315;
+  --color-surface-container: #1f2022;
+  --color-surface-container-high: #2a2b2e;
+  --color-border: #2c2d30;
+
+  --color-primary: #f2ca50;
+  --color-primary-container: #d4af37;
+  --color-on-primary: #1c1300;
+
+  --color-tertiary: #eec98f;
+  --color-on-tertiary: #1c1300;
+
+  --color-on-surface: #e3e2e5;
+  --color-on-surface-muted: #a1a0a5;
+
+  --color-success: #8fd6a4;
+  --color-success-container: #163a26;
+  --color-warning: #f5b26b;
+  --color-warning-container: #402a12;
+  --color-error: #ffb4ab;
+  --color-error-container: #93000a;
+  --color-neutral: #c7c6ca;
+  --color-neutral-container: #303134;
+
+  --font-display: var(--font-bodoni), ui-serif, Georgia, serif;
+  --font-body: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-label: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-surface-container: var(--color-surface-container);
+  --color-surface-container-high: var(--color-surface-container-high);
+  --color-border: var(--color-border);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--color-primary);
+  --color-primary-container: var(--color-primary-container);
+  --color-on-primary: var(--color-on-primary);
+
+  --color-tertiary: var(--color-tertiary);
+  --color-on-tertiary: var(--color-on-tertiary);
+
+  --color-on-surface: var(--color-on-surface);
+  --color-on-surface-muted: var(--color-on-surface-muted);
+
+  --color-success: var(--color-success);
+  --color-success-container: var(--color-success-container);
+  --color-warning: var(--color-warning);
+  --color-warning-container: var(--color-warning-container);
+  --color-error: var(--color-error);
+  --color-error-container: var(--color-error-container);
+  --color-neutral: var(--color-neutral);
+  --color-neutral-container: var(--color-neutral-container);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-label: var(--font-label);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-geist-mono);
+
+  /* "precision-cut" — radius kecil & tajam, bukan rounded-friendly konsumer biasa */
+  --radius-xs: 0.0625rem;
+  --radius-sm: 0.125rem;
+  --radius-md: 0.1875rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.375rem;
+  --radius-2xl: 0.5rem;
+  --radius-3xl: 0.75rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
+  accent-color: var(--color-primary-container);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+::selection {
+  background: var(--color-primary-container);
+  color: var(--color-on-primary);
+}
+
+/* Scrollbar tipis, sesuai tema gelap — kosmetik saja, aman diabaikan browser yang tidak dukung */
+* {
+  scrollbar-color: var(--color-surface-container-high) var(--color-surface);
 }

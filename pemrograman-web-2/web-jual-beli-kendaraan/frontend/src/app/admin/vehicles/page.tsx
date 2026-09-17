@@ -67,24 +67,24 @@ export default function AdminVehiclesPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-semibold text-zinc-900">Review Listing Kendaraan</h1>
+      <h1 className="text-xl font-semibold text-on-surface">Review Listing Kendaraan</h1>
 
-      {actionError && <p className="mt-3 text-sm text-red-600">{actionError}</p>}
+      {actionError && <p className="mt-3 text-sm text-error">{actionError}</p>}
 
       {isLoading ? (
-        <p className="mt-6 text-sm text-zinc-500">Memuat...</p>
+        <p className="mt-6 text-sm text-on-surface-muted">Memuat...</p>
       ) : vehicles.length === 0 ? (
-        <p className="mt-6 text-sm text-zinc-500">Tidak ada listing pending review.</p>
+        <p className="mt-6 text-sm text-on-surface-muted">Tidak ada listing pending review.</p>
       ) : (
         <div className="mt-6 space-y-4">
           {vehicles.map((vehicle) => (
-            <div key={vehicle.id} className="rounded-lg border border-zinc-200 bg-white p-4">
+            <div key={vehicle.id} className="rounded-lg border border-border bg-surface-container p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-zinc-900">
+                  <p className="font-medium text-on-surface">
                     {vehicle.brand} {vehicle.model} {vehicle.year}
                   </p>
-                  <p className="text-sm text-zinc-500">
+                  <p className="text-sm text-on-surface-muted">
                     {formatRupiah(vehicle.price)} &middot; {vehicle.seller_name}
                   </p>
                 </div>
@@ -93,18 +93,18 @@ export default function AdminVehiclesPage() {
 
               <button
                 onClick={() => toggleDetail(vehicle.id)}
-                className="mt-3 text-sm text-zinc-700 underline"
+                className="mt-3 text-sm text-on-surface underline"
               >
                 {expandedId === vehicle.id ? "Sembunyikan detail" : "Lihat detail & dokumen"}
               </button>
 
               {expandedId === vehicle.id && (
-                <div className="mt-3 rounded-md bg-zinc-50 p-3 text-sm">
+                <div className="mt-3 rounded-md bg-surface-container-high p-3 text-sm">
                   {!detail ? (
-                    <p className="text-zinc-500">Memuat detail...</p>
+                    <p className="text-on-surface-muted">Memuat detail...</p>
                   ) : (
                     <div className="flex flex-col gap-2">
-                      <p className="text-zinc-600">{detail.description}</p>
+                      <p className="text-on-surface-muted">{detail.description}</p>
                       <div className="flex gap-4">
                         {detail.documents?.map((doc) => (
                           <a
@@ -112,13 +112,13 @@ export default function AdminVehiclesPage() {
                             href={doc.download_url}
                             target="_blank"
                             rel="noreferrer"
-                            className="text-zinc-700 underline"
+                            className="text-on-surface underline"
                           >
                             Lihat {doc.type.toUpperCase()}
                           </a>
                         ))}
                         {(!detail.documents || detail.documents.length === 0) && (
-                          <span className="text-zinc-400">Belum ada dokumen diunggah.</span>
+                          <span className="text-on-surface-muted">Belum ada dokumen diunggah.</span>
                         )}
                       </div>
                     </div>

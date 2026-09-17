@@ -32,45 +32,45 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-10">
-      <h1 className="text-xl font-semibold text-zinc-900">Masuk</h1>
+      <h1 className="text-xl font-semibold text-on-surface">Masuk</h1>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         <div>
-          <label className="block text-sm font-medium text-zinc-700">Email</label>
+          <label className="block text-sm font-medium text-on-surface">Email</label>
           <input
             required
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-zinc-700">Password</label>
+          <label className="block text-sm font-medium text-on-surface">Password</label>
           <input
             required
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
           />
         </div>
 
-        {formError && <p className="text-sm text-red-600">{formError}</p>}
+        {formError && <p className="text-sm text-error">{formError}</p>}
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700 disabled:opacity-60"
+          className="w-full rounded-md bg-primary-container px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary disabled:opacity-60"
         >
           {isSubmitting ? "Memproses..." : "Masuk"}
         </button>
       </form>
 
-      <p className="mt-4 text-sm text-zinc-500">
+      <p className="mt-4 text-sm text-on-surface-muted">
         Belum punya akun?{" "}
-        <Link href="/register" className="font-medium text-zinc-900">
+        <Link href="/register" className="font-medium text-on-surface">
           Daftar
         </Link>
       </p>

@@ -50,32 +50,32 @@ export default function AdminKycPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-semibold text-zinc-900">Review KYC Seller</h1>
+      <h1 className="text-xl font-semibold text-on-surface">Review KYC Seller</h1>
 
-      {actionError && <p className="mt-3 text-sm text-red-600">{actionError}</p>}
+      {actionError && <p className="mt-3 text-sm text-error">{actionError}</p>}
 
       {isLoading ? (
-        <p className="mt-6 text-sm text-zinc-500">Memuat...</p>
+        <p className="mt-6 text-sm text-on-surface-muted">Memuat...</p>
       ) : profiles.length === 0 ? (
-        <p className="mt-6 text-sm text-zinc-500">Tidak ada pengajuan KYC pending.</p>
+        <p className="mt-6 text-sm text-on-surface-muted">Tidak ada pengajuan KYC pending.</p>
       ) : (
         <div className="mt-6 space-y-4">
           {profiles.map((profile) => (
-            <div key={profile.id} className="rounded-lg border border-zinc-200 bg-white p-4">
+            <div key={profile.id} className="rounded-lg border border-border bg-surface-container p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-zinc-900">{profile.user?.name}</p>
-                  <p className="text-sm text-zinc-500">{profile.user?.email}</p>
+                  <p className="font-medium text-on-surface">{profile.user?.name}</p>
+                  <p className="text-sm text-on-surface-muted">{profile.user?.email}</p>
                 </div>
                 <StatusBadge status={profile.status} />
               </div>
 
               <div className="mt-3 flex gap-4 text-sm">
-                <a href={profile.ktp_url} target="_blank" rel="noreferrer" className="text-zinc-700 underline">
+                <a href={profile.ktp_url} target="_blank" rel="noreferrer" className="text-on-surface underline">
                   Lihat KTP
                 </a>
                 {profile.npwp_url && (
-                  <a href={profile.npwp_url} target="_blank" rel="noreferrer" className="text-zinc-700 underline">
+                  <a href={profile.npwp_url} target="_blank" rel="noreferrer" className="text-on-surface underline">
                     Lihat NPWP
                   </a>
                 )}

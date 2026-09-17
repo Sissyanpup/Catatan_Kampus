@@ -68,12 +68,16 @@ Seller : Dashboard Portofolio → Form Listing (kurasi 4 tahap) → menunggu app
 Admin  : Console Compliance (monitor makro) → Kurasi & Verifikasi Forensik (per unit) → Otorisasi Rilis Escrow
 ```
 
-## 5. Rekomendasi Pemakaian untuk Implementasi
+## 5. Status Implementasi (Sprint 5, 2026-09-18)
+
+Token warna/font/radius di §2 sudah diterapkan ke seluruh aplikasi lewat `frontend/src/app/globals.css` (Tailwind v4 `@theme`), font Bodoni Moda & Manrope di-self-host lewat `next/font/local` (file di `frontend/src/app/fonts/`, bukan `next/font/google`, supaya build tetap jalan tanpa internet — lihat `docs/02` §1b), dan disebarkan ke komponen bersama (`Header`, `ConfirmModal`, `Badge` + turunannya) serta seluruh 17 halaman lain lewat script reskin satu kali (menukar kelas Tailwind `zinc/white` → token semantik `surface/on-surface/primary`, bukan menulis ulang tiap halaman dari nol). Istilah flavor mewah ("VIP Collector", "Dossier Forensik", dst.) **tidak** dipakai menggantikan penamaan domain/database — sesuai catatan di §1. Layar-layar detail di inventori §3 (stepper checkout 4 tahap, tab dossier, live tracking 5 fase, dll.) tetap versi generik yang sudah dibangun di Sprint 1-4, bukan rebuild identik dengan mockup HTML — itu di luar scope polish visual.
+
+## 6. Rekomendasi Pemakaian untuk Implementasi
 
 - File `!-- Design System --.html` adalah **rujukan UI/UX resmi** proyek ini — buka langsung di browser untuk melihat tampilan tiap layar. Perlakukan sebagai acuan visual/markup, bukan kode aplikasi final: tetap perlu dipecah jadi komponen di framework yang dipakai (lihat [`02-tech-stack-arsitektur.md`](./02-tech-stack-arsitektur.md)), potong per section sesuai marker HTML comment di dalamnya.
 - Sinkronkan setiap layar di atas dengan flow CRUD generik di [`04-activity-diagram-crud.md`](./04-activity-diagram-crud.md) agar konsisten dari sisi UX (confirm dialog, validasi, loading state).
 
-## 6. Terkait
+## 7. Terkait
 
 - Domain & peran → [`01-domain-dan-peran.md`](./01-domain-dan-peran.md)
 - Escrow flow teknis → [`03-payment-escrow.md`](./03-payment-escrow.md)

@@ -42,22 +42,24 @@ export default function ConfirmModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-md rounded-lg bg-white p-5 shadow-xl">
-        <h2 className="text-base font-semibold text-zinc-900">{title}</h2>
-        <div className="mt-2 text-sm text-zinc-600">{message}</div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+      <div className="w-full max-w-md rounded-lg border border-border bg-surface-container p-5 shadow-xl">
+        <h2 className="font-display text-lg text-on-surface">{title}</h2>
+        <div className="mt-2 text-sm text-on-surface-muted">{message}</div>
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-3">
           {fields.map((field) => (
             <div key={field.name}>
-              <label className="block text-sm font-medium text-zinc-700">{field.label}</label>
+              <label className="font-label block text-sm font-medium text-on-surface">
+                {field.label}
+              </label>
               <input
                 type="text"
                 required={field.required}
                 placeholder={field.placeholder}
                 value={values[field.name] ?? ""}
                 onChange={(e) => setValues((prev) => ({ ...prev, [field.name]: e.target.value }))}
-                className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-1.5 text-sm"
+                className="mt-1 block w-full rounded-md border border-border bg-surface px-3 py-1.5 text-sm text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
               />
             </div>
           ))}
@@ -67,14 +69,14 @@ export default function ConfirmModal({
               type="button"
               onClick={onCancel}
               disabled={isSubmitting}
-              className="rounded-md px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 disabled:opacity-60"
+              className="font-label rounded-md px-3 py-1.5 text-sm font-medium text-on-surface-muted hover:bg-surface-container-high disabled:opacity-60"
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="rounded-md bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 disabled:opacity-60"
+              className="font-label rounded-md bg-primary-container px-3 py-1.5 text-sm font-medium text-on-primary hover:bg-primary disabled:opacity-60"
             >
               {isSubmitting ? "Memproses..." : confirmLabel}
             </button>

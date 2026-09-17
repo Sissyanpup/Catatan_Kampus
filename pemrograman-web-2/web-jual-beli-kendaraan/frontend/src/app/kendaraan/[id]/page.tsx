@@ -27,7 +27,7 @@ export default async function VehicleDetailPage({
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
         {vehicle.photos && vehicle.photos.length > 0 ? (
           vehicle.photos.map((photo, index) => (
-            <div key={photo.id} className="relative aspect-video w-full overflow-hidden rounded-lg bg-zinc-100">
+            <div key={photo.id} className="relative aspect-video w-full overflow-hidden rounded-lg bg-surface-container-high">
               <Image
                 src={photo.url}
                 alt={`${vehicle.brand} ${vehicle.model}`}
@@ -39,36 +39,36 @@ export default async function VehicleDetailPage({
             </div>
           ))
         ) : (
-          <div className="col-span-full aspect-video w-full rounded-lg bg-zinc-100" />
+          <div className="col-span-full aspect-video w-full rounded-lg bg-surface-container-high" />
         )}
       </div>
 
-      <h1 className="mt-6 text-2xl font-semibold text-zinc-900">
+      <h1 className="mt-6 text-2xl font-semibold text-on-surface">
         {vehicle.brand} {vehicle.model} {vehicle.year}
       </h1>
-      <p className="mt-1 text-2xl font-bold text-zinc-900">{formatRupiah(vehicle.price)}</p>
-      <p className="mt-1 text-sm text-zinc-500">
+      <p className="mt-1 text-2xl font-bold text-on-surface">{formatRupiah(vehicle.price)}</p>
+      <p className="mt-1 text-sm text-on-surface-muted">
         {vehicle.mileage.toLocaleString("id-ID")} km &middot; {vehicle.location}
       </p>
 
       {vehicle.description && (
-        <p className="mt-4 whitespace-pre-line text-sm text-zinc-700">{vehicle.description}</p>
+        <p className="mt-4 whitespace-pre-line text-sm text-on-surface">{vehicle.description}</p>
       )}
 
       {vehicle.specs && Object.keys(vehicle.specs).length > 0 && (
-        <dl className="mt-6 grid grid-cols-2 gap-3 rounded-lg border border-zinc-200 bg-white p-4 sm:grid-cols-3">
+        <dl className="mt-6 grid grid-cols-2 gap-3 rounded-lg border border-border bg-surface-container p-4 sm:grid-cols-3">
           {Object.entries(vehicle.specs).map(([key, value]) => (
             <div key={key}>
-              <dt className="text-xs uppercase text-zinc-400">{key}</dt>
-              <dd className="text-sm text-zinc-800">{value}</dd>
+              <dt className="text-xs uppercase text-on-surface-muted">{key}</dt>
+              <dd className="text-sm text-on-surface">{value}</dd>
             </div>
           ))}
         </dl>
       )}
 
       {vehicle.seller && (
-        <p className="mt-6 text-sm text-zinc-500">
-          Dijual oleh <span className="font-medium text-zinc-800">{vehicle.seller.name}</span>
+        <p className="mt-6 text-sm text-on-surface-muted">
+          Dijual oleh <span className="font-medium text-on-surface">{vehicle.seller.name}</span>
         </p>
       )}
 

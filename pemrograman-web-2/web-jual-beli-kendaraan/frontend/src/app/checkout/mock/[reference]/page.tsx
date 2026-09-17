@@ -51,14 +51,14 @@ export default function MockPaymentPage({
   }
 
   if (isLoading) {
-    return <div className="mx-auto max-w-md px-4 py-10 text-sm text-zinc-500">Memuat...</div>;
+    return <div className="mx-auto max-w-md px-4 py-10 text-sm text-on-surface-muted">Memuat...</div>;
   }
 
   if (error && !transaction) {
     return (
       <div className="mx-auto max-w-md px-4 py-10">
-        <p className="text-sm text-red-600">{error}</p>
-        <Link href="/login" className="mt-4 inline-block text-sm text-zinc-600 underline">
+        <p className="text-sm text-error">{error}</p>
+        <Link href="/login" className="mt-4 inline-block text-sm text-on-surface-muted underline">
           Masuk untuk melanjutkan
         </Link>
       </div>
@@ -69,24 +69,24 @@ export default function MockPaymentPage({
 
   return (
     <div className="mx-auto max-w-md px-4 py-10">
-      <div className="rounded-lg border border-zinc-200 bg-white p-6">
-        <p className="text-xs uppercase tracking-wide text-zinc-400">Simulasi Invoice (Offline)</p>
-        <h1 className="mt-1 text-lg font-semibold text-zinc-900">
+      <div className="rounded-lg border border-border bg-surface-container p-6">
+        <p className="text-xs uppercase tracking-wide text-on-surface-muted">Simulasi Invoice (Offline)</p>
+        <h1 className="mt-1 text-lg font-semibold text-on-surface">
           {transaction.vehicle.brand} {transaction.vehicle.model} {transaction.vehicle.year}
         </h1>
-        <p className="mt-3 text-2xl font-bold text-zinc-900">{formatRupiah(transaction.amount)}</p>
+        <p className="mt-3 text-2xl font-bold text-on-surface">{formatRupiah(transaction.amount)}</p>
 
         <div className="mt-4 flex items-center gap-2">
-          <span className="text-sm text-zinc-500">Status:</span>
+          <span className="text-sm text-on-surface-muted">Status:</span>
           <PaymentStatusBadge status={transaction.payment_status} />
         </div>
 
-        <p className="mt-4 text-xs text-zinc-400">
+        <p className="mt-4 text-xs text-on-surface-muted">
           Halaman ini menggantikan halaman checkout Xendit asli karena proyek berjalan tanpa akses internet. Tombol
           di bawah mengubah status transaksi secara langsung, seperti yang seharusnya dilakukan pembayaran nyata.
         </p>
 
-        {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+        {error && <p className="mt-3 text-sm text-error">{error}</p>}
 
         {transaction.payment_status === "pending" ? (
           <div className="mt-6 flex gap-3">
@@ -108,7 +108,7 @@ export default function MockPaymentPage({
         ) : (
           <Link
             href="/buyer/transactions"
-            className="mt-6 block rounded-md bg-zinc-900 px-4 py-2 text-center text-sm font-medium text-white hover:bg-zinc-700"
+            className="mt-6 block rounded-md bg-primary-container px-4 py-2 text-center text-sm font-medium text-on-primary hover:bg-primary"
           >
             Kembali ke Transaksi Saya
           </Link>

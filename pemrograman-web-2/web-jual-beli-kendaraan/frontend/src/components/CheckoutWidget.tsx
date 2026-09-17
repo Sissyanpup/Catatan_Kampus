@@ -18,8 +18,8 @@ export default function CheckoutWidget({ vehicleId, price }: { vehicleId: number
 
   if (!user) {
     return (
-      <div className="mt-6 rounded-lg border border-zinc-200 bg-white p-4 text-sm text-zinc-600">
-        <Link href="/login" className="text-zinc-900 underline">
+      <div className="mt-6 rounded-lg border border-border bg-surface-container p-4 text-sm text-on-surface-muted">
+        <Link href="/login" className="text-on-surface underline">
           Masuk
         </Link>{" "}
         sebagai pembeli untuk mengajukan DP kendaraan ini.
@@ -54,28 +54,28 @@ export default function CheckoutWidget({ vehicleId, price }: { vehicleId: number
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 space-y-3 rounded-lg border border-zinc-200 bg-white p-4">
-      <h2 className="text-sm font-medium text-zinc-800">Ajukan Pembayaran DP</h2>
+    <form onSubmit={handleSubmit} className="mt-6 space-y-3 rounded-lg border border-border bg-surface-container p-4">
+      <h2 className="text-sm font-medium text-on-surface">Ajukan Pembayaran DP</h2>
 
       <div>
-        <label className="block text-sm font-medium text-zinc-700">Jumlah DP (min. 10% harga)</label>
+        <label className="block text-sm font-medium text-on-surface">Jumlah DP (min. 10% harga)</label>
         <input
           type="number"
           min={minDp}
           max={Number(price)}
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
         />
-        <p className="mt-1 text-xs text-zinc-400">Minimal {formatRupiah(minDp)}</p>
+        <p className="mt-1 text-xs text-on-surface-muted">Minimal {formatRupiah(minDp)}</p>
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-error">{error}</p>}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700 disabled:opacity-60"
+        className="w-full rounded-md bg-primary-container px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary disabled:opacity-60"
       >
         {isSubmitting ? "Memproses..." : "Bayar DP Sekarang"}
       </button>

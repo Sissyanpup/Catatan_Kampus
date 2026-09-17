@@ -101,8 +101,8 @@ export default function AdminTransactionsPage() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-zinc-900">Dashboard Escrow & Transaksi</h1>
-        <Link href="/admin/payouts" className="text-sm text-zinc-600 underline hover:text-zinc-900">
+        <h1 className="text-xl font-semibold text-on-surface">Dashboard Escrow & Transaksi</h1>
+        <Link href="/admin/payouts" className="text-sm text-on-surface-muted underline hover:text-on-surface">
           Rekonsiliasi Payout
         </Link>
       </div>
@@ -113,7 +113,7 @@ export default function AdminTransactionsPage() {
             key={item.value}
             onClick={() => setFilter(item.value)}
             className={`rounded-full px-3 py-1 text-xs font-medium ${
-              filter === item.value ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+              filter === item.value ? "bg-primary-container text-on-primary" : "bg-surface-container-high text-on-surface-muted hover:bg-border"
             }`}
           >
             {item.label}
@@ -121,22 +121,22 @@ export default function AdminTransactionsPage() {
         ))}
       </div>
 
-      {actionError && <p className="mt-3 text-sm text-red-600">{actionError}</p>}
+      {actionError && <p className="mt-3 text-sm text-error">{actionError}</p>}
 
       {isLoading ? (
-        <p className="mt-6 text-sm text-zinc-500">Memuat...</p>
+        <p className="mt-6 text-sm text-on-surface-muted">Memuat...</p>
       ) : transactions.length === 0 ? (
-        <p className="mt-6 text-sm text-zinc-500">Tidak ada transaksi pada kategori ini.</p>
+        <p className="mt-6 text-sm text-on-surface-muted">Tidak ada transaksi pada kategori ini.</p>
       ) : (
         <div className="mt-6 space-y-4">
           {transactions.map((transaction) => (
-            <div key={transaction.id} className="rounded-lg border border-zinc-200 bg-white p-4">
+            <div key={transaction.id} className="rounded-lg border border-border bg-surface-container p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-zinc-900">
+                  <p className="font-medium text-on-surface">
                     {transaction.vehicle.brand} {transaction.vehicle.model} {transaction.vehicle.year}
                   </p>
-                  <p className="text-sm text-zinc-500">
+                  <p className="text-sm text-on-surface-muted">
                     {formatRupiah(transaction.amount)} &middot; {transaction.buyer?.name} → {transaction.seller?.name}
                   </p>
                 </div>
@@ -147,33 +147,33 @@ export default function AdminTransactionsPage() {
                 </div>
               </div>
 
-              <button onClick={() => toggleDetail(transaction.id)} className="mt-3 text-sm text-zinc-700 underline">
+              <button onClick={() => toggleDetail(transaction.id)} className="mt-3 text-sm text-on-surface underline">
                 {expandedId === transaction.id ? "Sembunyikan detail" : "Lihat detail & aksi"}
               </button>
 
               {expandedId === transaction.id && (
-                <div className="mt-3 rounded-md bg-zinc-50 p-3 text-sm">
+                <div className="mt-3 rounded-md bg-surface-container-high p-3 text-sm">
                   {!detail ? (
-                    <p className="text-zinc-500">Memuat detail...</p>
+                    <p className="text-on-surface-muted">Memuat detail...</p>
                   ) : (
                     <div className="flex flex-col gap-4">
                       <dl className="grid grid-cols-2 gap-3">
                         <div>
-                          <dt className="text-xs uppercase text-zinc-400">Buyer Konfirmasi Terima</dt>
-                          <dd className="text-zinc-800">
+                          <dt className="text-xs uppercase text-on-surface-muted">Buyer Konfirmasi Terima</dt>
+                          <dd className="text-on-surface">
                             {detail.buyer_confirmed_at ? formatDate(detail.buyer_confirmed_at) : "Belum"}
                           </dd>
                         </div>
                         <div>
-                          <dt className="text-xs uppercase text-zinc-400">Seller Konfirmasi Serahkan</dt>
-                          <dd className="text-zinc-800">
+                          <dt className="text-xs uppercase text-on-surface-muted">Seller Konfirmasi Serahkan</dt>
+                          <dd className="text-on-surface">
                             {detail.seller_confirmed_at ? formatDate(detail.seller_confirmed_at) : "Belum"}
                           </dd>
                         </div>
                         {detail.seller_bank_account && (
                           <div className="col-span-2">
-                            <dt className="text-xs uppercase text-zinc-400">Rekening Bank Penjual</dt>
-                            <dd className="text-zinc-800">
+                            <dt className="text-xs uppercase text-on-surface-muted">Rekening Bank Penjual</dt>
+                            <dd className="text-on-surface">
                               {detail.seller_bank_account.bank_name} &middot;{" "}
                               {detail.seller_bank_account.bank_account_number} a.n.{" "}
                               {detail.seller_bank_account.bank_account_holder_name}
@@ -182,7 +182,7 @@ export default function AdminTransactionsPage() {
                         )}
                         {detail.dispute_reason && (
                           <div className="col-span-2">
-                            <dt className="text-xs uppercase text-zinc-400">Alasan Sengketa</dt>
+                            <dt className="text-xs uppercase text-on-surface-muted">Alasan Sengketa</dt>
                             <dd className="text-red-700">{detail.dispute_reason}</dd>
                           </div>
                         )}
@@ -230,7 +230,7 @@ export default function AdminTransactionsPage() {
                             <button
                               disabled={isSubmitting}
                               onClick={() => setPendingAction({ type: "resolve-dispute", id: detail.id, resolution: "resume" })}
-                              className="rounded-md bg-zinc-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-zinc-600 disabled:opacity-60"
+                              className="rounded-md bg-surface-container-high px-3 py-1.5 text-sm font-medium text-on-surface hover:bg-border disabled:opacity-60"
                             >
                               Lanjutkan Transaksi
                             </button>
@@ -247,8 +247,8 @@ export default function AdminTransactionsPage() {
 
                       {detail.payouts && detail.payouts.length > 0 && (
                         <div>
-                          <p className="mb-2 text-xs font-semibold uppercase text-zinc-400">Riwayat Payout</p>
-                          <ul className="space-y-1 text-sm text-zinc-700">
+                          <p className="mb-2 text-xs font-semibold uppercase text-on-surface-muted">Riwayat Payout</p>
+                          <ul className="space-y-1 text-sm text-on-surface">
                             {detail.payouts.map((payout) => (
                               <li key={payout.id}>
                                 {formatDate(payout.created_at)} &middot; {payout.method} &middot;{" "}
@@ -264,7 +264,7 @@ export default function AdminTransactionsPage() {
 
                       {detail.status_history && (
                         <div>
-                          <p className="mb-2 text-xs font-semibold uppercase text-zinc-400">Riwayat Status</p>
+                          <p className="mb-2 text-xs font-semibold uppercase text-on-surface-muted">Riwayat Status</p>
                           <TransactionStatusHistory entries={detail.status_history} />
                         </div>
                       )}

@@ -56,33 +56,33 @@ export default function SellerVehiclesPage() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-zinc-900">Listing Saya</h1>
+        <h1 className="text-xl font-semibold text-on-surface">Listing Saya</h1>
         <Link
           href="/seller/vehicles/new"
-          className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700"
+          className="rounded-md bg-primary-container px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary"
         >
           + Tambah Listing
         </Link>
       </div>
 
-      {actionError && <p className="mt-3 text-sm text-red-600">{actionError}</p>}
+      {actionError && <p className="mt-3 text-sm text-error">{actionError}</p>}
 
       {isLoading ? (
-        <p className="mt-6 text-sm text-zinc-500">Memuat...</p>
+        <p className="mt-6 text-sm text-on-surface-muted">Memuat...</p>
       ) : vehicles.length === 0 ? (
-        <p className="mt-6 text-sm text-zinc-500">Belum ada listing. Klik &ldquo;Tambah Listing&rdquo; untuk mulai.</p>
+        <p className="mt-6 text-sm text-on-surface-muted">Belum ada listing. Klik &ldquo;Tambah Listing&rdquo; untuk mulai.</p>
       ) : (
-        <div className="mt-6 overflow-x-auto rounded-lg border border-zinc-200 bg-white">
-          <table className="min-w-full divide-y divide-zinc-200 text-sm">
+        <div className="mt-6 overflow-x-auto rounded-lg border border-border bg-surface-container">
+          <table className="min-w-full divide-y divide-border text-sm">
             <thead>
-              <tr className="text-left text-xs uppercase text-zinc-500">
+              <tr className="text-left text-xs uppercase text-on-surface-muted">
                 <th className="px-4 py-3">Kendaraan</th>
                 <th className="px-4 py-3">Harga</th>
                 <th className="px-4 py-3">Status</th>
                 <th className="px-4 py-3">Aksi</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-100">
+            <tbody className="divide-y divide-border">
               {vehicles.map((vehicle) => (
                 <tr key={vehicle.id}>
                   <td className="px-4 py-3">
@@ -98,19 +98,19 @@ export default function SellerVehiclesPage() {
                         <>
                           <Link
                             href={`/seller/vehicles/${vehicle.id}/edit`}
-                            className="text-zinc-700 underline"
+                            className="text-on-surface underline"
                           >
                             Edit
                           </Link>
                           <button
                             onClick={() => setPendingAction({ type: "submit-for-review", id: vehicle.id })}
-                            className="text-emerald-700 underline"
+                            className="text-success underline"
                           >
                             Ajukan Review
                           </button>
                           <button
                             onClick={() => setPendingAction({ type: "delete", id: vehicle.id })}
-                            className="text-red-600 underline"
+                            className="text-error underline"
                           >
                             Hapus
                           </button>

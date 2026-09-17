@@ -10,11 +10,20 @@
 | ----------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Frontend    | **Next.js 16 (App Router)**                                                      | Listing kendaraan butuh SEO bagus (orang cari "jual mobil Avanza 2020 Tangerang" di Google) + dashboard dinamis untuk 3 role berbeda.                                                                                                                                                                     |
 | Backend/API | **Laravel 13**                                                                   | Dipilih di atas NestJS karena kecepatan bangun untuk solo dev: Eloquent ORM, Sanctum, migration, form request, policy sudah built-in — mengurangi boilerplate dibanding setup DI/module manual di NestJS. Cocok untuk target selesai tepat waktu dengan scope fitur lengkap (auth, KYC, escrow, payment). |
-| Database    | **PostgreSQL**                                                                   | Transaksi (escrow, payout) butuh ACID kuat; JSONB berguna untuk spesifikasi kendaraan yang variatif per kategori.                                                                                                                                                                                         |
+| Database    | **SQLite** (revisi Sprint 5, lihat catatan di bawah)                             | Awalnya direkomendasikan PostgreSQL untuk ACID kuat + JSONB, tapi tugas ini jalan solo & offline tanpa deployment sungguhan — SQLite sudah terbukti stabil dari Sprint 1 (75 test PHPUnit lolos) dan tidak ada fitur yang benar-benar butuh JSONB (spesifikasi kendaraan disimpan sebagai kolom biasa).            |
 | Auth        | **Laravel Sanctum** + verifikasi dokumen manual/semi-otomatis (OCR KTP opsional) | Buyer auth ringan, seller wajib KYC sebelum bisa listing.                                                                                                                                                                                                                                                 |
 | Storage     | **S3-compatible**                                                                | Foto kendaraan banyak (10–20 per listing) + dokumen sensitif harus terpisah dari bucket publik.                                                                                                                                                                                                           |
 
 > Kalau nanti ada keputusan yang berubah dari yang tercatat di atas, update tabel ini agar tidak menyesatkan pembaca berikutnya (lihat `CLAUDE.md` bagian 4).
+
+### 1b. Keputusan Final: SQLite vs PostgreSQL (ditutup Sprint 5, 2026-09-18)
+
+Sejak Sprint 1 keputusan ini digantung ("dites dulu pakai SQLite, putuskan nanti") — ditutup di Sprint 5 dengan keputusan **tetap SQLite**, alasan:
+
+- Tugas dikerjakan solo & dinilai secara lokal/offline (tidak ada deployment ke server produksi sungguhan), jadi argumen utama PostgreSQL (concurrency tinggi multi-instance, butuh connection pooling) tidak relevan di konteks ini.
+- Tidak ada kolom yang benar-benar butuh tipe `JSONB` — spesifikasi kendaraan disimpan sebagai kolom relasional biasa, bukan dokumen semi-terstruktur.
+- Migrasi ke PostgreSQL menjelang akhir pengerjaan berisiko regresi baru (query yang kebetulan SQLite-specific, perbedaan driver) tanpa manfaat yang terukur untuk scope tugas ini, dibanding 75 test PHPUnit yang sudah stabil di atas SQLite.
+- Kalau proyek ini pernah dilanjutkan ke deployment produksi sungguhan, poin performa #20 (`Database Connection Pooling`, lihat §2a) tetap dicatat sebagai hal yang perlu direvisit saat itu terjadi.
 
 ## 1a. Struktur Repo
 
@@ -75,7 +84,7 @@ Daftar berikut adalah 20 poin optimisasi yang harus dicek satu per satu sebelum 
 | 17 | Add Lazy Loading | ✅ Selesai | Foto kendaraan di katalog & detail diganti dari `<img>` ke `next/image` (lazy-load native + `priority` cuma untuk foto pertama di atas fold pada halaman detail). |
 | 18 | Defer Non-Critical Scripts | ➖ N/A | Tidak ada script pihak ketiga (analytics/tracking/dsb) di aplikasi ini yang perlu di-defer. |
 | 19 | Unused Dependencies | ✅ Diverifikasi bersih | `composer.json` (Laravel, Sanctum, Tinker saja) & `package.json` (Next, React, Tailwind + type packages) dicek — semua importnya benar-benar dipakai di kode, tidak ada yang menganggur. |
-| 20 | Database Connection Pooling | ➖ N/A (lokal) | SQLite lokal tidak punya konsep connection pool. Kalau nanti pindah ke PostgreSQL (rencana final stack di §1) dan production sungguhan, pertimbangkan PgBouncer. |
+| 20 | Database Connection Pooling | ➖ N/A (lokal) | SQLite lokal tidak punya konsep connection pool. Keputusan final tetap SQLite (§1b) — kalau di masa depan proyek ini benar-benar dideploy produksi dan pindah ke PostgreSQL, pertimbangkan PgBouncer saat itu. |
 
 ## 3. Urutan Build (Deployment-First)
 

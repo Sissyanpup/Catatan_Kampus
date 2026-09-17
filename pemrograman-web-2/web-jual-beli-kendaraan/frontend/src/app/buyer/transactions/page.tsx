@@ -19,28 +19,28 @@ export default function BuyerTransactionsPage() {
   }, []);
 
   if (isLoading) {
-    return <p className="text-sm text-zinc-500">Memuat...</p>;
+    return <p className="text-sm text-on-surface-muted">Memuat...</p>;
   }
 
   return (
     <div>
-      <h1 className="text-xl font-semibold text-zinc-900">Transaksi Saya</h1>
+      <h1 className="text-xl font-semibold text-on-surface">Transaksi Saya</h1>
 
       {transactions.length === 0 ? (
-        <p className="mt-4 text-sm text-zinc-500">Belum ada transaksi.</p>
+        <p className="mt-4 text-sm text-on-surface-muted">Belum ada transaksi.</p>
       ) : (
         <ul className="mt-6 space-y-3">
           {transactions.map((transaction) => (
             <li key={transaction.id}>
               <Link
                 href={`/buyer/transactions/${transaction.id}`}
-                className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white p-4 hover:border-zinc-300"
+                className="flex items-center justify-between rounded-lg border border-border bg-surface-container p-4 hover:border-primary-container"
               >
                 <div>
-                  <p className="font-medium text-zinc-900">
+                  <p className="font-medium text-on-surface">
                     {transaction.vehicle.brand} {transaction.vehicle.model} {transaction.vehicle.year}
                   </p>
-                  <p className="mt-1 text-sm text-zinc-500">
+                  <p className="mt-1 text-sm text-on-surface-muted">
                     DP {formatRupiah(transaction.amount)} &middot; {formatDate(transaction.created_at)}
                   </p>
                 </div>

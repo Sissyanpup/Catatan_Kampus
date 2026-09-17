@@ -17,16 +17,16 @@ export default function EditVehiclePage({ params }: { params: Promise<{ id: stri
   }, [id]);
 
   if (isLoading) {
-    return <p className="text-sm text-zinc-500">Memuat...</p>;
+    return <p className="text-sm text-on-surface-muted">Memuat...</p>;
   }
 
   if (!vehicle) {
-    return <p className="text-sm text-red-600">Listing tidak ditemukan.</p>;
+    return <p className="text-sm text-error">Listing tidak ditemukan.</p>;
   }
 
   return (
     <div>
-      <h1 className="text-xl font-semibold text-zinc-900">Edit Listing Kendaraan</h1>
+      <h1 className="text-xl font-semibold text-on-surface">Edit Listing Kendaraan</h1>
       <div className="mt-6">
         <VehicleForm vehicleId={vehicle.id} initial={vehicle} />
       </div>

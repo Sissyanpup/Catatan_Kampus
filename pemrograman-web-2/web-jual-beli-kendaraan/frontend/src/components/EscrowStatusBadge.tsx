@@ -1,4 +1,5 @@
 import type { EscrowStatus } from "@/lib/types";
+import Badge, { type BadgeTone } from "./Badge";
 
 const LABELS: Record<EscrowStatus, string> = {
   escrow_hold: "Dana Ditahan (Escrow)",
@@ -9,19 +10,15 @@ const LABELS: Record<EscrowStatus, string> = {
   refunded: "Dana Dikembalikan",
 };
 
-const COLORS: Record<EscrowStatus, string> = {
-  escrow_hold: "bg-blue-100 text-blue-800",
-  serah_terima: "bg-indigo-100 text-indigo-800",
-  payout_release: "bg-purple-100 text-purple-800",
-  selesai: "bg-emerald-100 text-emerald-800",
-  dispute: "bg-red-100 text-red-800",
-  refunded: "bg-zinc-100 text-zinc-700",
+const TONES: Record<EscrowStatus, BadgeTone> = {
+  escrow_hold: "info",
+  serah_terima: "info",
+  payout_release: "primary",
+  selesai: "success",
+  dispute: "danger",
+  refunded: "neutral",
 };
 
 export default function EscrowStatusBadge({ status }: { status: EscrowStatus }) {
-  return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${COLORS[status]}`}>
-      {LABELS[status]}
-    </span>
-  );
+  return <Badge tone={TONES[status]}>{LABELS[status]}</Badge>;
 }

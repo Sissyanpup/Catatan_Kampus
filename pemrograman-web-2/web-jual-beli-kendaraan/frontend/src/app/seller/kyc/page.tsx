@@ -107,33 +107,33 @@ export default function SellerKycPage() {
   }
 
   if (isLoading) {
-    return <p className="text-sm text-zinc-500">Memuat...</p>;
+    return <p className="text-sm text-on-surface-muted">Memuat...</p>;
   }
 
   const canSubmit = !profile || profile.status !== "approved";
 
   return (
     <div>
-      <h1 className="text-xl font-semibold text-zinc-900">Verifikasi KYC</h1>
-      <p className="mt-1 text-sm text-zinc-500">
+      <h1 className="text-xl font-semibold text-on-surface">Verifikasi KYC</h1>
+      <p className="mt-1 text-sm text-on-surface-muted">
         Wajib disetujui admin sebelum kamu bisa membuat listing kendaraan.
       </p>
 
       {profile && (
-        <div className="mt-6 rounded-lg border border-zinc-200 bg-white p-4">
+        <div className="mt-6 rounded-lg border border-border bg-surface-container p-4">
           <div className="flex items-center gap-2">
-            <span className="text-sm text-zinc-500">Status:</span>
+            <span className="text-sm text-on-surface-muted">Status:</span>
             <StatusBadge status={profile.status} />
           </div>
           {profile.status === "rejected" && profile.rejection_reason && (
-            <p className="mt-2 text-sm text-red-600">Alasan ditolak: {profile.rejection_reason}</p>
+            <p className="mt-2 text-sm text-error">Alasan ditolak: {profile.rejection_reason}</p>
           )}
           <div className="mt-3 flex gap-4 text-sm">
-            <a href={profile.ktp_url} target="_blank" rel="noreferrer" className="text-zinc-700 underline">
+            <a href={profile.ktp_url} target="_blank" rel="noreferrer" className="text-on-surface underline">
               Lihat KTP
             </a>
             {profile.npwp_url && (
-              <a href={profile.npwp_url} target="_blank" rel="noreferrer" className="text-zinc-700 underline">
+              <a href={profile.npwp_url} target="_blank" rel="noreferrer" className="text-on-surface underline">
                 Lihat NPWP
               </a>
             )}
@@ -142,39 +142,39 @@ export default function SellerKycPage() {
       )}
 
       {canSubmit && (
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4 rounded-lg border border-zinc-200 bg-white p-4">
-          <h2 className="text-sm font-medium text-zinc-800">
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4 rounded-lg border border-border bg-surface-container p-4">
+          <h2 className="text-sm font-medium text-on-surface">
             {profile ? "Ajukan Ulang Dokumen" : "Unggah Dokumen"}
           </h2>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700">Foto KTP</label>
+            <label className="block text-sm font-medium text-on-surface">Foto KTP</label>
             <input
               type="file"
               accept="image/jpeg,image/png,application/pdf"
               onChange={(e) => setKtp(e.target.files?.[0] ?? null)}
               className="mt-1 block w-full text-sm"
             />
-            {errors.ktp && <p className="mt-1 text-xs text-red-600">{errors.ktp[0]}</p>}
+            {errors.ktp && <p className="mt-1 text-xs text-error">{errors.ktp[0]}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700">Foto NPWP (opsional, untuk dealer)</label>
+            <label className="block text-sm font-medium text-on-surface">Foto NPWP (opsional, untuk dealer)</label>
             <input
               type="file"
               accept="image/jpeg,image/png,application/pdf"
               onChange={(e) => setNpwp(e.target.files?.[0] ?? null)}
               className="mt-1 block w-full text-sm"
             />
-            {errors.npwp && <p className="mt-1 text-xs text-red-600">{errors.npwp[0]}</p>}
+            {errors.npwp && <p className="mt-1 text-xs text-error">{errors.npwp[0]}</p>}
           </div>
 
-          {formError && <p className="text-sm text-red-600">{formError}</p>}
+          {formError && <p className="text-sm text-error">{formError}</p>}
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700 disabled:opacity-60"
+            className="rounded-md bg-primary-container px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary disabled:opacity-60"
           >
             {isSubmitting ? "Mengunggah..." : "Kirim"}
           </button>
@@ -183,58 +183,58 @@ export default function SellerKycPage() {
 
       {profile && (
         <div className="mt-6">
-          <h2 className="text-lg font-semibold text-zinc-900">Rekening Bank untuk Payout</h2>
-          <p className="mt-1 text-sm text-zinc-500">
+          <h2 className="text-lg font-semibold text-on-surface">Rekening Bank untuk Payout</h2>
+          <p className="mt-1 text-sm text-on-surface-muted">
             Dana hasil penjualan akan ditransfer admin ke rekening ini setelah serah-terima dikonfirmasi. Bisa
             diperbarui kapan pun, tidak memerlukan review ulang KYC.
           </p>
 
-          <form onSubmit={handleBankSubmit} className="mt-4 space-y-4 rounded-lg border border-zinc-200 bg-white p-4">
+          <form onSubmit={handleBankSubmit} className="mt-4 space-y-4 rounded-lg border border-border bg-surface-container p-4">
             <div>
-              <label className="block text-sm font-medium text-zinc-700">Nama Bank</label>
+              <label className="block text-sm font-medium text-on-surface">Nama Bank</label>
               <input
                 type="text"
                 value={bankName}
                 onChange={(e) => setBankName(e.target.value)}
                 placeholder="mis. BCA"
-                className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-1.5 text-sm"
+                className="mt-1 block w-full rounded-md border border-border px-3 py-1.5 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
               />
-              {bankErrors.bank_name && <p className="mt-1 text-xs text-red-600">{bankErrors.bank_name[0]}</p>}
+              {bankErrors.bank_name && <p className="mt-1 text-xs text-error">{bankErrors.bank_name[0]}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-700">Nomor Rekening</label>
+              <label className="block text-sm font-medium text-on-surface">Nomor Rekening</label>
               <input
                 type="text"
                 value={bankAccountNumber}
                 onChange={(e) => setBankAccountNumber(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-1.5 text-sm"
+                className="mt-1 block w-full rounded-md border border-border px-3 py-1.5 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
               />
               {bankErrors.bank_account_number && (
-                <p className="mt-1 text-xs text-red-600">{bankErrors.bank_account_number[0]}</p>
+                <p className="mt-1 text-xs text-error">{bankErrors.bank_account_number[0]}</p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-700">Nama Pemilik Rekening</label>
+              <label className="block text-sm font-medium text-on-surface">Nama Pemilik Rekening</label>
               <input
                 type="text"
                 value={bankAccountHolderName}
                 onChange={(e) => setBankAccountHolderName(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-1.5 text-sm"
+                className="mt-1 block w-full rounded-md border border-border px-3 py-1.5 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
               />
               {bankErrors.bank_account_holder_name && (
-                <p className="mt-1 text-xs text-red-600">{bankErrors.bank_account_holder_name[0]}</p>
+                <p className="mt-1 text-xs text-error">{bankErrors.bank_account_holder_name[0]}</p>
               )}
             </div>
 
-            {bankFormError && <p className="text-sm text-red-600">{bankFormError}</p>}
-            {bankSuccess && <p className="text-sm text-emerald-600">Rekening bank tersimpan.</p>}
+            {bankFormError && <p className="text-sm text-error">{bankFormError}</p>}
+            {bankSuccess && <p className="text-sm text-success">Rekening bank tersimpan.</p>}
 
             <button
               type="submit"
               disabled={isSavingBank}
-              className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700 disabled:opacity-60"
+              className="rounded-md bg-primary-container px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary disabled:opacity-60"
             >
               {isSavingBank ? "Menyimpan..." : "Simpan Rekening"}
             </button>

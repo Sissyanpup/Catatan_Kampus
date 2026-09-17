@@ -72,14 +72,14 @@ export default function VehicleForm({ vehicleId, initial }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-zinc-200 bg-white p-4">
+    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-border bg-surface-container p-4">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field label="Merek" error={errors.brand?.[0]}>
           <input
             required
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
           />
         </Field>
 
@@ -88,7 +88,7 @@ export default function VehicleForm({ vehicleId, initial }: Props) {
             required
             value={model}
             onChange={(e) => setModel(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
           />
         </Field>
 
@@ -98,7 +98,7 @@ export default function VehicleForm({ vehicleId, initial }: Props) {
             type="number"
             value={year}
             onChange={(e) => setYear(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
           />
         </Field>
 
@@ -108,7 +108,7 @@ export default function VehicleForm({ vehicleId, initial }: Props) {
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
           />
         </Field>
 
@@ -118,7 +118,7 @@ export default function VehicleForm({ vehicleId, initial }: Props) {
             type="number"
             value={mileage}
             onChange={(e) => setMileage(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
           />
         </Field>
 
@@ -127,7 +127,7 @@ export default function VehicleForm({ vehicleId, initial }: Props) {
             required
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
           />
         </Field>
       </div>
@@ -137,7 +137,7 @@ export default function VehicleForm({ vehicleId, initial }: Props) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
         />
       </Field>
 
@@ -174,12 +174,12 @@ export default function VehicleForm({ vehicleId, initial }: Props) {
         </Field>
       </div>
 
-      {formError && <p className="text-sm text-red-600">{formError}</p>}
+      {formError && <p className="text-sm text-error">{formError}</p>}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700 disabled:opacity-60"
+        className="rounded-md bg-primary-container px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary disabled:opacity-60"
       >
         {isSubmitting ? "Menyimpan..." : "Simpan"}
       </button>
@@ -198,9 +198,9 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-zinc-700">{label}</label>
+      <label className="block text-sm font-medium text-on-surface">{label}</label>
       {children}
-      {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+      {error && <p className="mt-1 text-xs text-error">{error}</p>}
     </div>
   );
 }

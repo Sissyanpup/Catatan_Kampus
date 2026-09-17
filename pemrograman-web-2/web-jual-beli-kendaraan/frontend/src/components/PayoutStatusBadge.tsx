@@ -1,4 +1,5 @@
 import type { PayoutStatus } from "@/lib/types";
+import Badge, { type BadgeTone } from "./Badge";
 
 const LABELS: Record<PayoutStatus, string> = {
   pending: "Payout Diproses",
@@ -6,16 +7,12 @@ const LABELS: Record<PayoutStatus, string> = {
   failed: "Payout Gagal",
 };
 
-const COLORS: Record<PayoutStatus, string> = {
-  pending: "bg-amber-100 text-amber-800",
-  paid: "bg-emerald-100 text-emerald-800",
-  failed: "bg-red-100 text-red-800",
+const TONES: Record<PayoutStatus, BadgeTone> = {
+  pending: "warning",
+  paid: "success",
+  failed: "danger",
 };
 
 export default function PayoutStatusBadge({ status }: { status: PayoutStatus }) {
-  return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${COLORS[status]}`}>
-      {LABELS[status]}
-    </span>
-  );
+  return <Badge tone={TONES[status]}>{LABELS[status]}</Badge>;
 }

@@ -78,15 +78,15 @@ export default function SellerTransactionDetailPage({
   }
 
   if (isLoading) {
-    return <p className="text-sm text-zinc-500">Memuat...</p>;
+    return <p className="text-sm text-on-surface-muted">Memuat...</p>;
   }
 
   if (error && !transaction) {
-    return <p className="text-sm text-red-600">{error}</p>;
+    return <p className="text-sm text-error">{error}</p>;
   }
 
   if (!transaction) {
-    return <p className="text-sm text-red-600">Transaksi tidak ditemukan.</p>;
+    return <p className="text-sm text-error">Transaksi tidak ditemukan.</p>;
   }
 
   const canConfirmHandover = transaction.escrow_status === "escrow_hold" && !transaction.seller_confirmed_at;
@@ -94,13 +94,13 @@ export default function SellerTransactionDetailPage({
 
   return (
     <div>
-      <Link href="/seller/transactions" className="text-sm text-zinc-500 hover:text-zinc-800">
+      <Link href="/seller/transactions" className="text-sm text-on-surface-muted hover:text-on-surface">
         &larr; Kembali ke Transaksi Penjualan
       </Link>
 
-      <div className="mt-4 rounded-lg border border-zinc-200 bg-white p-5">
+      <div className="mt-4 rounded-lg border border-border bg-surface-container p-5">
         <div className="flex items-center justify-between">
-          <h1 className="text-lg font-semibold text-zinc-900">
+          <h1 className="text-lg font-semibold text-on-surface">
             {transaction.vehicle.brand} {transaction.vehicle.model} {transaction.vehicle.year}
           </h1>
           <div className="flex flex-col items-end gap-1">
@@ -111,37 +111,37 @@ export default function SellerTransactionDetailPage({
 
         <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
           <div>
-            <dt className="text-xs uppercase text-zinc-400">Jumlah DP</dt>
-            <dd className="text-zinc-800">{formatRupiah(transaction.amount)}</dd>
+            <dt className="text-xs uppercase text-on-surface-muted">Jumlah DP</dt>
+            <dd className="text-on-surface">{formatRupiah(transaction.amount)}</dd>
           </div>
           <div>
-            <dt className="text-xs uppercase text-zinc-400">Dibuat</dt>
-            <dd className="text-zinc-800">{formatDate(transaction.created_at)}</dd>
+            <dt className="text-xs uppercase text-on-surface-muted">Dibuat</dt>
+            <dd className="text-on-surface">{formatDate(transaction.created_at)}</dd>
           </div>
           {transaction.paid_at && (
             <div>
-              <dt className="text-xs uppercase text-zinc-400">Dibayar Buyer</dt>
-              <dd className="text-zinc-800">{formatDate(transaction.paid_at)}</dd>
+              <dt className="text-xs uppercase text-on-surface-muted">Dibayar Buyer</dt>
+              <dd className="text-on-surface">{formatDate(transaction.paid_at)}</dd>
             </div>
           )}
           {transaction.buyer_confirmed_at && (
             <div>
-              <dt className="text-xs uppercase text-zinc-400">Buyer Konfirmasi Terima</dt>
-              <dd className="text-zinc-800">{formatDate(transaction.buyer_confirmed_at)}</dd>
+              <dt className="text-xs uppercase text-on-surface-muted">Buyer Konfirmasi Terima</dt>
+              <dd className="text-on-surface">{formatDate(transaction.buyer_confirmed_at)}</dd>
             </div>
           )}
           {transaction.seller_confirmed_at && (
             <div>
-              <dt className="text-xs uppercase text-zinc-400">Anda Konfirmasi Serahkan</dt>
-              <dd className="text-zinc-800">{formatDate(transaction.seller_confirmed_at)}</dd>
+              <dt className="text-xs uppercase text-on-surface-muted">Anda Konfirmasi Serahkan</dt>
+              <dd className="text-on-surface">{formatDate(transaction.seller_confirmed_at)}</dd>
             </div>
           )}
         </dl>
 
-        {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+        {error && <p className="mt-3 text-sm text-error">{error}</p>}
 
         {(canConfirmHandover || canDispute) && (
-          <div className="mt-6 flex flex-wrap gap-3 border-t border-zinc-100 pt-4">
+          <div className="mt-6 flex flex-wrap gap-3 border-t border-border pt-4">
             {canConfirmHandover && (
               <button
                 onClick={() => setShowConfirmHandover(true)}
@@ -164,14 +164,14 @@ export default function SellerTransactionDetailPage({
 
         {showDisputeForm && (
           <form onSubmit={handleSubmitDispute} className="mt-4 rounded-md border border-red-200 bg-red-50 p-4">
-            <label className="block text-sm font-medium text-zinc-800">Jelaskan ketidaksesuaian</label>
+            <label className="block text-sm font-medium text-on-surface">Jelaskan ketidaksesuaian</label>
             <textarea
               required
               maxLength={1000}
               value={disputeReason}
               onChange={(e) => setDisputeReason(e.target.value)}
               rows={3}
-              className="mt-2 w-full rounded-md border border-zinc-300 p-2 text-sm"
+              className="mt-2 w-full rounded-md border border-border p-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
               placeholder="Contoh: buyer belum melunasi sisa pembayaran di luar sistem."
             />
             <div className="mt-3 flex gap-3">
@@ -185,7 +185,7 @@ export default function SellerTransactionDetailPage({
               <button
                 type="button"
                 onClick={() => setShowDisputeForm(false)}
-                className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50"
+                className="rounded-md border border-border px-4 py-2 text-sm font-medium text-on-surface hover:bg-surface-container-high"
               >
                 Batal
               </button>
@@ -203,7 +203,7 @@ export default function SellerTransactionDetailPage({
 
       {transaction.status_history && transaction.status_history.length > 0 && (
         <div className="mt-6">
-          <h2 className="text-sm font-semibold text-zinc-900">Riwayat Status Escrow</h2>
+          <h2 className="text-sm font-semibold text-on-surface">Riwayat Status Escrow</h2>
           <div className="mt-3">
             <TransactionStatusHistory entries={transaction.status_history} />
           </div>
