@@ -2,17 +2,30 @@
 
 > Sumber asli: `saran.txt` (bagian 2 & poin performa di akhir file).
 
-## 1. Rekomendasi Layer
+## 1. Stack Final (Keputusan)
 
-| Layer | Rekomendasi | Alasan |
+> Dosen tidak mewajibkan framework tertentu. Stack di bawah **sudah final** (dikonfirmasi 2026-09-17), dipilih atas dasar prioritas *selesai tepat waktu dengan fitur lengkap* untuk pengerjaan solo — bukan lagi opsi terbuka.
+
+| Layer | Keputusan | Alasan |
 | --- | --- | --- |
 | Frontend | **Next.js 16 (App Router)** | Listing kendaraan butuh SEO bagus (orang cari "jual mobil Avanza 2020 Tangerang" di Google) + dashboard dinamis untuk 3 role berbeda. |
-| Backend/API | **Laravel 12** (solo/cepat bangun) atau **NestJS** (full TypeScript) | Logic bisnis kompleks (komisi, escrow, verifikasi dokumen, multi-role) butuh struktur yang bertahan (service provider, policy, form request, observer, event system). |
+| Backend/API | **Laravel 13** | Dipilih di atas NestJS karena kecepatan bangun untuk solo dev: Eloquent ORM, Sanctum, migration, form request, policy sudah built-in — mengurangi boilerplate dibanding setup DI/module manual di NestJS. Cocok untuk target selesai tepat waktu dengan scope fitur lengkap (auth, KYC, escrow, payment). |
 | Database | **PostgreSQL** | Transaksi (escrow, payout) butuh ACID kuat; JSONB berguna untuk spesifikasi kendaraan yang variatif per kategori. |
-| Auth | **Sanctum/JWT** + verifikasi dokumen manual/semi-otomatis (OCR KTP opsional) | Buyer auth ringan, seller wajib KYC sebelum bisa listing. |
+| Auth | **Laravel Sanctum** + verifikasi dokumen manual/semi-otomatis (OCR KTP opsional) | Buyer auth ringan, seller wajib KYC sebelum bisa listing. |
 | Storage | **S3-compatible** | Foto kendaraan banyak (10–20 per listing) + dokumen sensitif harus terpisah dari bucket publik. |
 
-> Catatan: stack ini adalah *rekomendasi*, bukan keputusan final — sesuaikan dengan stack yang diwajibkan mata kuliah "Pemrograman Web 2" jika berbeda.
+> Kalau nanti ada keputusan yang berubah dari yang tercatat di atas, update tabel ini agar tidak menyesatkan pembaca berikutnya (lihat `CLAUDE.md` bagian 4).
+
+## 1a. Struktur Repo
+
+Monorepo — satu repo Git ini berisi dua project terpisah:
+
+```
+/backend   → Laravel 13 (API)
+/frontend  → Next.js 16 (App Router)
+```
+
+Masing-masing punya `.gitignore` sendiri (`vendor/`, `node_modules/`, `.env` sudah dikecualikan). Dijalankan sebagai dua proses terpisah saat development (`php artisan serve` + `npm run dev`), berkomunikasi lewat REST API.
 
 ## 2. Checklist Performa (wajib dipertimbangkan sebelum deployment)
 

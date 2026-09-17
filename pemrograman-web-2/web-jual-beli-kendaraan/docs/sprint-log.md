@@ -54,15 +54,16 @@
 
 ## Sprint 1 — Auth, Role & Listing CRUD
 
-- Tanggal mulai: _(isi saat mulai)_
+- Tanggal mulai: 2026-09-17
 - Tanggal selesai: _(isi saat sprint ditutup)_
 
 **Sprint Planning**
 - Item backlog: Epic 1 di `docs/06-product-backlog.md`.
-- Definition of Done: _(isi)_
+- Keputusan stack dikunci sebelum sprint mulai: Laravel 13 + Next.js 16, monorepo `/backend` + `/frontend` (lihat `docs/02-tech-stack-arsitektur.md`).
+- Definition of Done: validasi client (Next.js form) + server (Laravel form request) ada di tiap form; role admin/seller/buyer di-gate lewat policy, bukan cek ad-hoc; listing baru berstatus non-public sampai admin approve; audit trail (siapa & kapan) untuk approve/reject listing; tidak ada N+1 query di endpoint katalog (checklist performa poin 3 & 7 di `docs/02`).
 
 **Selama Sprint (Daily Progress Check)**
-- _(isi)_
+- 2026-09-17: Scaffold awal selesai — `composer create-project laravel/laravel backend` (Laravel 13.32) dan `create-next-app` (Next.js 16.3.5, TypeScript + Tailwind + App Router) di root monorepo. `.gitignore` masing-masing sudah mengecualikan `vendor/`, `node_modules/`, `.env`. Belum ada model/migration/route custom — masih default framework.
 
 **Sprint Review (Demo)**
 - _(isi)_

@@ -4,7 +4,7 @@ Dokumen ini adalah **master index** untuk proyek tugas mata kuliah *Pemrograman 
 
 ## 1. Status Proyek
 
-Proyek ini masih pada **tahap perencanaan & eksplorasi desain** — belum ada kode aplikasi (backend/frontend) yang tercommit. Yang sudah ada:
+Proyek sudah masuk **Sprint 1** — scaffold kode aplikasi sudah ada (`/backend` Laravel 13, `/frontend` Next.js 16, lihat `docs/02-tech-stack-arsitektur.md`), development fitur Epic 1 sedang berjalan (lihat `docs/sprint-log.md`). Dokumentasi hasil Sprint 0 tetap jadi acuan:
 
 | File sumber (root) | Isi | Sudah dirangkum di |
 | --- | --- | --- |
