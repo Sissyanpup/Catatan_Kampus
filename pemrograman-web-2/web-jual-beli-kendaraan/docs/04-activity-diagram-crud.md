@@ -14,13 +14,13 @@ Start → Table Data → Branch aksi (Add/Edit/Delete)
 
 ## Ringkasan Perbedaan per Aksi
 
-| Aksi | Form? | Confirm Dialog? | Catatan |
-| --- | --- | --- | --- |
-| **Add** | Ya (kosong) | Tidak | Risiko rendah — salah input tinggal diedit/dihapus lagi. |
-| **Edit** | Ya (terisi data existing) | **Ya** | Menimpa data existing → butuh *safety net* konfirmasi. Pertimbangkan tampilkan *diff* untuk field sensitif (finansial). |
-| **Delete** | Tidak | **Ya** | Kegagalan paling sering karena FK constraint. Pertimbangkan **soft delete** untuk data transaksional. |
-| **View/Detail** | Tidak (read-only) | Tidak | Tanpa Decision (tidak ada proses tulis). |
-| **Approve/Reject** (workflow) | Kadang (form alasan) | Ya | Decision branching ke status berbeda, bukan cuma yes/no — relevan untuk approval listing & escrow release oleh admin. |
+| Aksi                          | Form?                     | Confirm Dialog? | Catatan                                                                                                                 |
+| ----------------------------- | ------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Add**                       | Ya (kosong)               | Tidak           | Risiko rendah — salah input tinggal diedit/dihapus lagi.                                                                |
+| **Edit**                      | Ya (terisi data existing) | **Ya**          | Menimpa data existing → butuh _safety net_ konfirmasi. Pertimbangkan tampilkan _diff_ untuk field sensitif (finansial). |
+| **Delete**                    | Tidak                     | **Ya**          | Kegagalan paling sering karena FK constraint. Pertimbangkan **soft delete** untuk data transaksional.                   |
+| **View/Detail**               | Tidak (read-only)         | Tidak           | Tanpa Decision (tidak ada proses tulis).                                                                                |
+| **Approve/Reject** (workflow) | Kadang (form alasan)      | Ya              | Decision branching ke status berbeda, bukan cuma yes/no — relevan untuk approval listing & escrow release oleh admin.   |
 
 ## Prinsip yang Wajib Dipegang di Semua Modul CRUD Proyek Ini
 
@@ -33,8 +33,8 @@ Start → Table Data → Branch aksi (Add/Edit/Delete)
 
 ## Penerapan di Proyek Ini
 
-- **Approve listing oleh Admin** → pakai pola *Approve/Reject workflow* (bukan Edit biasa) karena ada branching status (approved/rejected) + wajib audit trail.
-- **Release dana escrow** → pola paling mendekati *Delete* (irreversible, butuh konfirmasi eksplisit + kemungkinan gagal karena constraint, misal dokumen belum lengkap).
+- **Approve listing oleh Admin** → pakai pola _Approve/Reject workflow_ (bukan Edit biasa) karena ada branching status (approved/rejected) + wajib audit trail.
+- **Release dana escrow** → pola paling mendekati _Delete_ (irreversible, butuh konfirmasi eksplisit + kemungkinan gagal karena constraint, misal dokumen belum lengkap).
 - **Listing kendaraan (Seller)** → Add/Edit standar, tapi status listing tidak langsung "tayang" — ada gate verifikasi admin sebelum publik (lihat [`01-domain-dan-peran.md`](./01-domain-dan-peran.md)).
 
 ## Terkait

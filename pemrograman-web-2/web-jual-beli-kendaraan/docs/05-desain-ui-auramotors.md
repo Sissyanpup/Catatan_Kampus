@@ -13,21 +13,22 @@ Tema visual: **Obsidian & Champagne Gold** (dark mode premium).
 ## 2. Design Tokens (diekstrak dari `!-- Design System --.html`)
 
 **Font:**
+
 - Display/Headline → `Bodoni Moda` (serif, mewah)
 - Body → `Manrope`
 - Label/UI kecil → `Geist`
 
 **Warna kunci (dark theme, dari `tailwind.config`):**
 
-| Token | Hex | Kegunaan |
-| --- | --- | --- |
-| `primary` | `#f2ca50` | Aksen emas/champagne utama (CTA, highlight) |
-| `primary-container` | `#d4af37` | Tombol utama |
-| `tertiary` | `#eec98f` | Aksen sekunder (badge, teks emas muda) |
-| `background` / `surface` | `#121315` | Latar dasar (obsidian/dark) |
-| `surface-container` | `#1f2022` | Card/panel |
-| `on-surface` | `#e3e2e5` | Teks utama di atas dasar gelap |
-| `error` / `error-container` | `#ffb4ab` / `#93000a` | Status gagal/warning |
+| Token                       | Hex                   | Kegunaan                                    |
+| --------------------------- | --------------------- | ------------------------------------------- |
+| `primary`                   | `#f2ca50`             | Aksen emas/champagne utama (CTA, highlight) |
+| `primary-container`         | `#d4af37`             | Tombol utama                                |
+| `tertiary`                  | `#eec98f`             | Aksen sekunder (badge, teks emas muda)      |
+| `background` / `surface`    | `#121315`             | Latar dasar (obsidian/dark)                 |
+| `surface-container`         | `#1f2022`             | Card/panel                                  |
+| `on-surface`                | `#e3e2e5`             | Teks utama di atas dasar gelap              |
+| `error` / `error-container` | `#ffb4ab` / `#93000a` | Status gagal/warning                        |
 
 **Spacing scale:** `space-xs (0.375rem)`, `space-sm (0.75rem)`, `space-md (1.25rem)`, `space-lg (2rem)`, `space-xl (3.5rem)`, plus `margin`/`gutter` khusus mobile vs desktop.
 
@@ -38,6 +39,7 @@ Tema visual: **Obsidian & Champagne Gold** (dark mode premium).
 ## 3. Inventori Layar yang Sudah Dirancang
 
 ### Portal Buyer / VIP Collector
+
 1. **Landing/Public Page** — hero, team showcase, penjelasan platform (3 pillars), live stats, filter cepat, gallery preview, CTA login/register.
 2. **Autentikasi & Registrasi** (`AuraMotors - Autentikasi & Registrasi VIP Kolektor`) — tab Login/Register, dukungan biometrik/FIDO2, showcase eksklusif.
 3. **Dashboard Belanja Pasca-Login** (`AuraMotors - Dashboard Belanja Unit Otomotif Mewah`) — header user + saldo escrow, filter mendalam, grid katalog unit, widget layanan (financing, konsultasi, private viewing).
@@ -47,10 +49,12 @@ Tema visual: **Obsidian & Champagne Gold** (dark mode premium).
 7. **Akun & Garasi Digital** (`AuraMotors - Garasi Digital & Pengelolaan Akun Kolektor`) — profil, metrik portofolio, koleksi unit dimiliki, riwayat transaksi, dokumen/sertifikat, keamanan vault (2FA, bank terhubung).
 
 ### Portal Seller / Dealer Mitra
+
 8. **Dashboard Penjualan & Portofolio Mitra** (`AuraMotors - Dashboard Penjualan & Portofolio Mitra Dealer`) — KPI penjualan, feed tawaran/bidding masuk, armada konsinyasi aktif, status pencairan escrow.
 9. **Form Listing & Kurasi Unit Baru** — stepper 4 tahap (identitas & spesifikasi unit → kliring legalitas/BPKB → upload foto/berkas → penetapan nilai & escrow).
 
 ### Portal Admin / Super Admin
+
 10. **Master Admin & Escrow Oversight Console** — indikator konektivitas institusional (OJK, Korlantas, bank kustodian), metrik makro (volume escrow, antrean kurasi, integritas forensik), otorisasi rilis escrow, live audit log.
 11. **Admin Kurasi & Verifikasi Forensik Unit** — profil unit dalam audit, dossier forensik (integritas fisik, kliring dokumen/pajak, studio visual), protokol otorisasi multi-signature sebelum unit terbit ke showroom.
 

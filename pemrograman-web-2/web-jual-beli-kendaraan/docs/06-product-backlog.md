@@ -3,29 +3,36 @@
 > Diturunkan dari urutan build di `saran.txt` bagian 5, dipecah jadi backlog per epic supaya bisa langsung dipetakan ke sprint Agile di [`../CLAUDE.md`](../CLAUDE.md).
 
 ## Epic 1 — Auth, Role & Listing CRUD (tanpa payment)
-- [ ] Setup auth (Sanctum/JWT) untuk 3 role: admin, seller, buyer.
-- [ ] KYC seller (upload KTP, NPWP opsional untuk dealer) sebelum bisa listing.
-- [ ] CRUD listing kendaraan (foto, spesifikasi, dokumen STNK/BPKB) — pakai pola di [`04-activity-diagram-crud.md`](./04-activity-diagram-crud.md).
-- [ ] Gate: listing tidak tayang publik sebelum diverifikasi admin.
-- [ ] Halaman katalog + filter (merek, tahun, harga, lokasi) untuk buyer.
+
+- [x] Setup auth (Sanctum/JWT) untuk 3 role: admin, seller, buyer.
+- [x] KYC seller (upload KTP, NPWP opsional untuk dealer) sebelum bisa listing.
+- [x] CRUD listing kendaraan (foto, spesifikasi, dokumen STNK/BPKB) — pakai pola di [`04-activity-diagram-crud.md`](./04-activity-diagram-crud.md).
+- [x] Gate: listing tidak tayang publik sebelum diverifikasi admin.
+- [x] Halaman katalog + filter (merek, tahun, harga, lokasi) untuk buyer.
 
 ## Epic 2 — Payment Collection (Xendit Sandbox)
-- [ ] Integrasi Xendit sandbox untuk terima pembayaran (collection saja, belum disbursement).
-- [ ] Halaman checkout (deposit/DP alokasi unit).
-- [ ] Webhook handler status pembayaran (pending/success/failed).
+
+> Kelas berjalan **tanpa akses internet** (kesepakatan dengan dosen agar tidak perlu hosting) — lihat keputusan driver abstraction di [`03-payment-escrow.md`](./03-payment-escrow.md#6-driver-payment-gateway--offline-classroom-constraint).
+
+- [x] Integrasi Xendit sandbox untuk terima pembayaran (collection saja, belum disbursement) — via `PaymentGateway` interface + `XenditGateway` (dipakai kalau ada internet).
+- [x] Halaman checkout (deposit/DP alokasi unit).
+- [x] Webhook handler status pembayaran (pending/success/failed) — plus endpoint polling (`refresh-status`) sebagai fallback saat webhook tidak bisa diakses (offline).
 
 ## Epic 3 — Escrow State Machine & Admin Approval
-- [ ] Definisikan state machine transaksi: `listing → deal → escrow_hold → serah_terima → payout_release → selesai` (lihat [`03-payment-escrow.md`](./03-payment-escrow.md)).
-- [ ] Admin dashboard untuk approve transisi state (dengan audit trail: siapa & kapan).
-- [ ] Halaman tracking status transaksi untuk buyer & seller.
-- [ ] Dispute flow dasar (buyer/seller lapor ketidaksesuaian → admin review).
+
+- [x] Definisikan state machine transaksi: `listing → deal → escrow_hold → serah_terima → payout_release → selesai` (lihat [`03-payment-escrow.md`](./03-payment-escrow.md)) — via `App\Escrow\EscrowStateMachine`.
+- [x] Admin dashboard untuk approve transisi state (dengan audit trail: siapa & kapan) — `transaction_status_histories` mencatat setiap transisi.
+- [x] Halaman tracking status transaksi untuk buyer & seller — termasuk konfirmasi serah-terima per pihak.
+- [x] Dispute flow dasar (buyer/seller lapor ketidaksesuaian → admin review) — admin resolve via refund atau lanjutkan transaksi.
 
 ## Epic 4 — Disbursement ke Seller
+
 - [ ] Payout manual oleh admin dulu (trigger manual, bukan otomatis).
 - [ ] Setelah stabil: otomatisasi disbursement via Xendit ke rekening seller.
 - [ ] Rekonsiliasi laporan komisi platform vs payout seller.
 
 ## Epic 5 — Polish, Performa & Hardening
+
 - [ ] Jalankan checklist performa 20 poin — lihat [`02-tech-stack-arsitektur.md`](./02-tech-stack-arsitektur.md).
 - [ ] Lighthouse audit halaman katalog & detail kendaraan.
 - [ ] Review UX konsisten dengan pola CRUD & confirm-dialog di [`04-activity-diagram-crud.md`](./04-activity-diagram-crud.md).

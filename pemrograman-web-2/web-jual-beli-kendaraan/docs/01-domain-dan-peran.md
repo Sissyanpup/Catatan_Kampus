@@ -14,12 +14,12 @@ Marketplace kendaraan menjual barang bernilai tinggi (puluhan-ratusan juta hingg
 
 ## 2. Empat Peran Minimum
 
-| Peran | Tanggung Jawab Utama |
-| --- | --- |
-| **Admin** | Approve listing kendaraan (cegah listing curang/duplikat), verifikasi dokumen (STNK/BPKB), moderasi dispute, kelola komisi. |
-| **Seller** (dealer/perorangan) | KYC wajib (KTP, kadang NPWP untuk dealer), upload listing + dokumen kendaraan, terima payout setelah transaksi *clear*. |
-| **Buyer** | Browse/filter kendaraan, chat dengan seller, checkout, tracking status pembayaran & transfer kepemilikan. |
-| **Payment/Escrow layer** | Uang buyer **tidak langsung cair** ke seller — ditahan sampai ada konfirmasi serah-terima (mirip rekening bersama), karena nilai transaksi besar & risiko penipuan tinggi. |
+| Peran                          | Tanggung Jawab Utama                                                                                                                                                       |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Admin**                      | Approve listing kendaraan (cegah listing curang/duplikat), verifikasi dokumen (STNK/BPKB), moderasi dispute, kelola komisi.                                                |
+| **Seller** (dealer/perorangan) | KYC wajib (KTP, kadang NPWP untuk dealer), upload listing + dokumen kendaraan, terima payout setelah transaksi _clear_.                                                    |
+| **Buyer**                      | Browse/filter kendaraan, chat dengan seller, checkout, tracking status pembayaran & transfer kepemilikan.                                                                  |
+| **Payment/Escrow layer**       | Uang buyer **tidak langsung cair** ke seller — ditahan sampai ada konfirmasi serah-terima (mirip rekening bersama), karena nilai transaksi besar & risiko penipuan tinggi. |
 
 ## 3. Prinsip Desain Domain
 

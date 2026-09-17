@@ -4,15 +4,15 @@
 
 ## 1. Stack Final (Keputusan)
 
-> Dosen tidak mewajibkan framework tertentu. Stack di bawah **sudah final** (dikonfirmasi 2026-09-17), dipilih atas dasar prioritas *selesai tepat waktu dengan fitur lengkap* untuk pengerjaan solo — bukan lagi opsi terbuka.
+> Dosen tidak mewajibkan framework tertentu. Stack di bawah **sudah final** (dikonfirmasi 2026-09-17), dipilih atas dasar prioritas _selesai tepat waktu dengan fitur lengkap_ untuk pengerjaan solo — bukan lagi opsi terbuka.
 
-| Layer | Keputusan | Alasan |
-| --- | --- | --- |
-| Frontend | **Next.js 16 (App Router)** | Listing kendaraan butuh SEO bagus (orang cari "jual mobil Avanza 2020 Tangerang" di Google) + dashboard dinamis untuk 3 role berbeda. |
-| Backend/API | **Laravel 13** | Dipilih di atas NestJS karena kecepatan bangun untuk solo dev: Eloquent ORM, Sanctum, migration, form request, policy sudah built-in — mengurangi boilerplate dibanding setup DI/module manual di NestJS. Cocok untuk target selesai tepat waktu dengan scope fitur lengkap (auth, KYC, escrow, payment). |
-| Database | **PostgreSQL** | Transaksi (escrow, payout) butuh ACID kuat; JSONB berguna untuk spesifikasi kendaraan yang variatif per kategori. |
-| Auth | **Laravel Sanctum** + verifikasi dokumen manual/semi-otomatis (OCR KTP opsional) | Buyer auth ringan, seller wajib KYC sebelum bisa listing. |
-| Storage | **S3-compatible** | Foto kendaraan banyak (10–20 per listing) + dokumen sensitif harus terpisah dari bucket publik. |
+| Layer       | Keputusan                                                                        | Alasan                                                                                                                                                                                                                                                                                                    |
+| ----------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Frontend    | **Next.js 16 (App Router)**                                                      | Listing kendaraan butuh SEO bagus (orang cari "jual mobil Avanza 2020 Tangerang" di Google) + dashboard dinamis untuk 3 role berbeda.                                                                                                                                                                     |
+| Backend/API | **Laravel 13**                                                                   | Dipilih di atas NestJS karena kecepatan bangun untuk solo dev: Eloquent ORM, Sanctum, migration, form request, policy sudah built-in — mengurangi boilerplate dibanding setup DI/module manual di NestJS. Cocok untuk target selesai tepat waktu dengan scope fitur lengkap (auth, KYC, escrow, payment). |
+| Database    | **PostgreSQL**                                                                   | Transaksi (escrow, payout) butuh ACID kuat; JSONB berguna untuk spesifikasi kendaraan yang variatif per kategori.                                                                                                                                                                                         |
+| Auth        | **Laravel Sanctum** + verifikasi dokumen manual/semi-otomatis (OCR KTP opsional) | Buyer auth ringan, seller wajib KYC sebelum bisa listing.                                                                                                                                                                                                                                                 |
+| Storage     | **S3-compatible**                                                                | Foto kendaraan banyak (10–20 per listing) + dokumen sensitif harus terpisah dari bucket publik.                                                                                                                                                                                                           |
 
 > Kalau nanti ada keputusan yang berubah dari yang tercatat di atas, update tabel ini agar tidak menyesatkan pembaca berikutnya (lihat `CLAUDE.md` bagian 4).
 
@@ -55,9 +55,9 @@ Daftar berikut adalah 20 poin optimisasi yang harus dicek satu per satu sebelum 
 ## 3. Urutan Build (Deployment-First)
 
 1. Auth + role (admin/seller/buyer) + listing CRUD dulu, **tanpa payment**.
-2. Integrasi Xendit sandbox untuk *collection* (buyer bayar) — test dulu tanpa disbursement.
+2. Integrasi Xendit sandbox untuk _collection_ (buyer bayar) — test dulu tanpa disbursement.
 3. Tambah state machine transaksi (escrow hold) + admin dashboard approve.
-4. Baru integrasi *disbursement* ke seller setelah flow-nya jalan manual dulu (admin trigger payout manual sebelum diotomatisasi).
+4. Baru integrasi _disbursement_ ke seller setelah flow-nya jalan manual dulu (admin trigger payout manual sebelum diotomatisasi).
 
 Urutan ini menjadi dasar pembagian sprint — lihat [`06-product-backlog.md`](./06-product-backlog.md) dan bagian **Agile Cycle** di `CLAUDE.md`.
 

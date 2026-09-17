@@ -1,0 +1,58 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { apiFetch } from "@/lib/api";
+import { formatDate, formatRupiah } from "@/lib/format";
+import type { Paginated, Transaction } from "@/lib/types";
+import PaymentStatusBadge from "@/components/PaymentStatusBadge";
+import EscrowStatusBadge from "@/components/EscrowStatusBadge";
+
+export default function BuyerTransactionsPage() {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    apiFetch<Paginated<Transaction>>("/api/buyer/transactions")
+      .then(({ data }) => setTransactions(data))
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  if (isLoading) {
+    return <p className="text-sm text-zinc-500">Memuat...</p>;
+  }
+
+  return (
+    <div>
+      <h1 className="text-xl font-semibold text-zinc-900">Transaksi Saya</h1>
+
+      {transactions.length === 0 ? (
+        <p className="mt-4 text-sm text-zinc-500">Belum ada transaksi.</p>
+      ) : (
+        <ul className="mt-6 space-y-3">
+          {transactions.map((transaction) => (
+            <li key={transaction.id}>
+              <Link
+                href={`/buyer/transactions/${transaction.id}`}
+                className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white p-4 hover:border-zinc-300"
+              >
+                <div>
+                  <p className="font-medium text-zinc-900">
+                    {transaction.vehicle.brand} {transaction.vehicle.model} {transaction.vehicle.year}
+                  </p>
+                  <p className="mt-1 text-sm text-zinc-500">
+                    DP {formatRupiah(transaction.amount)} &middot; {formatDate(transaction.created_at)}
+                  </p>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <PaymentStatusBadge status={transaction.payment_status} />
+                  {transaction.escrow_status && <EscrowStatusBadge status={transaction.escrow_status} />}
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
