@@ -8,10 +8,10 @@ Aplikasi untuk membantu petugas koperasi mengelola data simpan pinjam (Java + My
 
 ## Hak Akses Pengguna
 
-| Kategori | Hak Akses |
-|---|---|
-| **Petugas Koperasi** | Mengelola (tambah/edit/hapus) & mencari data anggota, simpanan, pinjaman, angsuran; akses penuh ke menu antar muka & tombol insert/edit/delete; akses ke laporan |
-| **Pimpinan/Ketua Koperasi** | Menerima & melihat laporan data anggota, simpanan, pinjaman, angsuran; akses ke menu antar muka & tombol view laporan (tanpa insert/edit/delete) |
+| Kategori                    | Hak Akses                                                                                                                                                        |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Petugas Koperasi**        | Mengelola (tambah/edit/hapus) & mencari data anggota, simpanan, pinjaman, angsuran; akses penuh ke menu antar muka & tombol insert/edit/delete; akses ke laporan |
+| **Pimpinan/Ketua Koperasi** | Menerima & melihat laporan data anggota, simpanan, pinjaman, angsuran; akses ke menu antar muka & tombol view laporan (tanpa insert/edit/delete)                 |
 
 ## Use Case Diagram
 
@@ -30,6 +30,7 @@ Pola skenario yang sama (pre-condition → post-condition → alur pengguna vs a
 ## Sequence Diagram (Pola Umum)
 
 Untuk tiap fitur "Mengelola Data X" (Anggota/Simpanan/Pinjaman/Angsuran), pola sequence-nya konsisten — melibatkan objek: **Pengguna → MenuUtama → UI Data X → controllerKelolaDataX → Tabel Data X**, dengan 4 skenario utama:
+
 - **Simpan** (insert) — input data → klik simpan → insert ke tabel → update data
 - **Edit** — input data → klik edit → update ke tabel
 - **Delete** — input data → klik delete → hapus dari tabel
@@ -57,6 +58,7 @@ Untuk tiap fitur "Mengelola Data X" (Anggota/Simpanan/Pinjaman/Angsuran), pola s
 Pengujian **Black Box** = pengujian terhadap **fungsionalitas** perangkat lunak **tanpa memperhatikan struktur logika internal**-nya. Merupakan metode perancangan data uji yang didasarkan pada **spesifikasi** perangkat lunak — bukan pada kode di dalamnya.
 
 **Alur pengujian Black Box:**
+
 ```
 Data uji dibangkitkan → dieksekusi pada perangkat lunak → keluaran dicek apakah sesuai harapan
 ```
