@@ -149,46 +149,59 @@
 
 ## Sprint 4 — Disbursement ke Seller
 
-- Tanggal mulai: _(isi saat mulai)_
-- Tanggal selesai: _(isi saat sprint ditutup)_
+- Tanggal mulai: 2026-09-17
+- Tanggal selesai: 2026-09-17
 
 **Sprint Planning**
 
 - Item backlog: Epic 4 di `docs/06-product-backlog.md`.
-- Definition of Done: _(isi)_
+- Definition of Done: pencairan dana adalah aksi terpisah dari approval `payout_release` (bukan otomatis ikut approval); setiap percobaan payout tercatat sebagai baris baru (bukan overwrite status) untuk keperluan rekonsiliasi; komisi platform dihitung konsisten dari satu sumber config (`PLATFORM_COMMISSION_RATE`); transaksi tidak bisa ditandai selesai sebelum dana benar-benar cair; rekening bank seller diisi mandiri tanpa perlu review ulang KYC; driver payout (`manual`/`xendit`) mengikuti pola abstraksi offline-first yang sama seperti `PaymentGateway` di Epic 2; test PHPUnit + verifikasi browser nyata sebelum epic ditutup (pelajaran dari retro Sprint 1–3).
 
 **Selama Sprint (Daily Progress Check)**
 
-- _(isi)_
+- 2026-09-17: Backend — migration nambah `bank_name/bank_account_number/bank_account_holder_name` ke `seller_profiles`, `payout_status` ke `transactions`, tabel baru `transaction_payouts` (ledger append-only per percobaan payout: method, status, commission_rate/amount, payout_amount, reference, failure_reason, initiated_by). Enum `PayoutMethod`, `TransactionPayoutStatus`. Abstraksi `App\Payouts\DisbursementGateway` (interface) dengan `ManualDisbursementGateway` (100% offline, admin input nomor referensi transfer sebagai bukti) & `XenditDisbursementGateway` (HTTP client ke Xendit Disbursement API asli, dibind lewat `AppServiceProvider` berdasar `PAYOUT_GATEWAY_DRIVER` — sama pola dengan `PaymentGateway` Epic 2). `App\Payouts\PayoutService` menghitung split komisi/payout, menulis baris `transaction_payouts` + entri `transaction_status_histories`, dan meng-cache status terakhir ke `transactions.payout_status`, dibungkus `DB::transaction` supaya gagal-gateway tidak meninggalkan baris payout menggantung. `EscrowStateMachine::markCompleted` diperketat: sekarang mensyaratkan `payout_status = paid`, bukan cuma `escrow_status = payout_release`. Endpoint baru: admin (`TransactionReviewController@disburse`, `Admin\PayoutReconciliationController@index` untuk laporan rekonsiliasi), seller (`SellerBankAccountController@update`, terpisah dari alur KYC supaya update rekening tidak memicu review ulang admin). Policy `SellerProfilePolicy::manageBankAccount` (beda dari `update` KYC — boleh diubah kapan pun, termasuk setelah approved). 14 feature test baru (69 total lolos): split komisi, guard urutan state (belum payout_release, sudah dibayar dua kali), guard mark-completed sebelum payout, validasi rekening bank, driver Xendit via `Http::fake`, isolasi akses, dan rekonsiliasi hanya menghitung payout berstatus `paid`.
+- 2026-09-17: Frontend — form rekening bank di halaman `/seller/kyc` (terpisah dari form dokumen KYC, tidak perlu re-review). Halaman admin `/admin/transactions` dapat aksi baru "Cairkan Dana ke Penjual" (tampil setelah `payout_release`, sebelum `mark-completed` yang sekarang butuh payout lunas dulu) + tampilan rekening bank seller & riwayat payout. Halaman baru `/admin/payouts` (rekonsiliasi: total komisi vs total payout vs jumlah payout berhasil, plus tabel detail). Sekalian menuntaskan aksi retro Sprint 3: dibuat komponen `ConfirmModal` in-app dan dipakai untuk **seluruh** aksi di `/admin/transactions` (approve-handover, approve-payout, disburse, mark-completed, resolve-dispute) menggantikan `window.confirm`/`window.prompt` yang sebelumnya bikin tab Claude in Chrome freeze permanen. Halaman lain (`admin/kyc`, `admin/vehicles`, `seller/vehicles`, `seller/transactions/[id]`, `buyer/transactions/[id]`) masih pakai `window.confirm`/`prompt` — belum diganti, di luar scope Epic 4, dicatat sebagai kandidat kerja lanjutan. `tsc`, `next lint`, `next build` lolos.
+- 2026-09-17: Diverifikasi end-to-end lewat browser (Claude in Chrome) dengan seed data tinker (bukan pengganti test — 81 PHPUnit test tetap jadi bukti utama logika benar, seeding cuma untuk mengecek UI baru bisa dipakai manusia): login seller → isi & simpan rekening bank → sukses; login admin → dashboard escrow menampilkan rekening bank penjual → klik "Cairkan Dana ke Penjual" → modal in-app muncul (bukan `window.prompt`, tidak freeze tab) → isi nomor referensi → submit → badge "Dana Dicairkan" muncul, riwayat payout & riwayat status terisi benar (komisi 3% dari Rp150jt = Rp4,5jt, payout Rp145,5jt) → "Tandai Selesai" baru muncul setelah payout lunas → halaman `/admin/payouts` menampilkan total yang sama persis.
+- 2026-09-17: Ditemukan & diperbaiki 1 bug lewat test (bukan browser kali ini) — agregat SUM di SQLite mengembalikan angka tanpa 2 desimal tetap (`"4500000"` bukan `"4500000.00"`), beda dari `decimal:2` cast Eloquent biasa; diperbaiki dengan `number_format` eksplisit di `PayoutReconciliationController` alih-alih mengandalkan cast otomatis pada hasil raw aggregate query.
 
 **Sprint Review (Demo)**
 
-- _(isi)_
+- Berhasil: seluruh 3 item backlog Epic 4 selesai (lihat `docs/06-product-backlog.md`). Payout manual jalan penuh offline (driver `manual` default), sekaligus siap dipakai dengan Xendit asli di luar kelas (driver `xendit`, diverifikasi lewat `Http::fake`, belum dites dengan kunci asli/jaringan nyata — sama seperti keterbatasan `XenditGateway` di Epic 2). Rekonsiliasi komisi vs payout jalan dari ledger `transaction_payouts`, bukan dihitung ulang.
+- Belum selesai / dipindah ke sprint berikutnya: Epic 5 (polish, checklist performa, opsional tema AuraMotors) — termasuk keputusan SQLite vs PostgreSQL yang masih tertunda dari Sprint 1–3. Penggantian `window.confirm`/`prompt` ke modal in-app baru mencakup `/admin/transactions`; halaman lain masih pakai dialog native dan berisiko kena masalah freeze CDP yang sama kalau nanti perlu diverifikasi lewat browser lagi.
 
 **Retrospective**
 
-- _(isi)_
+- Baik: mengikuti pola abstraksi `PaymentGateway` dari Epic 2 untuk `DisbursementGateway` bikin kendala offline kelas (yang sudah diantisipasi sejak Sprint 2) tidak perlu dipikir ulang — tinggal tambah driver `manual` & `xendit` dengan bentuk yang sama. Memisahkan "approve payout_release" (Epic 3) dari "cairkan dana" (Epic 4) sebagai dua aksi berbeda, dengan `markCompleted` mensyaratkan payout lunas, mencegah kelas bug "ditandai selesai padahal uang belum pindah" yang justru jadi concern utama domain escrow ini sejak awal (lihat `docs/01`).
+- Perlu diperbaiki: dua sprint terakhir (3 & 4) sama-sama nemu bug yang baru ketahuan lewat test HTTP/agregat nyata, bukan logika unit biasa — kali ini soal representasi desimal dari raw SQL aggregate (`SUM()`) yang tidak otomatis ikut cast Eloquent seperti kolom biasa. Pola "hasil raw query butuh formatting eksplisit, jangan asumsikan konsisten dengan cast model" perlu langsung dicurigai tiap kali menulis endpoint laporan/agregat baru.
+- Aksi untuk Sprint 5: mulai Epic 5 (`docs/06`) — jalankan checklist performa 20 poin, Lighthouse audit, dan putuskan final soal SQLite vs PostgreSQL sebelum submit tugas. Kalau ada waktu lebih, lanjutkan penggantian `window.confirm`/`prompt` di halaman-halaman yang belum tersentuh (`admin/kyc`, `admin/vehicles`, `seller/vehicles`, `seller/transactions/[id]`, `buyer/transactions/[id]`) supaya seluruh verifikasi browser epic-epic berikutnya konsisten tidak berisiko freeze tab.
 
 ---
 
 ## Sprint 5 — Polish, Performa & Hardening
 
-- Tanggal mulai: _(isi saat mulai)_
-- Tanggal selesai: _(isi saat sprint ditutup)_
+- Tanggal mulai: 2026-09-17
+- Tanggal selesai: _(belum ditutup — Lighthouse audit, review UX, & tema AuraMotors opsional masih terbuka)_
 
 **Sprint Planning**
 
 - Item backlog: Epic 5 di `docs/06-product-backlog.md`.
-- Definition of Done: _(isi)_
+- Sebelum mulai Epic 5, diverifikasi dulu kerja Epic 4 (disbursement) yang masih uncommitted di git: 69 test PHPUnit lolos + `next build`/`tsc`/`lint` bersih — dipastikan bukan kerja yang setengah jalan sebelum menumpuk perubahan baru di atasnya.
+- Definition of Done: tiap poin checklist performa (`docs/02` §2) diberi status jelas (selesai/N/A/pending) dengan alasan, bukan dicentang tanpa verifikasi; setiap fix yang mengubah query/response punya test regresi; tidak ada regresi di 69+ test yang sudah ada; verifikasi browser nyata untuk perubahan yang menyentuh gambar/caching (pelajaran retro Sprint 1-4: PHPUnit saja tidak menangkap bug driver-specific).
 
 **Selama Sprint (Daily Progress Check)**
 
-- _(isi)_
+- 2026-09-17: Backend — fix over-fetching N+1-adjacent di 4 endpoint list (`VehicleCatalogController`, `Admin\VehicleReviewController@index`, `Seller\VehicleController@index`, `TransactionController@index`) yang sebelumnya eager-load **semua** foto kendaraan padahal cuma butuh 1 cover; ditambah relasi `Vehicle::coverPhoto()` (HasOne + `orderBy('sort_order')`). Index baru `vehicles.seller_id` & `transactions.seller_id`. `App\Support\ImageOptimizer` (GD, tanpa dependency baru) mengompres foto kendaraan saat upload (maks lebar 1600px). `App\Support\CatalogCache` — cache 30s untuk `GET /api/vehicles` per kombinasi filter, invalidasi lewat version counter yang di-bump otomatis di event `Vehicle::saved()`/`deleted()` (bukan `Cache::tags()` karena cache store `database` project ini tidak mendukung tagging — sudah dicek langsung, `BadMethodCallException`). 5 test baru + 2 test unit `ImageOptimizer` (74 total lolos).
+- 2026-09-17: Ditemukan & diperbaiki 1 bug produksi lewat verifikasi browser nyata (bukan dari 74 PHPUnit yang lolos) — sama persis pola retro Sprint 1-4 "test lolos tapi jalur HTTP nyata beda": men-cache `LengthAwarePaginator`/model Eloquent langsung lewat `Cache::remember` crash saat `unserialize()` dengan cache store `database` (test environment pakai store `array` yang tidak pernah benar-benar serialize, jadi tidak ketahuan). Diperbaiki dengan cache payload array hasil `VehicleResource::collection(...)->response()->getData(true)`, bukan objek Eloquent mentah. Ditambah test regresi baru yang eksplisit memaksa `config(['cache.default' => 'database'])` supaya kelas bug ini tidak lolos lagi tanpa ketahuan.
+- 2026-09-17: Frontend — ganti seluruh `<img>` di katalog (`/`) & detail kendaraan (`/kendaraan/[id]`) ke `next/image` (lazy-load native, compress otomatis, responsive `sizes`). Ditemukan bug kedua saat verifikasi browser: Next.js 16 punya SSRF guard baru yang menolak optimize image dari host yang resolve ke IP privat/localhost secara default (`⨯ upstream image ... hostname resolved to private IP`) — perlu `images.dangerouslyAllowLocalIP: true` di `next.config.ts` karena setup kelas ini sengaja menjalankan backend+frontend di localhost yang sama (`docs/02` §6). Loading skeleton ditambahkan dengan `<Suspense>` yang di-scope ke grid hasil katalog saja (bukan `app/loading.tsx` di root — itu akan otomatis membungkus SEMUA route lain termasuk `/login`, `/admin/*`, dst. karena mereka semua children dari root layout yang sama); untuk `/kendaraan/[id]` yang merupakan route daun tanpa child, `loading.tsx` di folder tersebut aman dipakai langsung.
+- 2026-09-17: Sisa 16 poin checklist performa (`docs/02`) dinilai satu per satu: mayoritas sudah otomatis terpenuhi dari pilihan stack (code splitting & minify by Next.js build) atau memang tidak relevan untuk setup offline-lokal tanpa hosting (Load Balancer, CDN, Connection Pooling, defer script pihak ketiga karena memang tidak ada). Lighthouse Audit (#13) sengaja **tidak** diklaim selesai — CLI `lighthouse` tidak terpasang dan instalasi butuh internet (kelas offline), jadi dipindah jadi TODO manual lewat Chrome DevTools, bukan dicentang begitu saja.
 
 **Sprint Review (Demo)**
 
-- _(isi)_
+- Berhasil: 74 test PHPUnit (naik dari 69) + `next build`/`tsc`/`lint` tetap bersih setelah seluruh perubahan performa. Diverifikasi manual lewat browser (Claude in Chrome) dengan foto kendaraan asli: katalog & detail kendaraan menampilkan cover photo lewat `next/image` dengan benar setelah kedua bug produksi (cache unserialize, SSRF guard) ditemukan & diperbaiki — foto & artefak sementara yang dipakai untuk verifikasi sudah dibersihkan setelah selesai.
+- Belum selesai / tetap terbuka: Lighthouse audit (perlu dijalankan manual), review UX/confirm-dialog untuk halaman yang masih pakai `window.confirm`/`prompt` (Sprint 4 baru menuntaskan `/admin/transactions`), tema AuraMotors (opsional), dan keputusan final SQLite vs PostgreSQL yang sudah berulang kali disebut sejak Sprint 1. Sprint ini belum ditutup karena item-item tersebut masih terbuka.
 
 **Retrospective**
 
-- _(isi)_
+- Baik: menulis status eksplisit per poin checklist (selesai/N/A/pending + alasan) di `docs/02` mencegah godaan menandai sesuatu "selesai" padahal cuma "tidak relevan" atau "belum sempat" — beda makna yang penting untuk laporan tugas.
+- Perlu diperbaiki: dua bug produksi baru (cache unserialize, SSRF guard Next.js 16) sama-sama baru ketahuan lewat verifikasi browser nyata, bukan dari test suite — ini retro Sprint 1-4 yang berulang lagi. Ditambahkan test regresi yang memaksa cache store nyata (`database`) untuk kasus pertama; kasus kedua (SSRF guard) murni behavior Next.js 16 yang tidak bisa dites lewat PHPUnit sama sekali, jadi verifikasi browser tetap wajib untuk setiap perubahan yang menyentuh `next/image`.
+- Aksi untuk sisa Sprint 5: jalankan Lighthouse audit manual di Chrome DevTools untuk `/` & `/kendaraan/[id]`, lanjutkan penggantian `window.confirm`/`prompt` di halaman yang belum tersentuh, putuskan final SQLite vs PostgreSQL, lalu baru pertimbangkan tema AuraMotors (opsional) sebelum menutup sprint & submit tugas.

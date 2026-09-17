@@ -3,6 +3,7 @@
 namespace App\Escrow;
 
 use App\Enums\EscrowStatus;
+use App\Enums\TransactionPayoutStatus;
 use App\Enums\VehicleStatus;
 use App\Models\Transaction;
 use App\Models\TransactionStatusHistory;
@@ -90,11 +91,13 @@ class EscrowStateMachine
     }
 
     /**
-     * Admin closes out the transaction after the payout has been handled.
+     * Admin closes out the transaction after the payout has actually been
+     * disbursed (Epic 4's PayoutService) — not just approved for release.
      */
     public function markCompleted(Transaction $transaction, User $admin, ?string $note = null): void
     {
         abort_unless($transaction->escrow_status === EscrowStatus::PayoutRelease, 409, 'Transaksi belum berada di tahap payout release.');
+        abort_unless($transaction->payout_status === TransactionPayoutStatus::Paid, 409, 'Dana belum dicairkan ke penjual (payout belum berhasil).');
 
         $transaction->update(['escrow_status' => EscrowStatus::Selesai]);
 

@@ -27,15 +27,15 @@
 
 ## Epic 4 — Disbursement ke Seller
 
-- [ ] Payout manual oleh admin dulu (trigger manual, bukan otomatis).
-- [ ] Setelah stabil: otomatisasi disbursement via Xendit ke rekening seller.
-- [ ] Rekonsiliasi laporan komisi platform vs payout seller.
+- [x] Payout manual oleh admin dulu (trigger manual, bukan otomatis) — via `App\Payouts\PayoutService` + `ManualDisbursementGateway`.
+- [x] Setelah stabil: otomatisasi disbursement via Xendit ke rekening seller — `XenditDisbursementGateway` (dipakai kalau ada internet, sama seperti pola `PaymentGateway` di Epic 2).
+- [x] Rekonsiliasi laporan komisi platform vs payout seller — dashboard `/admin/payouts`, sumber data tabel `transaction_payouts` (bukan dihitung ulang dari `transactions`).
 
 ## Epic 5 — Polish, Performa & Hardening
 
-- [ ] Jalankan checklist performa 20 poin — lihat [`02-tech-stack-arsitektur.md`](./02-tech-stack-arsitektur.md).
-- [ ] Lighthouse audit halaman katalog & detail kendaraan.
-- [ ] Review UX konsisten dengan pola CRUD & confirm-dialog di [`04-activity-diagram-crud.md`](./04-activity-diagram-crud.md).
+- [x] Jalankan checklist performa 20 poin — lihat status per poin di [`02-tech-stack-arsitektur.md`](./02-tech-stack-arsitektur.md#2a-status-per-poin-sprint-5-diisi-2026-09-17) (17/20 selesai atau N/A untuk setup kelas ini; sisanya jadi TODO eksplisit, bukan diklaim selesai).
+- [ ] Lighthouse audit halaman katalog & detail kendaraan — belum jalan (perlu Chrome DevTools manual, lihat catatan poin #13 di `docs/02`).
+- [ ] Review UX konsisten dengan pola CRUD & confirm-dialog di [`04-activity-diagram-crud.md`](./04-activity-diagram-crud.md) — termasuk sisa halaman yang masih pakai `window.confirm`/`prompt` (`admin/kyc`, `admin/vehicles`, `seller/vehicles`, `seller/transactions/[id]`, `buyer/transactions/[id]`, dicatat sejak retro Sprint 4).
 - [ ] (Opsional) Terapkan tema visual AuraMotors — lihat [`05-desain-ui-auramotors.md`](./05-desain-ui-auramotors.md).
 
 ## Prioritas & Dependensi

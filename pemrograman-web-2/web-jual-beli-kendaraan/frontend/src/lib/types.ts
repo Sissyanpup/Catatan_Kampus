@@ -19,6 +19,9 @@ export type SellerProfile = {
   reviewed_by: string | null;
   reviewed_at: string | null;
   rejection_reason: string | null;
+  bank_name: string | null;
+  bank_account_number: string | null;
+  bank_account_holder_name: string | null;
   created_at: string;
 };
 
@@ -85,11 +88,31 @@ export type TransactionStatusHistoryEntry = {
   created_at: string;
 };
 
+export type PayoutMethod = "manual" | "xendit";
+export type PayoutStatus = "pending" | "paid" | "failed";
+
+export type TransactionPayout = {
+  id: number;
+  transaction_id: number;
+  transaction?: { id: number; vehicle: string | null; seller: string | null; amount: string };
+  method: PayoutMethod;
+  status: PayoutStatus;
+  commission_rate: string;
+  commission_amount: string;
+  payout_amount: string;
+  reference: string | null;
+  failure_reason: string | null;
+  initiated_by: string | null;
+  paid_at: string | null;
+  created_at: string;
+};
+
 export type Transaction = {
   id: number;
   vehicle: Vehicle;
   buyer?: { id: number; name: string };
   seller?: { id: number; name: string };
+  seller_bank_account?: { bank_name: string | null; bank_account_number: string | null; bank_account_holder_name: string | null };
   amount: string;
   payment_gateway: PaymentGateway;
   payment_status: PaymentStatus;
@@ -104,7 +127,9 @@ export type Transaction = {
   disputed_at: string | null;
   dispute_resolution_note: string | null;
   dispute_resolved_at: string | null;
+  payout_status: PayoutStatus | null;
   status_history?: TransactionStatusHistoryEntry[];
+  payouts?: TransactionPayout[];
   created_at: string;
 };
 

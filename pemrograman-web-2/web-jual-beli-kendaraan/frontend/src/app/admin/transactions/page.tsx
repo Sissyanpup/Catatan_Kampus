@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { ApiError, apiFetch } from "@/lib/api";
 import { formatDate, formatRupiah } from "@/lib/format";
 import type { Paginated, Transaction } from "@/lib/types";
 import PaymentStatusBadge from "@/components/PaymentStatusBadge";
 import EscrowStatusBadge from "@/components/EscrowStatusBadge";
+import PayoutStatusBadge from "@/components/PayoutStatusBadge";
 import TransactionStatusHistory from "@/components/TransactionStatusHistory";
+import ConfirmModal from "@/components/ConfirmModal";
 
 const FILTERS: { value: string; label: string }[] = [
   { value: "", label: "Semua" },
@@ -18,6 +21,11 @@ const FILTERS: { value: string; label: string }[] = [
   { value: "refunded", label: "Dikembalikan" },
 ];
 
+type PendingAction =
+  | { type: "approve-handover" | "approve-payout" | "mark-completed"; id: number }
+  | { type: "disburse"; id: number }
+  | { type: "resolve-dispute"; id: number; resolution: "refund" | "resume" };
+
 export default function AdminTransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +34,7 @@ export default function AdminTransactionsPage() {
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [detail, setDetail] = useState<Transaction | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pendingAction, setPendingAction] = useState<PendingAction | null>(null);
 
   async function loadTransactions() {
     setIsLoading(true);
@@ -60,38 +69,28 @@ export default function AdminTransactionsPage() {
     await loadTransactions();
   }
 
-  async function handleAction(id: number, action: "approve-handover" | "approve-payout" | "mark-completed", confirmMessage: string) {
-    if (!window.confirm(confirmMessage)) return;
-
+  async function runAction(action: PendingAction, values: Record<string, string>) {
     setActionError(null);
     setIsSubmitting(true);
     try {
-      await apiFetch(`/api/admin/transactions/${id}/${action}`, { method: "POST" });
-      await refreshDetail(id);
-    } catch (err) {
-      if (err instanceof ApiError) setActionError(err.message);
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
-
-  async function handleResolveDispute(id: number, resolution: "refund" | "resume") {
-    const confirmMessage =
-      resolution === "refund"
-        ? "Kembalikan dana ke buyer dan buka kembali listing kendaraan?"
-        : "Lanjutkan transaksi ke status sebelum sengketa?";
-    if (!window.confirm(confirmMessage)) return;
-
-    const note = window.prompt("Catatan penyelesaian (opsional):") ?? undefined;
-
-    setActionError(null);
-    setIsSubmitting(true);
-    try {
-      await apiFetch(`/api/admin/transactions/${id}/resolve-dispute`, {
-        method: "POST",
-        body: { resolution, note },
-      });
-      await refreshDetail(id);
+      if (action.type === "resolve-dispute") {
+        await apiFetch(`/api/admin/transactions/${action.id}/resolve-dispute`, {
+          method: "POST",
+          body: { resolution: action.resolution, note: values.note || undefined },
+        });
+      } else if (action.type === "disburse") {
+        await apiFetch(`/api/admin/transactions/${action.id}/disburse`, {
+          method: "POST",
+          body: { reference: values.reference || undefined, note: values.note || undefined },
+        });
+      } else {
+        await apiFetch(`/api/admin/transactions/${action.id}/${action.type}`, {
+          method: "POST",
+          body: values.note ? { note: values.note } : undefined,
+        });
+      }
+      await refreshDetail(action.id);
+      setPendingAction(null);
     } catch (err) {
       if (err instanceof ApiError) setActionError(err.message);
     } finally {
@@ -101,7 +100,12 @@ export default function AdminTransactionsPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-semibold text-zinc-900">Dashboard Escrow & Transaksi</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-semibold text-zinc-900">Dashboard Escrow & Transaksi</h1>
+        <Link href="/admin/payouts" className="text-sm text-zinc-600 underline hover:text-zinc-900">
+          Rekonsiliasi Payout
+        </Link>
+      </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
         {FILTERS.map((item) => (
@@ -139,6 +143,7 @@ export default function AdminTransactionsPage() {
                 <div className="flex flex-col items-end gap-1">
                   <PaymentStatusBadge status={transaction.payment_status} />
                   {transaction.escrow_status && <EscrowStatusBadge status={transaction.escrow_status} />}
+                  {transaction.payout_status && <PayoutStatusBadge status={transaction.payout_status} />}
                 </div>
               </div>
 
@@ -165,6 +170,16 @@ export default function AdminTransactionsPage() {
                             {detail.seller_confirmed_at ? formatDate(detail.seller_confirmed_at) : "Belum"}
                           </dd>
                         </div>
+                        {detail.seller_bank_account && (
+                          <div className="col-span-2">
+                            <dt className="text-xs uppercase text-zinc-400">Rekening Bank Penjual</dt>
+                            <dd className="text-zinc-800">
+                              {detail.seller_bank_account.bank_name} &middot;{" "}
+                              {detail.seller_bank_account.bank_account_number} a.n.{" "}
+                              {detail.seller_bank_account.bank_account_holder_name}
+                            </dd>
+                          </div>
+                        )}
                         {detail.dispute_reason && (
                           <div className="col-span-2">
                             <dt className="text-xs uppercase text-zinc-400">Alasan Sengketa</dt>
@@ -177,13 +192,7 @@ export default function AdminTransactionsPage() {
                         {detail.escrow_status === "escrow_hold" && (
                           <button
                             disabled={isSubmitting}
-                            onClick={() =>
-                              handleAction(
-                                detail.id,
-                                "approve-handover",
-                                "Setujui transisi ke status serah-terima?"
-                              )
-                            }
+                            onClick={() => setPendingAction({ type: "approve-handover", id: detail.id })}
                             className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-60"
                           >
                             Setujui Serah Terima
@@ -192,18 +201,25 @@ export default function AdminTransactionsPage() {
                         {detail.escrow_status === "serah_terima" && (
                           <button
                             disabled={isSubmitting}
-                            onClick={() =>
-                              handleAction(detail.id, "approve-payout", "Setujui pelepasan dana ke penjual?")
-                            }
+                            onClick={() => setPendingAction({ type: "approve-payout", id: detail.id })}
                             className="rounded-md bg-purple-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-500 disabled:opacity-60"
                           >
                             Setujui Payout Release
                           </button>
                         )}
-                        {detail.escrow_status === "payout_release" && (
+                        {detail.escrow_status === "payout_release" && detail.payout_status !== "paid" && (
                           <button
                             disabled={isSubmitting}
-                            onClick={() => handleAction(detail.id, "mark-completed", "Tandai transaksi ini selesai?")}
+                            onClick={() => setPendingAction({ type: "disburse", id: detail.id })}
+                            className="rounded-md bg-teal-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-teal-500 disabled:opacity-60"
+                          >
+                            Cairkan Dana ke Penjual
+                          </button>
+                        )}
+                        {detail.escrow_status === "payout_release" && detail.payout_status === "paid" && (
+                          <button
+                            disabled={isSubmitting}
+                            onClick={() => setPendingAction({ type: "mark-completed", id: detail.id })}
                             className="rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-500 disabled:opacity-60"
                           >
                             Tandai Selesai
@@ -213,14 +229,14 @@ export default function AdminTransactionsPage() {
                           <>
                             <button
                               disabled={isSubmitting}
-                              onClick={() => handleResolveDispute(detail.id, "resume")}
+                              onClick={() => setPendingAction({ type: "resolve-dispute", id: detail.id, resolution: "resume" })}
                               className="rounded-md bg-zinc-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-zinc-600 disabled:opacity-60"
                             >
                               Lanjutkan Transaksi
                             </button>
                             <button
                               disabled={isSubmitting}
-                              onClick={() => handleResolveDispute(detail.id, "refund")}
+                              onClick={() => setPendingAction({ type: "resolve-dispute", id: detail.id, resolution: "refund" })}
                               className="rounded-md bg-red-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-500 disabled:opacity-60"
                             >
                               Kembalikan Dana (Refund)
@@ -228,6 +244,23 @@ export default function AdminTransactionsPage() {
                           </>
                         )}
                       </div>
+
+                      {detail.payouts && detail.payouts.length > 0 && (
+                        <div>
+                          <p className="mb-2 text-xs font-semibold uppercase text-zinc-400">Riwayat Payout</p>
+                          <ul className="space-y-1 text-sm text-zinc-700">
+                            {detail.payouts.map((payout) => (
+                              <li key={payout.id}>
+                                {formatDate(payout.created_at)} &middot; {payout.method} &middot;{" "}
+                                <PayoutStatusBadge status={payout.status} /> &middot; komisi{" "}
+                                {formatRupiah(payout.commission_amount)} &middot; ke penjual{" "}
+                                {formatRupiah(payout.payout_amount)}
+                                {payout.reference ? ` (ref: ${payout.reference})` : ""}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
 
                       {detail.status_history && (
                         <div>
@@ -242,6 +275,69 @@ export default function AdminTransactionsPage() {
             </div>
           ))}
         </div>
+      )}
+
+      {pendingAction?.type === "approve-handover" && (
+        <ConfirmModal
+          title="Setujui Serah Terima"
+          message="Setujui transisi ke status serah-terima?"
+          fields={[{ name: "note", label: "Catatan (opsional)" }]}
+          isSubmitting={isSubmitting}
+          onConfirm={(values) => runAction(pendingAction, values)}
+          onCancel={() => setPendingAction(null)}
+        />
+      )}
+
+      {pendingAction?.type === "approve-payout" && (
+        <ConfirmModal
+          title="Setujui Payout Release"
+          message="Setujui pelepasan dana ke penjual? Dana belum ditransfer sampai kamu mencairkannya di langkah berikutnya."
+          fields={[{ name: "note", label: "Catatan (opsional)" }]}
+          isSubmitting={isSubmitting}
+          onConfirm={(values) => runAction(pendingAction, values)}
+          onCancel={() => setPendingAction(null)}
+        />
+      )}
+
+      {pendingAction?.type === "disburse" && (
+        <ConfirmModal
+          title="Cairkan Dana ke Penjual"
+          message="Transfer dana secara manual ke rekening penjual di atas, lalu catat nomor referensi transfernya di sini."
+          fields={[
+            { name: "reference", label: "Nomor Referensi Transfer", required: true, placeholder: "mis. TRF-20260917-001" },
+            { name: "note", label: "Catatan (opsional)" },
+          ]}
+          confirmLabel="Cairkan Dana"
+          isSubmitting={isSubmitting}
+          onConfirm={(values) => runAction(pendingAction, values)}
+          onCancel={() => setPendingAction(null)}
+        />
+      )}
+
+      {pendingAction?.type === "mark-completed" && (
+        <ConfirmModal
+          title="Tandai Selesai"
+          message="Tandai transaksi ini selesai?"
+          fields={[{ name: "note", label: "Catatan (opsional)" }]}
+          isSubmitting={isSubmitting}
+          onConfirm={(values) => runAction(pendingAction, values)}
+          onCancel={() => setPendingAction(null)}
+        />
+      )}
+
+      {pendingAction?.type === "resolve-dispute" && (
+        <ConfirmModal
+          title={pendingAction.resolution === "refund" ? "Kembalikan Dana (Refund)" : "Lanjutkan Transaksi"}
+          message={
+            pendingAction.resolution === "refund"
+              ? "Kembalikan dana ke buyer dan buka kembali listing kendaraan?"
+              : "Lanjutkan transaksi ke status sebelum sengketa?"
+          }
+          fields={[{ name: "note", label: "Catatan penyelesaian (opsional)" }]}
+          isSubmitting={isSubmitting}
+          onConfirm={(values) => runAction(pendingAction, values)}
+          onCancel={() => setPendingAction(null)}
+        />
       )}
     </div>
   );

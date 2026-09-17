@@ -24,7 +24,7 @@ class TransactionController extends Controller
             ? $request->user()->salesTransactions()
             : $request->user()->transactions();
 
-        $transactions = $query->with('vehicle.photos')->latest()->paginate(20);
+        $transactions = $query->with('vehicle.coverPhoto')->latest()->paginate(20);
 
         return TransactionResource::collection($transactions);
     }

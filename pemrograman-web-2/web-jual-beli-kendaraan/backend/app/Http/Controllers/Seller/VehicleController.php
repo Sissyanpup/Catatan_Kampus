@@ -9,9 +9,11 @@ use App\Http\Requests\Seller\VehicleUpdateRequest;
 use App\Http\Resources\VehicleDetailResource;
 use App\Http\Resources\VehicleResource;
 use App\Models\Vehicle;
+use App\Support\ImageOptimizer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class VehicleController extends Controller
@@ -19,7 +21,7 @@ class VehicleController extends Controller
     public function index(Request $request): AnonymousResourceCollection
     {
         $vehicles = $request->user()->vehicles()
-            ->with('photos')
+            ->with('coverPhoto')
             ->latest()
             ->paginate(20);
 
@@ -42,7 +44,7 @@ class VehicleController extends Controller
 
         foreach ($request->file('photos', []) as $index => $photo) {
             $vehicle->photos()->create([
-                'path' => $photo->store('vehicles/'.$vehicle->id, 'public'),
+                'path' => $this->storeOptimizedPhoto($photo, $vehicle),
                 'sort_order' => $index,
             ]);
         }
@@ -62,7 +64,7 @@ class VehicleController extends Controller
 
             foreach ($request->file('photos') as $index => $photo) {
                 $vehicle->photos()->create([
-                    'path' => $photo->store('vehicles/'.$vehicle->id, 'public'),
+                    'path' => $this->storeOptimizedPhoto($photo, $vehicle),
                     'sort_order' => $index,
                 ]);
             }
@@ -97,6 +99,15 @@ class VehicleController extends Controller
         ]);
 
         return new VehicleDetailResource($vehicle->load('photos', 'documents'));
+    }
+
+    private function storeOptimizedPhoto(UploadedFile $photo, Vehicle $vehicle): string
+    {
+        $path = $photo->store('vehicles/'.$vehicle->id, 'public');
+
+        ImageOptimizer::compress(Storage::disk('public')->path($path));
+
+        return $path;
     }
 
     private function storeDocuments(Request $request, Vehicle $vehicle): void

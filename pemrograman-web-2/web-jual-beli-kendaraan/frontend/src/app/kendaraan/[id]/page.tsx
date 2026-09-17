@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { API_URL } from "@/lib/api";
 import { formatRupiah } from "@/lib/format";
@@ -25,14 +26,17 @@ export default async function VehicleDetailPage({
     <div className="mx-auto max-w-4xl px-4 py-8">
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
         {vehicle.photos && vehicle.photos.length > 0 ? (
-          vehicle.photos.map((photo) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={photo.id}
-              src={photo.url}
-              alt={`${vehicle.brand} ${vehicle.model}`}
-              className="aspect-video w-full rounded-lg object-cover"
-            />
+          vehicle.photos.map((photo, index) => (
+            <div key={photo.id} className="relative aspect-video w-full overflow-hidden rounded-lg bg-zinc-100">
+              <Image
+                src={photo.url}
+                alt={`${vehicle.brand} ${vehicle.model}`}
+                fill
+                sizes="(min-width: 640px) 33vw, 50vw"
+                priority={index === 0}
+                className="object-cover"
+              />
+            </div>
           ))
         ) : (
           <div className="col-span-full aspect-video w-full rounded-lg bg-zinc-100" />

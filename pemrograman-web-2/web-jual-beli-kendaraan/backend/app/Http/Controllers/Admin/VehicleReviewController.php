@@ -20,7 +20,7 @@ class VehicleReviewController extends Controller
         $status = $request->query('status', VehicleStatus::PendingReview->value);
 
         $vehicles = Vehicle::query()
-            ->with(['photos', 'seller:id,name,email'])
+            ->with(['coverPhoto', 'seller:id,name,email'])
             ->when($status !== 'all', fn ($query) => $query->where('status', $status))
             ->latest()
             ->paginate(20);

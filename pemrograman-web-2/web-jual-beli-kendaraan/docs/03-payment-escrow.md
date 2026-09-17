@@ -62,7 +62,20 @@ Kelas ini berjalan **sepenuhnya tanpa akses internet** (kesepakatan dengan dosen
 
 Konsekuensi: alur checkout, status pembayaran (pending/paid/failed/expired), dan escrow state machine (Epic 3) tetap bisa didemokan penuh secara offline lewat `MockGateway`; fitur webhook Xendit asli tidak pernah teruji di lingkungan kelas, hanya di luar kelas oleh developer sendiri.
 
-## 6. Terkait
+## 6.1 Disbursement ke Seller (Epic 4, Sprint 4)
+
+Setelah admin approve `serah_terima → payout_release` (Epic 3), dana **belum** berpindah — `payout_release` hanya berarti "disetujui untuk dicairkan". Pencairan aktual adalah aksi terpisah, sengaja dipisah dari approval supaya ada jejak yang jelas antara "admin setuju" vs "uang benar-benar sudah dikirim":
+
+1. Admin klik **Cairkan Dana** di dashboard (`/admin/transactions`) → `App\Payouts\PayoutService::disburse()`.
+2. Service menghitung komisi platform (`PLATFORM_COMMISSION_RATE` di `.env`, default 3%) dan sisa payout ke seller, lalu mencatat percobaan sebagai baris baru di `transaction_payouts` (bukan overwrite) — pola yang sama seperti `transaction_status_histories` di Epic 3.
+3. Driver dipilih lewat `PAYOUT_GATEWAY_DRIVER` (sama pola dengan `PaymentGateway` di bagian 5):
+   - `manual` (default, 100% offline) — admin sudah transfer manual di luar aplikasi; sistem hanya mencatat nomor referensi transfer yang diinput admin sebagai bukti.
+   - `xendit` — panggil API Disbursement Xendit asli (`/disbursements`) ke rekening bank seller (`seller_profiles.bank_name/bank_account_number/bank_account_holder_name`, diisi seller sendiri dari halaman KYC — tidak perlu direview ulang admin karena bukan bagian verifikasi identitas).
+4. `transactions.payout_status` (pending/paid/failed) adalah cache status payout terakhir untuk query cepat; `transaction_payouts` tetap sumber kebenaran penuh (termasuk percobaan yang gagal).
+5. `escrow_status: payout_release → selesai` (`EscrowStateMachine::markCompleted`) sekarang **mensyaratkan** `payout_status = paid` — admin tidak bisa menandai transaksi selesai sebelum dana benar-benar dicairkan.
+6. Rekonsiliasi (`/admin/payouts`, `GET /api/admin/payouts/reconciliation`) menjumlahkan `commission_amount` vs `payout_amount` dari `transaction_payouts` berstatus `paid` — bukan dihitung ulang dari `transactions.amount`, supaya laporan selalu mencerminkan apa yang benar-benar sudah cair.
+
+## 7. Terkait
 
 - Peran admin dalam approve/verifikasi → [`01-domain-dan-peran.md`](./01-domain-dan-peran.md)
 - Alur konkret escrow di desain UI (checkout, tracking) → [`05-desain-ui-auramotors.md`](./05-desain-ui-auramotors.md)

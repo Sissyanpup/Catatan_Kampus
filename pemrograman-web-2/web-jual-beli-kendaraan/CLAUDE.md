@@ -1,17 +1,17 @@
 # CLAUDE.md — Web Jual Beli Kendaraan
 
-Dokumen ini adalah **master index** untuk proyek tugas mata kuliah *Pemrograman Web 2*: aplikasi web jual-beli kendaraan multi-role (admin/seller/buyer) dengan lapisan payment/escrow. Isinya dirangkum dari seluruh file `.txt`/`.md` eksplorasi yang sudah ada di root proyek, lalu dipecah jadi spesifikasi per topik di folder [`docs/`](./docs/).
+Dokumen ini adalah **master index** untuk proyek tugas mata kuliah _Pemrograman Web 2_: aplikasi web jual-beli kendaraan multi-role (admin/seller/buyer) dengan lapisan payment/escrow. Isinya dirangkum dari seluruh file `.txt`/`.md` eksplorasi yang sudah ada di root proyek, lalu dipecah jadi spesifikasi per topik di folder [`docs/`](./docs/).
 
 ## 1. Status Proyek
 
-Proyek sudah masuk **Sprint 1** — scaffold kode aplikasi sudah ada (`/backend` Laravel 13, `/frontend` Next.js 16, lihat `docs/02-tech-stack-arsitektur.md`), development fitur Epic 1 sedang berjalan (lihat `docs/sprint-log.md`). Dokumentasi hasil Sprint 0 tetap jadi acuan:
+Proyek sudah menyelesaikan **Sprint 1–4** (Epic 1–4: auth/listing, payment collection, escrow state machine, disbursement ke seller — lihat `docs/sprint-log.md` untuk detail tiap sprint) dan sedang bersiap masuk **Sprint 5** (Epic 5 — polish & performa, lihat `docs/06-product-backlog.md`). Dokumentasi hasil Sprint 0 tetap jadi acuan:
 
-| File sumber (root) | Isi | Sudah dirangkum di |
-| --- | --- | --- |
-| `saran.txt` | Rekomendasi domain, role, tech stack, payment/escrow, urutan MVP, checklist performa | `docs/01`, `docs/02`, `docs/03`, `docs/06` |
-| `referensi-umum.md` | Pola activity diagram generik untuk CRUD (Add/Edit/Delete) | `docs/04` (ringkasan + pointer, file asli tetap dipakai sebagai referensi lengkap) |
-| `log-chat-konteks.txt` | Log percakapan eksplorasi konsep desain "AuraMotors" (marketplace kendaraan mewah) — daftar layar yang sudah dirancang per role | `docs/05` |
-| `!-- Design System --.html` | Kode HTML/Tailwind mentah (~7000 baris) hasil generate desain visual AuraMotors (tema Obsidian & Champagne Gold) | `docs/05` (token desain + inventori layar diekstrak) |
+| File sumber (root)          | Isi                                                                                                                             | Sudah dirangkum di                                                                 |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `saran.txt`                 | Rekomendasi domain, role, tech stack, payment/escrow, urutan MVP, checklist performa                                            | `docs/01`, `docs/02`, `docs/03`, `docs/06`                                         |
+| `referensi-umum.md`         | Pola activity diagram generik untuk CRUD (Add/Edit/Delete)                                                                      | `docs/04` (ringkasan + pointer, file asli tetap dipakai sebagai referensi lengkap) |
+| `log-chat-konteks.txt`      | Log percakapan eksplorasi konsep desain "AuraMotors" (marketplace kendaraan mewah) — daftar layar yang sudah dirancang per role | `docs/05`                                                                          |
+| `!-- Design System --.html` | Kode HTML/Tailwind mentah (~7000 baris) hasil generate desain visual AuraMotors (tema Obsidian & Champagne Gold)                | `docs/05` (token desain + inventori layar diekstrak)                               |
 
 > `!-- Design System --.html` adalah **rujukan UI/UX** proyek ini (bukan sekadar draft) — dibuka langsung di browser untuk melihat tampilan tema AuraMotors. Sudah di-rename dari `.txt` ke `.html` agar bisa dirender.
 
@@ -34,7 +34,7 @@ Detail lengkap tiap topik ada di dokumen berikut:
 
 ## 3. Siklus Agile (Scrum) untuk Proyek Ini
 
-Proyek dikerjakan dalam **5 sprint** mengikuti urutan *deployment-first* dari `saran.txt` (backlog detail per epic ada di [`docs/06-product-backlog.md`](./docs/06-product-backlog.md)). Setiap sprint mengikuti siklus Scrum standar:
+Proyek dikerjakan dalam **5 sprint** mengikuti urutan _deployment-first_ dari `saran.txt` (backlog detail per epic ada di [`docs/06-product-backlog.md`](./docs/06-product-backlog.md)). Setiap sprint mengikuti siklus Scrum standar:
 
 ```
 Sprint Planning → Daily Progress Check → Development & Self-Review → Sprint Review (Demo) → Retrospective → (ulang ke sprint berikutnya)
@@ -42,7 +42,7 @@ Sprint Planning → Daily Progress Check → Development & Self-Review → Sprin
 
 ### Langkah dalam Satu Siklus Sprint
 
-1. **Sprint Planning** — pilih item dari `docs/06-product-backlog.md` untuk sprint ini, pecah jadi task kecil, definisikan *Definition of Done* (DoD) tiap task.
+1. **Sprint Planning** — pilih item dari `docs/06-product-backlog.md` untuk sprint ini, pecah jadi task kecil, definisikan _Definition of Done_ (DoD) tiap task.
 2. **Daily Progress Check** — cek singkat: apa yang sudah dikerjakan, apa yang dikerjakan berikutnya, ada blocker atau tidak (untuk tugas solo/kelompok kecil, ini bisa berupa catatan harian singkat, tidak harus meeting formal).
 3. **Development** — implementasi task sesuai spesifikasi di `docs/`, ikuti pola CRUD (`docs/04`) & prinsip domain (`docs/01`) supaya konsisten antar modul.
 4. **Self-Review / Code Review** — sebelum ditandai selesai, cek terhadap DoD: validasi client+server ada, confirm dialog hanya di aksi berisiko, audit trail untuk Edit/Delete, dsb.
@@ -51,14 +51,14 @@ Sprint Planning → Daily Progress Check → Development & Self-Review → Sprin
 
 ### Pemetaan Epic → Sprint
 
-| Sprint | Fokus (Epic) | Sumber Backlog |
-| --- | --- | --- |
-| **Sprint 0** *(sudah berjalan)* | Eksplorasi domain, stack, & desain visual (dokumen ini) | — (hasil: `docs/01`–`docs/05`) |
-| **Sprint 1** | Epic 1 — Auth, role, KYC seller, CRUD listing kendaraan, gate verifikasi admin | `docs/06` Epic 1 |
-| **Sprint 2** | Epic 2 — Integrasi Xendit sandbox (collection/pembayaran masuk), checkout | `docs/06` Epic 2 |
-| **Sprint 3** | Epic 3 — State machine escrow, admin dashboard approval, tracking, dispute dasar | `docs/06` Epic 3 |
-| **Sprint 4** | Epic 4 — Disbursement ke seller (manual → otomatis) | `docs/06` Epic 4 |
-| **Sprint 5** | Epic 5 — Polish, checklist performa, (opsional) penerapan tema AuraMotors | `docs/06` Epic 5 |
+| Sprint                          | Fokus (Epic)                                                                     | Sumber Backlog                 |
+| ------------------------------- | -------------------------------------------------------------------------------- | ------------------------------ |
+| **Sprint 0** _(sudah berjalan)_ | Eksplorasi domain, stack, & desain visual (dokumen ini)                          | — (hasil: `docs/01`–`docs/05`) |
+| **Sprint 1**                    | Epic 1 — Auth, role, KYC seller, CRUD listing kendaraan, gate verifikasi admin   | `docs/06` Epic 1               |
+| **Sprint 2**                    | Epic 2 — Integrasi Xendit sandbox (collection/pembayaran masuk), checkout        | `docs/06` Epic 2               |
+| **Sprint 3**                    | Epic 3 — State machine escrow, admin dashboard approval, tracking, dispute dasar | `docs/06` Epic 3               |
+| **Sprint 4**                    | Epic 4 — Disbursement ke seller (manual → otomatis)                              | `docs/06` Epic 4               |
+| **Sprint 5**                    | Epic 5 — Polish, checklist performa, (opsional) penerapan tema AuraMotors        | `docs/06` Epic 5               |
 
 > Catatan: Epic 5 (performa) sebaiknya **tidak ditunda seluruhnya ke Sprint 5** — sisipkan item relevan (index database, pagination, image compression) di setiap sprint begitu modul terkait dibuat, jangan menumpuk semua optimisasi di akhir.
 

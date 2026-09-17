@@ -94,6 +94,13 @@ class EscrowStateMachineTest extends TestCase
             ->assertJsonPath('data.escrow_status', 'payout_release');
 
         $this->actingAs($admin)->postJson("/api/admin/transactions/{$transaction->id}/mark-completed")
+            ->assertConflict();
+
+        $this->actingAs($admin)->postJson("/api/admin/transactions/{$transaction->id}/disburse", ['reference' => 'TRF-001'])
+            ->assertOk()
+            ->assertJsonPath('data.payout_status', 'paid');
+
+        $this->actingAs($admin)->postJson("/api/admin/transactions/{$transaction->id}/mark-completed")
             ->assertOk()
             ->assertJsonPath('data.escrow_status', 'selesai');
 

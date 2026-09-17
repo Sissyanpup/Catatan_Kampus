@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['ktp_path', 'npwp_path', 'status', 'reviewed_by', 'reviewed_at', 'rejection_reason'])]
+#[Fillable([
+    'ktp_path', 'npwp_path', 'status', 'reviewed_by', 'reviewed_at', 'rejection_reason',
+    'bank_name', 'bank_account_number', 'bank_account_holder_name',
+])]
 class SellerProfile extends Model
 {
     protected $attributes = [
@@ -15,6 +18,9 @@ class SellerProfile extends Model
         'reviewed_by' => null,
         'reviewed_at' => null,
         'rejection_reason' => null,
+        'bank_name' => null,
+        'bank_account_number' => null,
+        'bank_account_holder_name' => null,
     ];
 
     protected function casts(): array

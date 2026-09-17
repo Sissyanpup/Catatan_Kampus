@@ -59,4 +59,11 @@ class TransactionFactory extends Factory
             'seller_confirmed_at' => now(),
         ]);
     }
+
+    public function payoutRelease(): static
+    {
+        return $this->serahTerima()->state(fn () => [
+            'escrow_status' => EscrowStatus::PayoutRelease,
+        ]);
+    }
 }

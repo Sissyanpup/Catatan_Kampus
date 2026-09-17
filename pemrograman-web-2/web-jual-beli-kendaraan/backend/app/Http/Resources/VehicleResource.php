@@ -17,7 +17,9 @@ class VehicleResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $cover = $this->whenLoaded('photos', fn () => $this->photos->first());
+        $cover = $this->relationLoaded('coverPhoto')
+            ? $this->coverPhoto
+            : $this->whenLoaded('photos', fn () => $this->photos->first());
 
         return [
             'id' => $this->id,

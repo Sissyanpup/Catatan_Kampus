@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\TransactionPaymentStatus;
 use App\Escrow\EscrowStateMachine;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\DisburseTransactionRequest;
 use App\Http\Requests\Admin\EscrowTransitionRequest;
 use App\Http\Requests\Admin\ResolveDisputeRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
+use App\Payouts\PayoutService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TransactionReviewController extends Controller
 {
+    private const DETAIL_RELATIONS = ['vehicle.photos', 'buyer', 'seller.sellerProfile', 'statusHistories.actor', 'payouts'];
+
     public function index(Request $request): AnonymousResourceCollection
     {
         $this->authorize('manage', Transaction::class);
@@ -34,34 +38,43 @@ class TransactionReviewController extends Controller
     {
         $this->authorize('manage', Transaction::class);
 
-        return new TransactionResource($transaction->load(['vehicle.photos', 'buyer', 'seller', 'statusHistories.actor']));
+        return new TransactionResource($transaction->load(self::DETAIL_RELATIONS));
     }
 
     public function approveHandover(EscrowTransitionRequest $request, Transaction $transaction, EscrowStateMachine $escrow): TransactionResource
     {
         $escrow->approveHandover($transaction, $request->user(), $request->validated('note'));
 
-        return new TransactionResource($transaction->fresh(['vehicle.photos', 'buyer', 'seller', 'statusHistories.actor']));
+        return new TransactionResource($transaction->fresh(self::DETAIL_RELATIONS));
     }
 
     public function approvePayout(EscrowTransitionRequest $request, Transaction $transaction, EscrowStateMachine $escrow): TransactionResource
     {
         $escrow->approvePayoutRelease($transaction, $request->user(), $request->validated('note'));
 
-        return new TransactionResource($transaction->fresh(['vehicle.photos', 'buyer', 'seller', 'statusHistories.actor']));
+        return new TransactionResource($transaction->fresh(self::DETAIL_RELATIONS));
+    }
+
+    public function disburse(DisburseTransactionRequest $request, Transaction $transaction, PayoutService $payouts): TransactionResource
+    {
+        $this->authorize('manage', Transaction::class);
+
+        $payouts->disburse($transaction, $request->user(), $request->validated('reference'), $request->validated('note'));
+
+        return new TransactionResource($transaction->fresh(self::DETAIL_RELATIONS));
     }
 
     public function markCompleted(EscrowTransitionRequest $request, Transaction $transaction, EscrowStateMachine $escrow): TransactionResource
     {
         $escrow->markCompleted($transaction, $request->user(), $request->validated('note'));
 
-        return new TransactionResource($transaction->fresh(['vehicle.photos', 'buyer', 'seller', 'statusHistories.actor']));
+        return new TransactionResource($transaction->fresh(self::DETAIL_RELATIONS));
     }
 
     public function resolveDispute(ResolveDisputeRequest $request, Transaction $transaction, EscrowStateMachine $escrow): TransactionResource
     {
         $escrow->resolveDispute($transaction, $request->user(), $request->validated('resolution'), $request->validated('note'));
 
-        return new TransactionResource($transaction->fresh(['vehicle.photos', 'buyer', 'seller', 'statusHistories.actor']));
+        return new TransactionResource($transaction->fresh(self::DETAIL_RELATIONS));
     }
 }

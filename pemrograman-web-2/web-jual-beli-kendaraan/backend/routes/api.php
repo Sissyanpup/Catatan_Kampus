@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PayoutReconciliationController;
 use App\Http\Controllers\Admin\SellerKycController;
 use App\Http\Controllers\Admin\TransactionReviewController;
 use App\Http\Controllers\Admin\VehicleReviewController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Buyer\CheckoutController;
 use App\Http\Controllers\Catalog\VehicleCatalogController;
 use App\Http\Controllers\Payments\MockPaymentController;
 use App\Http\Controllers\Payments\XenditWebhookController;
+use App\Http\Controllers\Seller\SellerBankAccountController;
 use App\Http\Controllers\Seller\SellerProfileController;
 use App\Http\Controllers\Seller\VehicleController;
 use App\Http\Controllers\SellerProfileDocumentController;
@@ -31,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/kyc', [SellerProfileController::class, 'show'])->name('kyc.show');
         Route::post('/kyc', [SellerProfileController::class, 'store'])->name('kyc.store');
         Route::put('/kyc', [SellerProfileController::class, 'update'])->name('kyc.update');
+        Route::put('/bank-account', [SellerBankAccountController::class, 'update'])->name('bank-account.update');
 
         Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
         Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicles.store');
@@ -59,8 +62,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/transactions/{transaction}', [TransactionReviewController::class, 'show'])->name('transactions.show');
         Route::post('/transactions/{transaction}/approve-handover', [TransactionReviewController::class, 'approveHandover'])->name('transactions.approve-handover');
         Route::post('/transactions/{transaction}/approve-payout', [TransactionReviewController::class, 'approvePayout'])->name('transactions.approve-payout');
+        Route::post('/transactions/{transaction}/disburse', [TransactionReviewController::class, 'disburse'])->name('transactions.disburse');
         Route::post('/transactions/{transaction}/mark-completed', [TransactionReviewController::class, 'markCompleted'])->name('transactions.mark-completed');
         Route::post('/transactions/{transaction}/resolve-dispute', [TransactionReviewController::class, 'resolveDispute'])->name('transactions.resolve-dispute');
+
+        Route::get('/payouts/reconciliation', [PayoutReconciliationController::class, 'index'])->name('payouts.reconciliation');
     });
 
     // Buyer — checkout, pembayaran DP, & tracking serah-terima

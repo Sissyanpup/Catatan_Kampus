@@ -52,6 +52,31 @@ Daftar berikut adalah 20 poin optimisasi yang harus dicek satu per satu sebelum 
 19. Unused Dependencies (bersihkan)
 20. Database Connection Pooling
 
+### 2a. Status per Poin (Sprint 5, diisi 2026-09-17)
+
+| # | Poin | Status | Catatan |
+| - | --- | --- | --- |
+| 1 | Cache API response | ✅ Selesai | `App\Support\CatalogCache` — katalog publik (`GET /api/vehicles`) di-cache 30s per kombinasi filter, key pakai version counter yang otomatis bump di setiap `Vehicle::saved()`/`deleted()` supaya approve/reject/sold tidak pernah kelihatan stale. |
+| 2 | Load Balancer | ➖ N/A | Kelas berjalan offline, satu instance lokal (`docs/03` §6) — tidak ada multi-server untuk di-load-balance. Relevan lagi kalau nanti benar-benar deploy ke Laravel Cloud/hosting. |
+| 3 | Index the Database | ✅ Selesai | `vehicles.status`, `vehicles.brand` sudah ada dari Sprint 1; ditambah `vehicles.seller_id` & `transactions.seller_id` (dipakai query dashboard seller) di migration `2026_09_17_182633_...`. |
+| 4 | Compress Image | ✅ Selesai | `App\Support\ImageOptimizer` (GD, tanpa dependency baru) — resize foto kendaraan ke maks lebar 1600px + re-encode kualitas 78 saat upload (`Seller\VehicleController`). |
+| 5 | Loading Skeletons | ✅ Selesai | Katalog (`/`) pakai `<Suspense>` scoped di sekitar grid hasil (bukan `app/loading.tsx` di root — itu akan ikut membungkus semua route lain seperti `/login`/`/admin/*`); detail kendaraan (`/kendaraan/[id]`) pakai `loading.tsx` khusus folder tersebut (aman karena route daun tanpa child). |
+| 6 | Cache Expensive Queries | ✅ Selesai | Sama seperti #1 — query katalog dengan filter (brand/tahun/harga/lokasi) adalah yang paling sering dipanggil publik tanpa auth. |
+| 7 | N+1 Database Queries | ✅ Selesai | Endpoint list (`VehicleCatalogController@index`, `Admin\VehicleReviewController@index`, `Seller\VehicleController@index`, `TransactionController@index`) sebelumnya eager-load **semua** foto per kendaraan padahal `VehicleResource` cuma butuh 1 cover — diganti relasi `Vehicle::coverPhoto()` (HasOne, `ORDER BY sort_order`). Endpoint detail tetap load semua foto (`photos`) karena memang dipakai penuh. |
+| 8 | Debounce Input Handlers | ➖ N/A | Form filter katalog pakai submit biasa (`<form method="GET">`, tombol "Filter"), bukan live-search per keystroke — tidak ada handler yang perlu di-debounce. |
+| 9 | Split Code into Chunk | ✅ Otomatis | Next.js App Router sudah route-based code splitting per default (tiap `page.tsx` jadi chunk terpisah) — tidak perlu setup manual. |
+| 10 | Add CDN | ➖ N/A | Tidak ada hosting/CDN di kelas ini. Foto kendaraan disarankan lewat S3-compatible + CDN kalau production (`docs/02` §1, baris Storage). |
+| 11 | Server-side Caching | ✅ Selesai | Sama seperti #1/#6 (Laravel `Cache` facade, driver `database` dari `.env`). |
+| 12 | Paginate Large Lists | ✅ Selesai (sejak Sprint 1-4) | Semua endpoint index (`vehicles`, `admin/vehicles`, `admin/kyc`, `seller/vehicles`, transaksi, payout) sudah `paginate()`, tidak ada `->get()` tanpa limit di controller. |
+| 13 | Lighthouse Audit | ⏳ Belum (manual) | Perlu dijalankan manual lewat Chrome DevTools → tab Lighthouse terhadap `/` dan `/kendaraan/[id]` (halaman paling publik/SEO-sensitive) — tidak ada CLI `lighthouse` terpasang & kelas offline jadi tidak diinstal via `npx`. Item ini dipindah jadi TODO eksplisit, bukan diklaim selesai. |
+| 14 | Compress API Payloads | 🟡 Sebagian | Payload katalog sudah lebih kecil karena fix #7 (tidak lagi kirim semua foto per kendaraan di list). Kompresi transport (gzip/brotli) sendiri biasanya tanggung jawab web server/reverse proxy (nginx) di production, bukan `artisan serve` lokal — jadi belum relevan untuk setup kelas ini. |
+| 15 | Unnecessary Re-renders | 🟡 Direview | Ditinjau seluruh komponen `"use client"` — skala data & interaksi masih kecil (list terpaginasi 20/halaman, tidak ada list ribuan baris), belum ditemukan kasus re-render bermasalah. Revisit kalau ada halaman dengan list besar/tanpa paginasi di masa depan. |
+| 16 | Minify JS and CSS | ✅ Otomatis | `next build` (Turbopack, production mode) minify JS/CSS secara default — tidak perlu konfigurasi tambahan. |
+| 17 | Add Lazy Loading | ✅ Selesai | Foto kendaraan di katalog & detail diganti dari `<img>` ke `next/image` (lazy-load native + `priority` cuma untuk foto pertama di atas fold pada halaman detail). |
+| 18 | Defer Non-Critical Scripts | ➖ N/A | Tidak ada script pihak ketiga (analytics/tracking/dsb) di aplikasi ini yang perlu di-defer. |
+| 19 | Unused Dependencies | ✅ Diverifikasi bersih | `composer.json` (Laravel, Sanctum, Tinker saja) & `package.json` (Next, React, Tailwind + type packages) dicek — semua importnya benar-benar dipakai di kode, tidak ada yang menganggur. |
+| 20 | Database Connection Pooling | ➖ N/A (lokal) | SQLite lokal tidak punya konsep connection pool. Kalau nanti pindah ke PostgreSQL (rencana final stack di §1) dan production sungguhan, pertimbangkan PgBouncer. |
+
 ## 3. Urutan Build (Deployment-First)
 
 1. Auth + role (admin/seller/buyer) + listing CRUD dulu, **tanpa payment**.

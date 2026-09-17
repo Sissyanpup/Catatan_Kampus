@@ -67,6 +67,9 @@ export default function Header() {
               <Link href="/admin/transactions" className="text-zinc-600 hover:text-zinc-900">
                 Escrow & Transaksi
               </Link>
+              <Link href="/admin/payouts" className="text-zinc-600 hover:text-zinc-900">
+                Rekonsiliasi Payout
+              </Link>
             </>
           )}
 

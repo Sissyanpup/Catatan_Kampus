@@ -49,4 +49,14 @@ class SellerProfilePolicy
     {
         return $user->isAdmin();
     }
+
+    /**
+     * Determine whether the owner can set/update payout bank account details.
+     * Unlike update() (KYC resubmission), this is allowed regardless of KYC
+     * status — bank details aren't part of identity verification.
+     */
+    public function manageBankAccount(User $user, SellerProfile $sellerProfile): bool
+    {
+        return $user->id === $sellerProfile->user_id;
+    }
 }
