@@ -93,14 +93,14 @@ export default function MockPaymentPage({
             <button
               onClick={() => handleAction("pay")}
               disabled={isSubmitting}
-              className="flex-1 rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500 disabled:opacity-60"
+              className="flex-1 rounded-md bg-primary-container px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary disabled:opacity-60"
             >
               Bayar Sekarang
             </button>
             <button
               onClick={() => handleAction("fail")}
               disabled={isSubmitting}
-              className="flex-1 rounded-md border border-red-300 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-50 disabled:opacity-60"
+              className="flex-1 rounded-md border border-error px-4 py-2 text-sm font-medium text-error hover:bg-error-container disabled:opacity-60"
             >
               Gagalkan
             </button>

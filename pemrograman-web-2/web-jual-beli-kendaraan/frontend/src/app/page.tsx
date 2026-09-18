@@ -4,6 +4,18 @@ import { Suspense } from "react";
 import { API_URL } from "@/lib/api";
 import { formatRupiah } from "@/lib/format";
 import type { Paginated, Vehicle } from "@/lib/types";
+import Badge from "@/components/Badge";
+import DeveloperCredits from "@/components/DeveloperCredits";
+
+const FILTER_LABELS: Record<keyof SearchParams, string> = {
+  brand: "Merek",
+  location: "Lokasi",
+  year_min: "Tahun min",
+  year_max: "Tahun max",
+  price_min: "Harga min",
+  price_max: "Harga max",
+  page: "Halaman",
+};
 
 type SearchParams = {
   brand?: string;
@@ -66,7 +78,7 @@ async function CatalogResults({ searchParams }: { searchParams: SearchParams }) 
         <Link
           key={vehicle.id}
           href={`/kendaraan/${vehicle.id}`}
-          className="overflow-hidden rounded-lg border border-border bg-surface-container transition hover:shadow-md"
+          className="group overflow-hidden rounded-lg border border-border bg-surface-container transition hover:border-primary-container hover:shadow-lg"
         >
           <div className="relative aspect-video w-full bg-surface-container-high">
             {vehicle.cover_photo_url && (
@@ -75,20 +87,27 @@ async function CatalogResults({ searchParams }: { searchParams: SearchParams }) 
                 alt={`${vehicle.brand} ${vehicle.model}`}
                 fill
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover"
+                className="object-cover transition duration-300 group-hover:scale-105"
               />
             )}
+            <div className="absolute left-2 top-2">
+              <Badge tone="success">Terverifikasi Admin</Badge>
+            </div>
           </div>
           <div className="p-4">
-            <h2 className="font-medium text-on-surface">
+            <h2 className="font-display text-base font-medium text-on-surface">
               {vehicle.brand} {vehicle.model} {vehicle.year}
             </h2>
-            <p className="mt-1 text-lg font-semibold text-on-surface">
+            <p className="mt-1 text-lg font-semibold text-primary">
               {formatRupiah(vehicle.price)}
             </p>
-            <p className="mt-1 text-sm text-on-surface-muted">
-              {vehicle.mileage.toLocaleString("id-ID")} km &middot; {vehicle.location}
-            </p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <Badge tone="neutral">{vehicle.mileage.toLocaleString("id-ID")} km</Badge>
+              <Badge tone="neutral">{vehicle.location}</Badge>
+            </div>
+            {vehicle.seller_name && (
+              <p className="mt-2 text-xs text-on-surface-muted">Dijual oleh {vehicle.seller_name}</p>
+            )}
           </div>
         </Link>
       ))}
@@ -103,9 +122,16 @@ export default async function CatalogPage({
 }) {
   const params = await searchParams;
 
+  const activeFilters = (Object.entries(params) as [keyof SearchParams, string | undefined][]).filter(
+    ([key, value]) => key !== "page" && value,
+  );
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
-      <h1 className="text-2xl font-semibold text-on-surface">Katalog Kendaraan</h1>
+      <DeveloperCredits />
+
+      <Badge tone="primary">Katalog Terverifikasi</Badge>
+      <h1 className="mt-2 text-2xl font-semibold text-on-surface">Katalog Kendaraan</h1>
       <p className="mt-1 text-sm text-on-surface-muted">
         Semua listing sudah diverifikasi dokumen STNK/BPKB oleh admin.
       </p>
@@ -158,6 +184,29 @@ export default async function CatalogPage({
           Filter
         </button>
       </form>
+
+      {activeFilters.length > 0 && (
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          {activeFilters.map(([key, value]) => {
+            const rest = new URLSearchParams();
+            for (const [k, v] of Object.entries(params)) {
+              if (v && k !== key) rest.set(k, v);
+            }
+            return (
+              <Link
+                key={key}
+                href={`/?${rest.toString()}`}
+                className="inline-flex items-center gap-1 rounded-lg bg-surface-container-high px-2.5 py-1 text-xs text-on-surface hover:text-primary"
+              >
+                {FILTER_LABELS[key]}: {value} <span aria-hidden>&times;</span>
+              </Link>
+            );
+          })}
+          <Link href="/" className="text-xs text-on-surface-muted underline">
+            Reset semua
+          </Link>
+        </div>
+      )}
 
       <Suspense key={JSON.stringify(params)} fallback={<CatalogGridSkeleton />}>
         <CatalogResults searchParams={params} />

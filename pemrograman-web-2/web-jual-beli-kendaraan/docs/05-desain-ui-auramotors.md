@@ -1,6 +1,8 @@
 # Desain UI/UX — Konsep "AuraMotors" (Luxury Automotive Marketplace)
 
 > Sumber asli: `log-chat-konteks.txt` (log permintaan & ringkasan hasil desain) + `!-- Design System --.html` (kode HTML/Tailwind mentah hasil generate, ~7000 baris, satu halaman panjang berisi banyak section). Dokumen ini merangkum **konsep tema visual** dan **inventori layar** yang sudah dirancang, supaya tidak perlu membaca ulang file mentahnya.
+>
+> Tambahan (2026-09-18): dua file `stitch_luxury_vehicle_marketplace_platform*.zip` di root `docs/` (hasil export Google Stitch, AI UI generator) sudah diekstrak ke [`docs/design-reference/`](./design-reference/) — masing-masing folder berisi `code.html` (markup Tailwind mentah) + `screen.png` (screenshot render). Isinya versi standalone & lebih detail dari beberapa layar yang sudah masuk inventori §3 di bawah, ditambah satu layar baru. Zip aslinya tetap disimpan di `docs/` sebagai riwayat (tidak dihapus, sesuai konvensi `CLAUDE.md`).
 
 ## 1. Konsep & Tema
 
@@ -40,11 +42,11 @@ Tema visual: **Obsidian & Champagne Gold** (dark mode premium).
 
 ### Portal Buyer / VIP Collector
 
-1. **Landing/Public Page** — hero, team showcase, penjelasan platform (3 pillars), live stats, filter cepat, gallery preview, CTA login/register.
+1. **Landing/Public Page** — hero, team showcase, penjelasan platform (3 pillars), live stats, filter cepat, gallery preview, CTA login/register. Versi standalone team showcase (3 kartu kurator/broker dengan badge & foto) ada di [`design-reference/team-showcase/`](./design-reference/team-showcase/).
 2. **Autentikasi & Registrasi** (`AuraMotors - Autentikasi & Registrasi VIP Kolektor`) — tab Login/Register, dukungan biometrik/FIDO2, showcase eksklusif.
-3. **Dashboard Belanja Pasca-Login** (`AuraMotors - Dashboard Belanja Unit Otomotif Mewah`) — header user + saldo escrow, filter mendalam, grid katalog unit, widget layanan (financing, konsultasi, private viewing).
+3. **Dashboard Belanja Pasca-Login** (`AuraMotors - Dashboard Belanja Unit Otomotif Mewah`) — header user + saldo escrow, filter mendalam, grid katalog unit, widget layanan (financing, konsultasi, private viewing). Versi mockup terbaru: [`design-reference/dashboard-belanja/`](./design-reference/dashboard-belanja/).
 4. **Halaman Detail Kendaraan** (`AuraMotors - Detail Unit ...`) — galeri multi-angle, panel transaksi cepat, tab dossier (spesifikasi teknis, laporan inspeksi forensik, riwayat dokumen/provenance, paket opsi), rekomendasi unit sejenis.
-5. **Keranjang & Checkout Escrow** (`AuraMotors - Keranjang Alokasi & Transaksi Escrow`) — stepper 4 tahap, add-on services, breakdown biaya, pilihan metode settlement, diagram alur escrow, konfirmasi.
+5. **Keranjang & Checkout Escrow** (`AuraMotors - Keranjang Alokasi & Transaksi Escrow`) — stepper 4 tahap, add-on services, breakdown biaya, pilihan metode settlement, diagram alur escrow, konfirmasi. Versi mockup terbaru: [`design-reference/keranjang-escrow/`](./design-reference/keranjang-escrow/).
 6. **Pelacakan Transaksi & Handover** (`AuraMotors - Pelacakan Transaksi & Handover Escrow`) — stepper 5 fase (deposit terverifikasi → forensik & Samsat → pelunasan escrow → towing → handover kunci), live tracking, akses dokumen legalitas, tombol verifikasi rilis dana.
 7. **Akun & Garasi Digital** (`AuraMotors - Garasi Digital & Pengelolaan Akun Kolektor`) — profil, metrik portofolio, koleksi unit dimiliki, riwayat transaksi, dokumen/sertifikat, keamanan vault (2FA, bank terhubung).
 
@@ -59,6 +61,10 @@ Tema visual: **Obsidian & Champagne Gold** (dark mode premium).
 11. **Admin Kurasi & Verifikasi Forensik Unit** — profil unit dalam audit, dossier forensik (integritas fisik, kliring dokumen/pajak, studio visual), protokol otorisasi multi-signature sebelum unit terbit ke showroom.
 
 > Catatan: layar #10 dan #11 baru terdokumentasi di `log-chat-konteks.txt` (deskripsi naratif), belum ada kode HTML lengkapnya di `!-- Design System --.html` (file itu berhenti di layar #8). Perlu digenerate ulang atau dibangun langsung dalam kode aplikasi jika mau dipakai.
+
+### Layar Tambahan (opsional, di luar flow inti jual-beli)
+
+12. **Direktori Download Aset Visual Resmi** (`AuraMotors - Direktori & Download Aset Visual Resmi`) — halaman media kit/press kit: daftar aset brand (logo, foto unit resmi, dsb.) yang bisa diunduh. Bukan bagian dari flow buyer/seller/admin inti — mockup ada di [`design-reference/direktori-aset-visual/`](./design-reference/direktori-aset-visual/), dipakai hanya kalau butuh halaman brand asset/media kit.
 
 ## 4. Alur Utama (End-to-End)
 
@@ -75,6 +81,7 @@ Token warna/font/radius di §2 sudah diterapkan ke seluruh aplikasi lewat `front
 ## 6. Rekomendasi Pemakaian untuk Implementasi
 
 - File `!-- Design System --.html` adalah **rujukan UI/UX resmi** proyek ini — buka langsung di browser untuk melihat tampilan tiap layar. Perlakukan sebagai acuan visual/markup, bukan kode aplikasi final: tetap perlu dipecah jadi komponen di framework yang dipakai (lihat [`02-tech-stack-arsitektur.md`](./02-tech-stack-arsitektur.md)), potong per section sesuai marker HTML comment di dalamnya.
+- File-file di `design-reference/*/code.html` punya perlakuan sama: buka `screen.png` dulu utk lihat hasil render, lalu comot markup/kelas Tailwind dari `code.html` yang relevan kalau mau merapikan halaman `page.tsx` (dashboard) atau `/checkout` (keranjang escrow) yang sudah jalan sejak Sprint 1-4 — bukan bikin halaman baru dari nol, karena flow-nya sudah ada.
 - Sinkronkan setiap layar di atas dengan flow CRUD generik di [`04-activity-diagram-crud.md`](./04-activity-diagram-crud.md) agar konsisten dari sisi UX (confirm dialog, validasi, loading state).
 
 ## 7. Terkait

@@ -6,6 +6,13 @@ import { ApiError, apiFetch } from "@/lib/api";
 import { formatRupiah } from "@/lib/format";
 import type { Transaction } from "@/lib/types";
 import { useAuth } from "@/contexts/auth-context";
+import Badge from "@/components/Badge";
+
+const ESCROW_STEPS = [
+  "Dana Anda ditahan di rekening escrow platform, belum diteruskan ke penjual.",
+  "Serah terima kendaraan dikonfirmasi kedua pihak, lalu diverifikasi admin.",
+  "Setelah verifikasi selesai, dana baru dicairkan (payout) ke penjual.",
+];
 
 export default function CheckoutWidget({ vehicleId, price }: { vehicleId: number; price: string }) {
   const { user, isLoading } = useAuth();
@@ -53,12 +60,32 @@ export default function CheckoutWidget({ vehicleId, price }: { vehicleId: number
     }
   }
 
-  return (
-    <form onSubmit={handleSubmit} className="mt-6 space-y-3 rounded-lg border border-border bg-surface-container p-4">
-      <h2 className="text-sm font-medium text-on-surface">Ajukan Pembayaran DP</h2>
+  const sisaPelunasan = Math.max(Number(price) - amount, 0);
 
-      <div>
-        <label className="block text-sm font-medium text-on-surface">Jumlah DP (min. 10% harga)</label>
+  return (
+    <form onSubmit={handleSubmit} className="mt-6 rounded-lg border border-border bg-surface-container p-5">
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="font-display text-base font-medium text-on-surface">Alokasi & Pembayaran Escrow</h2>
+        <Badge tone="success">Dana Aman</Badge>
+      </div>
+
+      <dl className="mt-4 space-y-2 border-t border-border pt-4 text-sm">
+        <div className="flex items-center justify-between">
+          <dt className="text-on-surface-muted">Harga Unit</dt>
+          <dd className="text-on-surface">{formatRupiah(Number(price))}</dd>
+        </div>
+        <div className="flex items-center justify-between">
+          <dt className="text-on-surface-muted">DP Minimum (10%)</dt>
+          <dd className="text-on-surface">{formatRupiah(minDp)}</dd>
+        </div>
+        <div className="flex items-center justify-between font-medium">
+          <dt className="text-on-surface">Sisa Pelunasan Setelah DP</dt>
+          <dd className="text-on-surface">{formatRupiah(sisaPelunasan)}</dd>
+        </div>
+      </dl>
+
+      <div className="mt-4">
+        <label className="block text-sm font-medium text-on-surface">Jumlah DP yang diajukan</label>
         <input
           type="number"
           min={minDp}
@@ -70,15 +97,24 @@ export default function CheckoutWidget({ vehicleId, price }: { vehicleId: number
         <p className="mt-1 text-xs text-on-surface-muted">Minimal {formatRupiah(minDp)}</p>
       </div>
 
-      {error && <p className="text-sm text-error">{error}</p>}
+      {error && <p className="mt-3 text-sm text-error">{error}</p>}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-md bg-primary-container px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary disabled:opacity-60"
+        className="mt-4 w-full rounded-md bg-primary-container px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary disabled:opacity-60"
       >
         {isSubmitting ? "Memproses..." : "Bayar DP Sekarang"}
       </button>
+
+      <ol className="mt-5 space-y-2 border-t border-border pt-4">
+        {ESCROW_STEPS.map((step, index) => (
+          <li key={step} className="flex gap-2 text-xs text-on-surface-muted">
+            <span className="font-label font-medium text-primary">{index + 1}.</span>
+            <span>{step}</span>
+          </li>
+        ))}
+      </ol>
     </form>
   );
 }
