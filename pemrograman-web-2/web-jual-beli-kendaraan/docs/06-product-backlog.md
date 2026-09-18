@@ -33,8 +33,8 @@
 
 ## Epic 5 — Polish, Performa & Hardening
 
-- [x] Jalankan checklist performa 20 poin — lihat status per poin di [`02-tech-stack-arsitektur.md`](./02-tech-stack-arsitektur.md#2a-status-per-poin-sprint-5-diisi-2026-09-17) (17/20 selesai atau N/A untuk setup kelas ini; sisanya jadi TODO eksplisit, bukan diklaim selesai).
-- [ ] Lighthouse audit halaman katalog & detail kendaraan — belum jalan (perlu Chrome DevTools manual, lihat catatan poin #13 di `docs/02`).
+- [x] Jalankan checklist performa 20 poin — lihat status per poin di [`02-tech-stack-arsitektur.md`](./02-tech-stack-arsitektur.md#2a-status-per-poin-sprint-5-diisi-2026-09-17) (18/20 selesai atau N/A untuk setup kelas ini, 2 poin lain — Compress API Payloads & Unnecessary Re-renders — ditandai sebagian/direview dengan alasan eksplisit, bukan diklaim selesai penuh).
+- [x] Lighthouse audit halaman katalog & detail kendaraan — lihat hasil & catatan di [`02-tech-stack-arsitektur.md`](./02-tech-stack-arsitektur.md#2a-status-per-poin-sprint-5-diisi-2026-09-17) poin #13 (Performance 97/89, Accessibility 100/100, Best Practices 96/96, SEO 100/100).
 - [x] Review UX konsisten dengan pola CRUD & confirm-dialog di [`04-activity-diagram-crud.md`](./04-activity-diagram-crud.md) — sisa 5 halaman (`admin/kyc`, `admin/vehicles`, `seller/vehicles`, `seller/transactions/[id]`, `buyer/transactions/[id]`) sudah diganti ke `ConfirmModal` in-app, tidak ada lagi `window.confirm`/`prompt` di codebase.
 - [x] (Opsional) Terapkan tema visual AuraMotors — lihat [`05-desain-ui-auramotors.md`](./05-desain-ui-auramotors.md). Token warna/font/radius "Obsidian & Champagne Gold" diterapkan lewat `globals.css` + komponen bersama (`Badge`, `Header`, `ConfirmModal`), lalu disebarkan otomatis ke seluruh 17 halaman via script reskin — bukan rename istilah domain ke flavor mewah (sesuai catatan di `docs/05` §1).
 
