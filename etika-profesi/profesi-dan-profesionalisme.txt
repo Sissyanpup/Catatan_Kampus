@@ -1,0 +1,73 @@
+Profesi dan Profesionalisme
+
+9/22/26
+
+Profesi ialah suaru pekerjaan arau habatan yang menuntuk keahlian tertentu, diperoleh melalui penidiikan pelatihan khusus, serta dijalankan berdasakran kode etik yang mengikat. Memiliki tanggung jawab yang lebih berdasakran
+Diakui ooleh masyarakat
+
+Ciri-ciri :
+1. Keahlian Khusus - menguasai ilmu dan keterampilan
+2. Pendidikan dan Pelatihan
+3. Kode Etik
+4. Organisasi Profesi 
+5. Otonomi
+6. Orientasi Layanan
+
+Contoh Profesi di Bidang Teknik Informatika
+- Software Engineer
+- Data Scientist
+- System Analyst
+- Cybersecurity
+
+Profesionalisme adalah sikap komitmen dan cara pandang seseorang dalam menjalankan profesinya sesuai dengan staandar keahlian etika dan tangnggung jawab yang berlaku
+
+Ciri-ciri :
+1. Kompeten
+2. Bertanggungjawab
+3. Berintegritas
+4. Disiplin dan Tepat Waktu
+5. Mengutamakan Klien
+
+Perbedaan
+Profesi = 
+- Merujuk pada jenis pekerjaan atau jabatan
+- Bersifat status (apa profesi seseorang)
+- Ditentukan oleh pendidikan dan sertifikasi
+
+Profesionalisme =
+- Merujuk pada sikap dan perilaku dalam bekerja
+
+Kode etik
+- seperangkat aturan tertulis
+- pedoman moral dan perilaku
+- melindungi masyarakat
+- menjaga martabat profesi
+- pedoman perilaku
+- sanksi pelanggaran
+(profesi TI)
+- ACM Code of Ethic
+- IEEE Code of Ethics
+- Kode Etik APTIKOM/IPKIN
+
+Contoh pelanggaran etika di TI
+- Kebocoran data pengguna
+- Plagiarisme kode program
+- peretasan ilegal (hacking)
+- penyalahgunaan wewenang sistem
+
+Mengapa penting?
+- Meningkatkan kredibilitas
+- menjamin layanan yang aman bermutu 
+- menjaga reputasi
+
+Catatan (sesi tanya jawab)
+1. Jika client menolak atau revisi besar besaran dari aplikasi yang kita buat, yang justru dari pihak produsen atau kita sebagai pelaku profesi sudah melakukannya sesuai dengan standar baik dari tampilan fitur sistem hingga keamanan, tapi dari pihak client berbeda, yang harus dilakukan adalah tetap bersikap profesional, jangan terlalu mengiyakan client dahulu. 
+2. Jika proses produksi ternyata terlewat deadline dari client, dan masih ada bug misal celah data yang bocor, apakah push saja? Jawabannya perlu dipetakan atau analisis meta risk nya, apakah low-risk, medium-risk, atau high-risk. Dan beritahu client secara profesional dijelaskan perlahan (karena client itu bukan paham TI), agar kedua pihak sama-sama paham dengan menghasilkan persetujuan.
+3. Freelance lepas yang memiliki klien termasuk pekerjaan karena mmeiliki karya pekerjaan dan menghasilkan, namun belum tentu masuk profesi. Profesi ialah level diatasnya pekerjaan, karena harus memiliki pelatihan (sertifikasi). Freelance ini bisa diantara profesi dan pekerjaan, bisa masuk profesi jika sudah memasuki legalitas yang valid (dokumen, memiliki legalitas hukum, dan sertifikasi).
+4. Mitigasi darurat dalam bentuk tanggung jawab, hingga denda dan sanksi hukum, jika kita produsen mengalami kelalaian seperti kebocoran data. 
+
+PR presentasi :
+- Slide materi bagus
+- Namun saat presentasi, masih membaca baik di hp maupun di pptnya.
+- Pecahlah anggota kelompok, perorang bisa mempelajari hanya 2-3 slide.
+- Pelajari dahulu, baca sedikit saja di ppt, sisanya improvisasi sesuai pemahaman dan bahasa masing-masing.
