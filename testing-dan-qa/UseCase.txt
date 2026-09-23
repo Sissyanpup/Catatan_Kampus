@@ -1,0 +1,30 @@
+#Use Case :
+
+*Harus ada author Admin, yang memegang akses paling banyak.*
+*Saat membuat system, perhatikan agar asset penting dipastikan aman. Jangan sampai ada 2 actor atau lebih seperti admin.*
+
+- Wajib ada boundery, untuk meletakkan use case :
+-- Aktor diluar boundery (di luar system/pc)
+-- System atau fitur, Digambar dengan oval, di dalam boundery
+
+*Wajib Data yang dikelola oleh system, bukan makhluk*
+*System Mengelola Data*
+*Jangan memasukkan Controller (CRUD, tampil) ke use.*
+
+##Form Logn / Halaman login
+- System login dengan garis include dengan System login garis biasa.
+-- Login dengan baris biasa maka semua user harus masuk ke halaman login
+
+##Minimal UseCase 
+###Garis Biasa =
+- Registrasi
+- Login
+- Logout
+- Dashboard / Home
+
+#Catatan
+- Dalam use case, mengelola data laporan angsuran != mengelola laporan data angsuran. Data Laporan memiliki termin atau tujuan yang berbeda, biasanya dikelola triwulan dan lainnya. Laporan data yakni system sendiri untuk laporan.
+
+#Sparx Enterprise Architecture
+- Di sparx ea untuk rename hierarki project shortcut = Fn + F2
+- For activation, click to Desin on the navbar -> Add -> Model Wizard. Klik Model wizard page, Diagram pada navbar web Diagram -> checklist Create Package -> UML Behavioral -> klik Use Case -> klik Create Diagram
