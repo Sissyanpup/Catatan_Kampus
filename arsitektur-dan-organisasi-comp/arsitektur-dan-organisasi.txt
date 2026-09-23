@@ -1,0 +1,25 @@
+Arsitektur dan Organisasi Komputer
+
+Dua konesip fundamental, satu tujuan
+Arsitektur = fokus pada apa yang dilakukan komputer  
+- 
+Organisasi = fokus pada bagaimana komputer melakukan sesuatu
+- Struktur CPU
+- Memori hierarki
+- Bus 
+- 
+
+Komponen utama 
+- Prosesor
+-- ALU = melakukan operasi aritmatika dan logika data
+-- Control Unit = mengelola dan mengendalikan seluruh operasi di dalam komputer
+--- Fetch (ambil)
+--- Decode (terjemahkan)
+--- Execute (jalankan)
+--- Store (simpan)
+-- Register = Penyimpanan kecil berkecapatan tinggi yang digunakan oleh CPU
+--- PC, IR, MAR, MDR, ACC 
+--- Organiasi memori ada primary dan secondary
+-- Cache Memori = Memori berkecapatan tinggi yang menyimpan data yang sering diakses oleh CPU
+- Unit Memori
+- I/O Device
