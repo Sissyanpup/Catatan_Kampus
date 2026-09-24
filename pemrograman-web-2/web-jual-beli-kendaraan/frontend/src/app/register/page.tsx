@@ -47,101 +47,163 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="mx-auto max-w-md px-4 py-10">
-      <h1 className="text-xl font-semibold text-on-surface">Daftar Akun</h1>
+    <div className="relative flex min-h-[calc(100dvh-3.25rem)] items-center justify-center px-4 py-12">
+      {/* Ambient gold glow — dekoratif */}
+      <div
+        aria-hidden
+        className="pointer-events-none fixed left-1/2 top-0 -translate-x-1/2"
+        style={{
+          width: "600px",
+          height: "260px",
+          background: "radial-gradient(ellipse at 50% 0%, color-mix(in srgb, #f2ca50 8%, transparent) 0%, transparent 70%)",
+        }}
+      />
 
-      <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-on-surface">Nama</label>
-          <input
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
-          />
-          {errors.name && <p className="mt-1 text-xs text-error">{errors.name[0]}</p>}
+      <div className="animate-fade-up relative w-full max-w-md">
+        {/* Wordmark */}
+        <div className="mb-8 text-center">
+          <span className="font-display text-2xl tracking-widest text-primary">AuraMotors</span>
+          <p className="mt-1.5 text-xs uppercase tracking-[0.2em] text-on-surface-muted">
+            Marketplace Kendaraan Premium
+          </p>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-on-surface">Email</label>
-          <input
-            required
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
-          />
-          {errors.email && <p className="mt-1 text-xs text-error">{errors.email[0]}</p>}
-        </div>
+        <div className="rounded-lg border border-border bg-surface-container p-8">
+          <h1 className="font-display text-xl text-on-surface">Daftar Akun</h1>
+          <p className="mt-1 text-sm text-on-surface-muted">Mulai perjalanan Anda bersama AuraMotors.</p>
 
-        <div>
-          <label className="block text-sm font-medium text-on-surface">Password</label>
-          <input
-            required
-            type="password"
-            minLength={8}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
-          />
-          {errors.password && <p className="mt-1 text-xs text-error">{errors.password[0]}</p>}
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-on-surface">Konfirmasi Password</label>
-          <input
-            required
-            type="password"
-            minLength={8}
-            value={passwordConfirmation}
-            onChange={(e) => setPasswordConfirmation(e.target.value)}
-            className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
-          />
-          {errors.password_confirmation && (
-            <p className="mt-1 text-xs text-error">{errors.password_confirmation[0]}</p>
-          )}
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-on-surface">Daftar sebagai</label>
-          <div className="mt-1 flex gap-4 text-sm">
-            <label className="flex items-center gap-2">
+          <form onSubmit={handleSubmit} className="mt-7 space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-on-surface" htmlFor="reg-name">
+                Nama Lengkap
+              </label>
               <input
-                type="radio"
-                checked={role === "buyer"}
-                onChange={() => setRole("buyer")}
+                id="reg-name"
+                required
+                autoComplete="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="input-field mt-1.5"
               />
-              Buyer
-            </label>
-            <label className="flex items-center gap-2">
+              {errors.name && (
+                <p className="mt-1 text-xs text-error animate-fade-in">{errors.name[0]}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-on-surface" htmlFor="reg-email">
+                Email
+              </label>
               <input
-                type="radio"
-                checked={role === "seller"}
-                onChange={() => setRole("seller")}
+                id="reg-email"
+                required
+                type="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="input-field mt-1.5"
               />
-              Seller
-            </label>
+              {errors.email && (
+                <p className="mt-1 text-xs text-error animate-fade-in">{errors.email[0]}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-on-surface" htmlFor="reg-password">
+                Password
+              </label>
+              <input
+                id="reg-password"
+                required
+                type="password"
+                minLength={8}
+                autoComplete="new-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input-field mt-1.5"
+              />
+              {errors.password && (
+                <p className="mt-1 text-xs text-error animate-fade-in">{errors.password[0]}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-on-surface" htmlFor="reg-confirm">
+                Konfirmasi Password
+              </label>
+              <input
+                id="reg-confirm"
+                required
+                type="password"
+                minLength={8}
+                autoComplete="new-password"
+                value={passwordConfirmation}
+                onChange={(e) => setPasswordConfirmation(e.target.value)}
+                className="input-field mt-1.5"
+              />
+              {errors.password_confirmation && (
+                <p className="mt-1 text-xs text-error animate-fade-in">
+                  {errors.password_confirmation[0]}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <span className="block text-sm font-medium text-on-surface">Daftar sebagai</span>
+              <div className="mt-2 flex gap-3">
+                {(["buyer", "seller"] as const).map((r) => (
+                  <label
+                    key={r}
+                    className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border px-4 py-2.5 text-sm
+                                transition-all duration-200
+                                ${role === r
+                                  ? "border-primary bg-primary/10 text-primary"
+                                  : "border-border text-on-surface-muted hover:border-border/80 hover:text-on-surface"
+                                }`}
+                  >
+                    <input
+                      type="radio"
+                      className="sr-only"
+                      checked={role === r}
+                      onChange={() => setRole(r)}
+                    />
+                    {r === "buyer" ? "Pembeli" : "Penjual"}
+                  </label>
+                ))}
+              </div>
+              {errors.role && (
+                <p className="mt-1 text-xs text-error animate-fade-in">{errors.role[0]}</p>
+              )}
+            </div>
+
+            {formError && (
+              <p className="animate-fade-in text-sm text-error" role="alert">
+                {formError}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn-gold mt-2 w-full rounded-md px-4 py-2.5 text-sm"
+            >
+              {isSubmitting ? "Memproses..." : "Buat Akun"}
+            </button>
+          </form>
+
+          <div className="mt-6 border-t border-border pt-5">
+            <p className="text-center text-sm text-on-surface-muted">
+              Sudah punya akun?{" "}
+              <Link
+                href="/login"
+                className="font-medium text-on-surface transition-colors duration-150 hover:text-primary"
+              >
+                Masuk
+              </Link>
+            </p>
           </div>
-          {errors.role && <p className="mt-1 text-xs text-error">{errors.role[0]}</p>}
         </div>
-
-        {formError && <p className="text-sm text-error">{formError}</p>}
-
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full rounded-md bg-primary-container px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary disabled:opacity-60"
-        >
-          {isSubmitting ? "Memproses..." : "Daftar"}
-        </button>
-      </form>
-
-      <p className="mt-4 text-sm text-on-surface-muted">
-        Sudah punya akun?{" "}
-        <Link href="/login" className="font-medium text-on-surface">
-          Masuk
-        </Link>
-      </p>
+      </div>
     </div>
   );
 }

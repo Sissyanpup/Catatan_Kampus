@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const apiUrl = new URL(process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000");
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["192.168.88.253"],
   images: {
     remotePatterns: [
       {

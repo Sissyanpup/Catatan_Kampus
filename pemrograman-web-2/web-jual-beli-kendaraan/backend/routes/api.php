@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\VehicleReviewController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\MeController;
+use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Buyer\CheckoutController;
 use App\Http\Controllers\Catalog\VehicleCatalogController;
@@ -27,6 +28,11 @@ Route::post('/auth/login', [LoginController::class, 'store'])->name('auth.login'
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/logout', [LogoutController::class, 'destroy'])->name('auth.logout');
     Route::get('/auth/me', [MeController::class, 'show'])->name('auth.me');
+
+    // Profil — semua role
+    Route::put('/auth/profile', [ProfileController::class, 'update'])->name('auth.profile.update');
+    Route::put('/auth/profile/password', [ProfileController::class, 'updatePassword'])->name('auth.profile.password');
+    Route::post('/auth/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('auth.profile.avatar');
 
     // Seller — KYC & listing CRUD
     Route::middleware('role:seller')->prefix('seller')->name('seller.')->group(function () {

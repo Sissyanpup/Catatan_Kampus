@@ -71,19 +71,19 @@ Butuh **2 terminal** yang berjalan bersamaan.
 
 ```bash
 cd backend
-php artisan serve
+php artisan serve --host=0.0.0.0
 ```
 
-Backend berjalan di: http://localhost:8000
+Backend berjalan di: http://localhost:8000 dan http://192.168.88.253:8000
 
 ### Terminal 2 — Frontend
 
 ```bash
 cd frontend
-npm run dev
+npm run dev -- -H 0.0.0.0
 ```
 
-Frontend berjalan di: http://localhost:3000
+Frontend berjalan di: http://localhost:3000 dan http://192.168.88.253:3000
 
 ---
 
@@ -109,9 +109,9 @@ Frontend berjalan di: http://localhost:3000
 Sebelum presentasi, lakukan ini secara berurutan:
 
 - [ ] **Buka 2 terminal** di folder root proyek
-- [ ] **Terminal 1**: `cd backend && php artisan serve`
-- [ ] **Terminal 2**: `cd frontend && npm run dev`
-- [ ] **Buka browser** ke http://localhost:3000
+- [ ] **Terminal 1**: `cd backend && php artisan serve --host=0.0.0.0`
+- [ ] **Terminal 2**: `cd frontend && npm run dev -- -H 0.0.0.0`
+- [ ] **Buka browser** ke http://localhost:3000 (atau http://192.168.88.253:3000 dari perangkat lain)
 - [ ] Pastikan tidak ada pesan error di kedua terminal
 - [ ] Login sebagai admin dengan kredensial yang sudah dicatat
 
@@ -157,3 +157,27 @@ kill -9 <PID>
 ```bash
 cd backend && php artisan migrate:fresh --seed
 ```
+
+---
+
+## Akses dari Perangkat Lain (WiFi yang Sama)
+
+IP lokal mesin host: **`192.168.88.253`**
+
+Config sudah diatur. Jalankan server dengan flag berikut:
+
+| Terminal | Perintah |
+|----------|---------|
+| Backend  | `cd backend && php artisan serve --host=0.0.0.0` |
+| Frontend | `cd frontend && npm run dev -- -H 0.0.0.0` |
+
+Dari perangkat lain, buka browser ke:
+```
+http://192.168.88.253:3000
+```
+
+> **Catatan IP berubah**: Jika IP host berubah (karena DHCP router), update 2 file berikut dengan IP baru:
+> - `backend/.env` → `APP_URL`, `SANCTUM_STATEFUL_DOMAINS`, `FRONTEND_URL`
+> - `frontend/.env.local` → `NEXT_PUBLIC_API_URL`
+>
+> Cek IP lokal saat ini dengan: `ip addr show | grep 'inet ' | grep -v '127.0.0.1'`

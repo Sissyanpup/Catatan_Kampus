@@ -105,7 +105,7 @@ export default function AdminVehiclesPage() {
                   ) : (
                     <div className="flex flex-col gap-2">
                       <p className="text-on-surface-muted">{detail.description}</p>
-                      <div className="flex gap-4">
+                      <div className="flex flex-wrap gap-3">
                         {detail.documents?.map((doc) => (
                           <a
                             key={doc.id}

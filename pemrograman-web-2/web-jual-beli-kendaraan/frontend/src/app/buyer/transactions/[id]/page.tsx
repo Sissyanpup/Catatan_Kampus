@@ -115,17 +115,17 @@ export default function BuyerTransactionDetailPage({
       </Link>
 
       <div className="mt-4 rounded-lg border border-border bg-surface-container p-5">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
           <h1 className="text-lg font-semibold text-on-surface">
             {transaction.vehicle.brand} {transaction.vehicle.model} {transaction.vehicle.year}
           </h1>
-          <div className="flex flex-col items-end gap-1">
+          <div className="flex flex-wrap items-center gap-1.5 sm:flex-col sm:items-end">
             <PaymentStatusBadge status={transaction.payment_status} />
             {transaction.escrow_status && <EscrowStatusBadge status={transaction.escrow_status} />}
           </div>
         </div>
 
-        <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
+        <dl className="mt-4 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
           <div>
             <dt className="text-xs uppercase text-on-surface-muted">Jumlah DP</dt>
             <dd className="text-on-surface">{formatRupiah(transaction.amount)}</dd>

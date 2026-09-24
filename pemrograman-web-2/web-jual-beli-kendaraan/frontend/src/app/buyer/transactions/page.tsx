@@ -34,9 +34,11 @@ export default function BuyerTransactionsPage() {
             <li key={transaction.id}>
               <Link
                 href={`/buyer/transactions/${transaction.id}`}
-                className="flex items-center justify-between rounded-lg border border-border bg-surface-container p-4 hover:border-primary-container"
+                className="flex flex-col gap-2 rounded-lg border border-border bg-surface-container p-4
+                           transition-colors duration-200 hover:border-primary/40
+                           sm:flex-row sm:items-center sm:justify-between"
               >
-                <div>
+                <div className="min-w-0">
                   <p className="font-medium text-on-surface">
                     {transaction.vehicle.brand} {transaction.vehicle.model} {transaction.vehicle.year}
                   </p>
@@ -44,7 +46,7 @@ export default function BuyerTransactionsPage() {
                     DP {formatRupiah(transaction.amount)} &middot; {formatDate(transaction.created_at)}
                   </p>
                 </div>
-                <div className="flex flex-col items-end gap-1">
+                <div className="flex flex-wrap items-center gap-1.5 sm:flex-col sm:items-end">
                   <PaymentStatusBadge status={transaction.payment_status} />
                   {transaction.escrow_status && <EscrowStatusBadge status={transaction.escrow_status} />}
                 </div>

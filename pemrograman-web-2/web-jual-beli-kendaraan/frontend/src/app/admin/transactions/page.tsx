@@ -100,7 +100,7 @@ export default function AdminTransactionsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-start justify-between gap-2">
         <h1 className="text-xl font-semibold text-on-surface">Dashboard Escrow & Transaksi</h1>
         <Link href="/admin/payouts" className="text-sm text-on-surface-muted underline hover:text-on-surface">
           Rekonsiliasi Payout
@@ -131,16 +131,16 @@ export default function AdminTransactionsPage() {
         <div className="mt-6 space-y-4">
           {transactions.map((transaction) => (
             <div key={transaction.id} className="rounded-lg border border-border bg-surface-container p-4">
-              <div className="flex items-center justify-between">
-                <div>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                <div className="min-w-0">
                   <p className="font-medium text-on-surface">
                     {transaction.vehicle.brand} {transaction.vehicle.model} {transaction.vehicle.year}
                   </p>
-                  <p className="text-sm text-on-surface-muted">
+                  <p className="mt-0.5 text-sm text-on-surface-muted">
                     {formatRupiah(transaction.amount)} &middot; {transaction.buyer?.name} → {transaction.seller?.name}
                   </p>
                 </div>
-                <div className="flex flex-col items-end gap-1">
+                <div className="flex flex-wrap items-center gap-1.5 sm:flex-col sm:items-end">
                   <PaymentStatusBadge status={transaction.payment_status} />
                   {transaction.escrow_status && <EscrowStatusBadge status={transaction.escrow_status} />}
                   {transaction.payout_status && <PayoutStatusBadge status={transaction.payout_status} />}
@@ -157,7 +157,7 @@ export default function AdminTransactionsPage() {
                     <p className="text-on-surface-muted">Memuat detail...</p>
                   ) : (
                     <div className="flex flex-col gap-4">
-                      <dl className="grid grid-cols-2 gap-3">
+                      <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div>
                           <dt className="text-xs uppercase text-on-surface-muted">Buyer Konfirmasi Terima</dt>
                           <dd className="text-on-surface">

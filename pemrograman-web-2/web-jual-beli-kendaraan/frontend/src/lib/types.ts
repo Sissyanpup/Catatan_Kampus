@@ -6,6 +6,8 @@ export type User = {
   id: number;
   name: string;
   email: string;
+  bio: string | null;
+  avatar_url: string | null;
   role: UserRole;
   seller_profile_status?: SellerProfileStatus | null;
 };

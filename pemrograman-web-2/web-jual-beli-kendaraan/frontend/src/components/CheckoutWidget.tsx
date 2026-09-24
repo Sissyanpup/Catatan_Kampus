@@ -25,8 +25,9 @@ export default function CheckoutWidget({ vehicleId, price }: { vehicleId: number
 
   if (!user) {
     return (
-      <div className="mt-6 rounded-lg border border-border bg-surface-container p-4 text-sm text-on-surface-muted">
-        <Link href="/login" className="text-on-surface underline">
+      <div className="mt-6 rounded-lg border border-border bg-surface-container p-4 text-sm text-on-surface-muted
+                      transition-colors duration-200 hover:border-border/80">
+        <Link href="/login" className="font-medium text-on-surface transition-colors duration-150 hover:text-primary">
           Masuk
         </Link>{" "}
         sebagai pembeli untuk mengajukan DP kendaraan ini.
@@ -63,9 +64,15 @@ export default function CheckoutWidget({ vehicleId, price }: { vehicleId: number
   const sisaPelunasan = Math.max(Number(price) - amount, 0);
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 rounded-lg border border-border bg-surface-container p-5">
+    <form
+      onSubmit={handleSubmit}
+      className="mt-6 rounded-lg border border-border bg-surface-container p-5
+                 transition-[border-color] duration-200 hover:border-border/80"
+    >
       <div className="flex items-center justify-between gap-2">
-        <h2 className="font-display text-base font-medium text-on-surface">Alokasi & Pembayaran Escrow</h2>
+        <h2 className="font-display text-base font-medium text-on-surface">
+          Alokasi & Pembayaran Escrow
+        </h2>
         <Badge tone="success">Dana Aman</Badge>
       </div>
 
@@ -85,24 +92,31 @@ export default function CheckoutWidget({ vehicleId, price }: { vehicleId: number
       </dl>
 
       <div className="mt-4">
-        <label className="block text-sm font-medium text-on-surface">Jumlah DP yang diajukan</label>
+        <label className="block text-sm font-medium text-on-surface" htmlFor="checkout-amount">
+          Jumlah DP yang diajukan
+        </label>
         <input
+          id="checkout-amount"
           type="number"
           min={minDp}
           max={Number(price)}
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
-          className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none"
+          className="input-field mt-1.5"
         />
         <p className="mt-1 text-xs text-on-surface-muted">Minimal {formatRupiah(minDp)}</p>
       </div>
 
-      {error && <p className="mt-3 text-sm text-error">{error}</p>}
+      {error && (
+        <p className="mt-3 text-sm text-error animate-fade-in" role="alert">
+          {error}
+        </p>
+      )}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-4 w-full rounded-md bg-primary-container px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary disabled:opacity-60"
+        className="btn-gold mt-4 w-full rounded-md px-4 py-2.5 text-sm"
       >
         {isSubmitting ? "Memproses..." : "Bayar DP Sekarang"}
       </button>
@@ -110,7 +124,7 @@ export default function CheckoutWidget({ vehicleId, price }: { vehicleId: number
       <ol className="mt-5 space-y-2 border-t border-border pt-4">
         {ESCROW_STEPS.map((step, index) => (
           <li key={step} className="flex gap-2 text-xs text-on-surface-muted">
-            <span className="font-label font-medium text-primary">{index + 1}.</span>
+            <span className="font-label shrink-0 font-medium text-primary">{index + 1}.</span>
             <span>{step}</span>
           </li>
         ))}
