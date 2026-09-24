@@ -1,0 +1,17 @@
+{
+  "brand": "Honda",
+  "model": "Jazz",
+  "year": 2020,
+  "price": 220000000,
+  "mileage": 25000,
+  "location": "Bandung",
+  "description": "Honda Jazz 2020 RS CVT tangan pertama. Full ori semua panel, cat masih kilap. Fitur lengkap: Honda Sensing, kamera mundur, Apple CarPlay. Servis berkala di AHASS, buku servis ada. Cocok untuk anak muda yang aktif.",
+  "specs": {
+    "transmisi": "CVT Otomatis",
+    "bahan_bakar": "Bensin",
+    "warna": "Crystal Black Pearl",
+    "mesin": "1500cc i-VTEC",
+    "kapasitas_penumpang": 5,
+    "tipe": "Hatchback"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "brand": "Toyota",
+  "model": "Avanza",
+  "year": 2022,
+  "price": 195000000,
+  "mileage": 18000,
+  "location": "Jakarta Selatan",
+  "description": "Toyota Avanza 2022 kondisi prima, satu tangan dari baru. Perawatan rutin di bengkel resmi Toyota, ban baru ganti Februari 2024. Bodi mulus tanpa penyok, interior bersih, AC dingin. Surat-surat lengkap dan masih atas nama pemilik.",
+  "specs": {
+    "transmisi": "Manual 5-percepatan",
+    "bahan_bakar": "Bensin",
+    "warna": "Putih",
+    "mesin": "1500cc",
+    "kapasitas_penumpang": 7,
+    "tipe": "MPV"
+  }
+}
