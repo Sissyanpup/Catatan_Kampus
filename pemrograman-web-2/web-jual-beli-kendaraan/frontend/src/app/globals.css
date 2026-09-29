@@ -26,6 +26,7 @@
   --color-success-container: #163a26;
   --color-warning: #f5b26b;
   --color-warning-container: #402a12;
+  --color-on-warning: #2a1a05;
   --color-error: #ffb4ab;
   --color-error-container: #93000a;
   --color-neutral: #c7c6ca;
@@ -59,6 +60,7 @@
   --color-success-container: var(--color-success-container);
   --color-warning: var(--color-warning);
   --color-warning-container: var(--color-warning-container);
+  --color-on-warning: var(--color-on-warning);
   --color-error: var(--color-error);
   --color-error-container: var(--color-error-container);
   --color-neutral: var(--color-neutral);
@@ -134,6 +136,22 @@
     background-size: 200% 100%;
     animation: shimmer 1.8s linear infinite;
   }
+}
+
+/* ============================================================
+   Leaflet z-index override
+   ------------------------------------------------------------
+   Default Leaflet menaruh pane (400) & control (800-1000) tinggi
+   sehingga menutupi modal Tailwind `z-50`. Turunkan ke bawah 40
+   supaya semua overlay/modal (z-50, z-[9999]) selalu di atas peta.
+   ============================================================ */
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 10 !important;
+}
+.leaflet-control {
+  z-index: 20 !important;
 }
 
 /* ============================================================

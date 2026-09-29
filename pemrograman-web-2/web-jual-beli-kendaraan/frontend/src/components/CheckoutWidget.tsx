@@ -1,10 +1,7 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
 import Link from "next/link";
-import { ApiError, apiFetch } from "@/lib/api";
 import { formatRupiah } from "@/lib/format";
-import type { Transaction } from "@/lib/types";
 import { useAuth } from "@/contexts/auth-context";
 import Badge from "@/components/Badge";
 
@@ -16,21 +13,16 @@ const ESCROW_STEPS = [
 
 export default function CheckoutWidget({ vehicleId, price }: { vehicleId: number; price: string }) {
   const { user, isLoading } = useAuth();
-  const minDp = Math.ceil(Number(price) * 0.1);
-  const [amount, setAmount] = useState(minDp);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   if (isLoading) return null;
 
   if (!user) {
     return (
-      <div className="mt-6 rounded-lg border border-border bg-surface-container p-4 text-sm text-on-surface-muted
-                      transition-colors duration-200 hover:border-border/80">
+      <div className="mt-6 rounded-lg border border-border bg-surface-container p-4 text-sm text-on-surface-muted">
         <Link href="/login" className="font-medium text-on-surface transition-colors duration-150 hover:text-primary">
           Masuk
         </Link>{" "}
-        sebagai pembeli untuk mengajukan DP kendaraan ini.
+        sebagai pembeli untuk mengajukan pembelian kendaraan ini.
       </div>
     );
   }
@@ -39,87 +31,43 @@ export default function CheckoutWidget({ vehicleId, price }: { vehicleId: number
     return null;
   }
 
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-    setError(null);
-    setIsSubmitting(true);
-
-    try {
-      const { data } = await apiFetch<{ data: Transaction }>(`/api/buyer/vehicles/${vehicleId}/checkout`, {
-        method: "POST",
-        body: { amount },
-      });
-
-      if (data.gateway_invoice_url) {
-        window.location.href = data.gateway_invoice_url;
-      }
-    } catch (err) {
-      if (err instanceof ApiError) {
-        setError(err.errors?.amount?.[0] ?? err.message);
-      }
-      setIsSubmitting(false);
-    }
+  if (!user.has_completed_ktp) {
+    return (
+      <div className="mt-6 rounded-lg border border-warning/40 bg-warning/5 p-4 text-sm text-on-surface-muted">
+        Lengkapi data KTP kamu dulu sebelum bisa mengajukan pembelian.{" "}
+        <Link href="/lengkapi-data" className="font-medium text-warning hover:underline">
+          Isi sekarang
+        </Link>
+      </div>
+    );
   }
 
-  const sisaPelunasan = Math.max(Number(price) - amount, 0);
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mt-6 rounded-lg border border-border bg-surface-container p-5
-                 transition-[border-color] duration-200 hover:border-border/80"
-    >
+    <div className="mt-6 rounded-lg border border-border bg-surface-container p-5">
       <div className="flex items-center justify-between gap-2">
         <h2 className="font-display text-base font-medium text-on-surface">
-          Alokasi & Pembayaran Escrow
+          Ajukan Pembelian &amp; Escrow
         </h2>
         <Badge tone="success">Dana Aman</Badge>
       </div>
 
-      <dl className="mt-4 space-y-2 border-t border-border pt-4 text-sm">
+      <dl className="mt-4 border-t border-border pt-4 text-sm">
         <div className="flex items-center justify-between">
           <dt className="text-on-surface-muted">Harga Unit</dt>
-          <dd className="text-on-surface">{formatRupiah(Number(price))}</dd>
-        </div>
-        <div className="flex items-center justify-between">
-          <dt className="text-on-surface-muted">DP Minimum (10%)</dt>
-          <dd className="text-on-surface">{formatRupiah(minDp)}</dd>
-        </div>
-        <div className="flex items-center justify-between font-medium">
-          <dt className="text-on-surface">Sisa Pelunasan Setelah DP</dt>
-          <dd className="text-on-surface">{formatRupiah(sisaPelunasan)}</dd>
+          <dd className="font-semibold text-primary">{formatRupiah(Number(price))}</dd>
         </div>
       </dl>
 
-      <div className="mt-4">
-        <label className="block text-sm font-medium text-on-surface" htmlFor="checkout-amount">
-          Jumlah DP yang diajukan
-        </label>
-        <input
-          id="checkout-amount"
-          type="number"
-          min={minDp}
-          max={Number(price)}
-          value={amount}
-          onChange={(e) => setAmount(Number(e.target.value))}
-          className="input-field mt-1.5"
-        />
-        <p className="mt-1 text-xs text-on-surface-muted">Minimal {formatRupiah(minDp)}</p>
-      </div>
+      <p className="mt-3 text-xs text-on-surface-muted">
+        Pilih skema DP (mulai 5%) atau bayar penuh, tambahkan opsi asuransi, dan isi alamat pengantaran di form berikutnya.
+      </p>
 
-      {error && (
-        <p className="mt-3 text-sm text-error animate-fade-in" role="alert">
-          {error}
-        </p>
-      )}
-
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="btn-gold mt-4 w-full rounded-md px-4 py-2.5 text-sm"
+      <Link
+        href={`/checkout/${vehicleId}`}
+        className="btn-gold mt-4 block w-full rounded-md px-4 py-2.5 text-center text-sm"
       >
-        {isSubmitting ? "Memproses..." : "Bayar DP Sekarang"}
-      </button>
+        Lanjut ke Form Pembelian
+      </Link>
 
       <ol className="mt-5 space-y-2 border-t border-border pt-4">
         {ESCROW_STEPS.map((step, index) => (
@@ -129,6 +77,6 @@ export default function CheckoutWidget({ vehicleId, price }: { vehicleId: number
           </li>
         ))}
       </ol>
-    </form>
+    </div>
   );
 }

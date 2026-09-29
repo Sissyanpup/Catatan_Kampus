@@ -8,6 +8,7 @@ enum TransactionPaymentStatus: string
     case Paid = 'paid';
     case Failed = 'failed';
     case Expired = 'expired';
+    case Cancelled = 'cancelled';
 
     /**
      * Map a Xendit invoice "status" field to our own payment status.

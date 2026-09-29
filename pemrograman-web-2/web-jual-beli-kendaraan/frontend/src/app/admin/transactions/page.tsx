@@ -9,7 +9,10 @@ import PaymentStatusBadge from "@/components/PaymentStatusBadge";
 import EscrowStatusBadge from "@/components/EscrowStatusBadge";
 import PayoutStatusBadge from "@/components/PayoutStatusBadge";
 import TransactionStatusHistory from "@/components/TransactionStatusHistory";
+import VdrPanel from "@/components/VdrPanel";
+import ShipmentPanel from "@/components/ShipmentPanel";
 import ConfirmModal from "@/components/ConfirmModal";
+import DangerConfirmModal from "@/components/DangerConfirmModal";
 
 const FILTERS: { value: string; label: string }[] = [
   { value: "", label: "Semua" },
@@ -262,6 +265,17 @@ export default function AdminTransactionsPage() {
                         </div>
                       )}
 
+                      <VdrPanel documents={detail.documents} />
+
+                      {detail.shipment && (
+                        <ShipmentPanel
+                          transactionId={detail.id}
+                          shipment={detail.shipment}
+                          userRole="admin"
+                          onUpdate={() => refreshDetail(detail.id)}
+                        />
+                      )}
+
                       {detail.status_history && (
                         <div>
                           <p className="mb-2 text-xs font-semibold uppercase text-on-surface-muted">Riwayat Status</p>
@@ -300,14 +314,20 @@ export default function AdminTransactionsPage() {
       )}
 
       {pendingAction?.type === "disburse" && (
-        <ConfirmModal
+        <DangerConfirmModal
           title="Cairkan Dana ke Penjual"
-          message="Transfer dana secara manual ke rekening penjual di atas, lalu catat nomor referensi transfernya di sini."
+          intro="Aksi ini melepas dana escrow ke rekening penjual. Pastikan kamu sudah menyelesaikan transfer bank secara manual sebelum melanjutkan."
+          consequences={[
+            "Status payout berubah menjadi paid dan tidak bisa dibatalkan lewat sistem.",
+            "Nomor referensi yang kamu masukkan tercatat permanen di audit trail.",
+            "Refund harus dilakukan manual di luar sistem jika terjadi kesalahan.",
+          ]}
           fields={[
             { name: "reference", label: "Nomor Referensi Transfer", required: true, placeholder: "mis. TRF-20260917-001" },
-            { name: "note", label: "Catatan (opsional)" },
+            { name: "note", label: "Catatan (opsional)", type: "textarea" },
           ]}
-          confirmLabel="Cairkan Dana"
+          confirmWord="CAIRKAN"
+          confirmLabel="Cairkan Dana Sekarang"
           isSubmitting={isSubmitting}
           onConfirm={(values) => runAction(pendingAction, values)}
           onCancel={() => setPendingAction(null)}
@@ -325,14 +345,28 @@ export default function AdminTransactionsPage() {
         />
       )}
 
-      {pendingAction?.type === "resolve-dispute" && (
+      {pendingAction?.type === "resolve-dispute" && pendingAction.resolution === "refund" && (
+        <DangerConfirmModal
+          title="Kembalikan Dana (Refund) ke Buyer"
+          intro="Sengketa akan diselesaikan dengan mengembalikan dana escrow ke buyer dan membuka kembali listing kendaraan."
+          consequences={[
+            "Dana escrow di-refund ke buyer dan tidak dapat ditarik kembali.",
+            "Listing kendaraan kembali aktif dan bisa dibeli oleh buyer lain.",
+            "Catatan penyelesaian tercatat di riwayat transaksi & tidak bisa diubah.",
+          ]}
+          fields={[{ name: "note", label: "Catatan penyelesaian sengketa", required: true, type: "textarea" }]}
+          confirmWord="REFUND"
+          confirmLabel="Ya, Kembalikan Dana"
+          isSubmitting={isSubmitting}
+          onConfirm={(values) => runAction(pendingAction, values)}
+          onCancel={() => setPendingAction(null)}
+        />
+      )}
+
+      {pendingAction?.type === "resolve-dispute" && pendingAction.resolution === "resume" && (
         <ConfirmModal
-          title={pendingAction.resolution === "refund" ? "Kembalikan Dana (Refund)" : "Lanjutkan Transaksi"}
-          message={
-            pendingAction.resolution === "refund"
-              ? "Kembalikan dana ke buyer dan buka kembali listing kendaraan?"
-              : "Lanjutkan transaksi ke status sebelum sengketa?"
-          }
+          title="Lanjutkan Transaksi"
+          message="Lanjutkan transaksi ke status sebelum sengketa?"
           fields={[{ name: "note", label: "Catatan penyelesaian (opsional)" }]}
           isSubmitting={isSubmitting}
           onConfirm={(values) => runAction(pendingAction, values)}

@@ -32,13 +32,13 @@ class VehicleController extends Controller
     {
         $this->authorize('view', $vehicle);
 
-        return new VehicleDetailResource($vehicle->load('photos', 'documents', 'reviewer'));
+        return new VehicleDetailResource($vehicle->load('photos', 'documents', 'reviewer', 'insurancePolicies', 'vinChecks'));
     }
 
     public function store(VehicleStoreRequest $request): VehicleDetailResource
     {
         $vehicle = $request->user()->vehicles()->create([
-            ...$request->safe()->only(['brand', 'model', 'year', 'price', 'mileage', 'location', 'description', 'specs']),
+            ...$request->safe()->only(['brand', 'model', 'year', 'vin', 'price', 'mileage', 'location', 'description', 'specs', 'payment_options', 'insurance_options']),
             'status' => VehicleStatus::Draft,
         ]);
 
@@ -51,12 +51,12 @@ class VehicleController extends Controller
 
         $this->storeDocuments($request, $vehicle);
 
-        return new VehicleDetailResource($vehicle->load('photos', 'documents'));
+        return new VehicleDetailResource($vehicle->load('photos', 'documents', 'insurancePolicies', 'vinChecks'));
     }
 
     public function update(VehicleUpdateRequest $request, Vehicle $vehicle): VehicleDetailResource
     {
-        $vehicle->update($request->safe()->only(['brand', 'model', 'year', 'price', 'mileage', 'location', 'description', 'specs']));
+        $vehicle->update($request->safe()->only(['brand', 'model', 'year', 'vin', 'price', 'mileage', 'location', 'description', 'specs', 'payment_options', 'insurance_options']));
 
         if ($request->hasFile('photos')) {
             $vehicle->photos->each(fn ($photo) => Storage::disk('public')->delete($photo->path));
@@ -72,7 +72,7 @@ class VehicleController extends Controller
 
         $this->storeDocuments($request, $vehicle);
 
-        return new VehicleDetailResource($vehicle->load('photos', 'documents'));
+        return new VehicleDetailResource($vehicle->load('photos', 'documents', 'insurancePolicies', 'vinChecks'));
     }
 
     public function destroy(Vehicle $vehicle): Response
@@ -98,7 +98,7 @@ class VehicleController extends Controller
             'rejection_reason' => null,
         ]);
 
-        return new VehicleDetailResource($vehicle->load('photos', 'documents'));
+        return new VehicleDetailResource($vehicle->load('photos', 'documents', 'insurancePolicies', 'vinChecks'));
     }
 
     private function storeOptimizedPhoto(UploadedFile $photo, Vehicle $vehicle): string

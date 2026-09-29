@@ -14,11 +14,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['brand', 'model', 'year', 'price', 'mileage', 'location', 'description', 'specs', 'status', 'reviewed_by', 'reviewed_at', 'rejection_reason'])]
+#[Fillable(['brand', 'model', 'year', 'vin', 'price', 'mileage', 'location', 'description', 'specs', 'status', 'reviewed_by', 'reviewed_at', 'rejection_reason', 'payment_options', 'insurance_options'])]
 class Vehicle extends Model
 {
     /** @use HasFactory<VehicleFactory> */
     use HasFactory, SoftDeletes;
+
+    /** Preset default DP jika seller tidak mengoverride. */
+    public const DEFAULT_PAYMENT_OPTIONS = [
+        ['label' => 'DP 5%', 'percent' => 5],
+        ['label' => 'DP 10%', 'percent' => 10],
+        ['label' => 'DP 15%', 'percent' => 15],
+        ['label' => 'DP 20%', 'percent' => 20],
+        ['label' => 'Bayar Penuh', 'percent' => 100],
+    ];
+
+    /** Preset default asuransi jika seller tidak mengoverride. Premi = persentase dari harga kendaraan. */
+    public const DEFAULT_INSURANCE_OPTIONS = [
+        ['type' => 'none', 'label' => 'Tanpa Asuransi', 'premium_percent' => 0],
+        ['type' => 'tlo', 'label' => 'TLO (Total Loss Only)', 'premium_percent' => 0.35],
+        ['type' => 'all_risk', 'label' => 'All Risk', 'premium_percent' => 2.5],
+    ];
 
     protected $attributes = [
         'description' => null,
@@ -26,6 +42,8 @@ class Vehicle extends Model
         'reviewed_by' => null,
         'reviewed_at' => null,
         'rejection_reason' => null,
+        'payment_options' => null,
+        'insurance_options' => null,
     ];
 
     /**
@@ -43,10 +61,46 @@ class Vehicle extends Model
     {
         return [
             'specs' => 'array',
+            'payment_options' => 'array',
+            'insurance_options' => 'array',
             'status' => VehicleStatus::class,
             'reviewed_at' => 'datetime',
             'price' => 'decimal:2',
         ];
+    }
+
+    /**
+     * Preset DP efektif — seller override kalau ada, default kalau tidak.
+     *
+     * @return array<int, array{label:string, percent:float|int}>
+     */
+    public function effectivePaymentOptions(): array
+    {
+        return $this->payment_options ?: self::DEFAULT_PAYMENT_OPTIONS;
+    }
+
+    /**
+     * Preset asuransi efektif — seller override kalau ada, default kalau tidak.
+     * Premi dihitung dari persentase harga kendaraan (kecuali seller isi premium eksplisit).
+     *
+     * @return array<int, array{type:string, label:string, premium:float}>
+     */
+    public function effectiveInsuranceOptions(): array
+    {
+        $options = $this->insurance_options ?: self::DEFAULT_INSURANCE_OPTIONS;
+        $price = (float) $this->price;
+
+        return array_map(function (array $opt) use ($price): array {
+            $premium = isset($opt['premium'])
+                ? (float) $opt['premium']
+                : $price * ((float) ($opt['premium_percent'] ?? 0)) / 100;
+
+            return [
+                'type' => (string) $opt['type'],
+                'label' => (string) $opt['label'],
+                'premium' => round($premium, 2),
+            ];
+        }, $options);
     }
 
     public function seller(): BelongsTo
@@ -76,6 +130,16 @@ class Vehicle extends Model
     public function documents(): HasMany
     {
         return $this->hasMany(VehicleDocument::class);
+    }
+
+    public function insurancePolicies(): HasMany
+    {
+        return $this->hasMany(VehicleInsurancePolicy::class)->latest('valid_until');
+    }
+
+    public function vinChecks(): HasMany
+    {
+        return $this->hasMany(VehicleVinCheck::class)->latest('checked_at');
     }
 
     public function transactions(): HasMany

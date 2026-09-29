@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Payments;
 
+use App\Documents\DocumentGenerator;
 use App\Enums\PaymentGatewayDriver;
 use App\Enums\TransactionPaymentStatus;
 use App\Escrow\EscrowStateMachine;
@@ -21,7 +22,7 @@ class MockPaymentController extends Controller
         return new TransactionResource($this->findTransaction($reference)->load('vehicle.photos'));
     }
 
-    public function pay(string $reference, EscrowStateMachine $escrow): TransactionResource
+    public function pay(string $reference, EscrowStateMachine $escrow, DocumentGenerator $docs): TransactionResource
     {
         $transaction = $this->findTransaction($reference);
 
@@ -33,6 +34,8 @@ class MockPaymentController extends Controller
         ]);
 
         $escrow->holdFunds($transaction);
+        $docs->generateDepositReceipt($transaction);
+        $docs->generateTaxInvoice($transaction);
 
         return new TransactionResource($transaction->load('vehicle.photos'));
     }

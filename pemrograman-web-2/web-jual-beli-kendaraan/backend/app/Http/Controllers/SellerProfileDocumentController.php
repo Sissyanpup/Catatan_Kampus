@@ -9,15 +9,23 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class SellerProfileDocumentController extends Controller
 {
+    private const ALLOWED_TYPES = [
+        'ktp' => 'ktp_path',
+        'npwp' => 'npwp_path',
+        'company_registration' => 'company_registration_path',
+        'articles_of_association' => 'articles_of_association_path',
+        'ubo_declaration' => 'ubo_declaration_path',
+    ];
+
+    /**
+     * Akses dokumen digate lewat signed URL (middleware `signed` di route) —
+     * pola yang sama dengan `BuyerProfileDocumentController`.
+     */
     public function show(Request $request, SellerProfile $sellerProfile, string $type): StreamedResponse
     {
-        abort_unless(in_array($type, ['ktp', 'npwp'], true), 404);
-        abort_unless(
-            $request->user()->isAdmin() || $request->user()->id === $sellerProfile->user_id,
-            403
-        );
+        abort_unless(array_key_exists($type, self::ALLOWED_TYPES), 404);
 
-        $path = $type === 'ktp' ? $sellerProfile->ktp_path : $sellerProfile->npwp_path;
+        $path = $sellerProfile->{self::ALLOWED_TYPES[$type]};
 
         abort_if($path === null, 404);
 

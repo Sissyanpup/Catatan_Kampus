@@ -34,4 +34,13 @@ class TransactionPolicy
     {
         return $user->isAdmin();
     }
+
+    /**
+     * Buyer boleh membatalkan transaksinya sendiri selama masih pending
+     * (belum dibayar). Setelah dibayar, jalur pembatalan lewat dispute/refund.
+     */
+    public function cancel(User $user, Transaction $transaction): bool
+    {
+        return $user->id === $transaction->buyer_id;
+    }
 }

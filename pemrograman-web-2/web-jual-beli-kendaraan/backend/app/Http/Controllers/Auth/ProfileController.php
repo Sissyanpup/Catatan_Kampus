@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\UpdateAvatarRequest;
+use App\Http\Requests\Auth\UpdateKtpRequest;
 use App\Http\Requests\Auth\UpdatePasswordRequest;
 use App\Http\Requests\Auth\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
@@ -41,6 +42,19 @@ class ProfileController extends Controller
         if ($oldPath) {
             Storage::disk('public')->delete($oldPath);
         }
+
+        return new UserResource($user->load('sellerProfile'));
+    }
+
+    public function updateKtp(UpdateKtpRequest $request): UserResource
+    {
+        $user = $request->user();
+
+        $user->update([
+            'ktp_number' => $request->validated('ktp_number'),
+            'ktp_name' => $request->validated('ktp_name'),
+            'ktp_verified_at' => now(),
+        ]);
 
         return new UserResource($user->load('sellerProfile'));
     }

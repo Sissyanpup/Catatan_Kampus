@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Enums\SellerEntityType;
 use App\Enums\SellerProfileStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Seller\SellerKycRequest;
@@ -26,9 +27,16 @@ class SellerProfileController extends Controller
     {
         $this->authorize('create', SellerProfile::class);
 
+        $folder = 'kyc/'.$request->user()->id;
+        $entityType = SellerEntityType::from($request->validated('entity_type'));
+
         $profile = $request->user()->sellerProfile()->create([
-            'ktp_path' => $request->file('ktp')->store('kyc/'.$request->user()->id, 'local'),
-            'npwp_path' => $request->file('npwp')?->store('kyc/'.$request->user()->id, 'local'),
+            'entity_type' => $entityType,
+            'ktp_path' => $request->file('ktp')->store($folder, 'local'),
+            'npwp_path' => $request->file('npwp')?->store($folder, 'local'),
+            'company_registration_path' => $request->file('company_registration')?->store($folder, 'local'),
+            'articles_of_association_path' => $request->file('articles_of_association')?->store($folder, 'local'),
+            'ubo_declaration_path' => $request->file('ubo_declaration')?->store($folder, 'local'),
             'status' => SellerProfileStatus::Pending,
         ]);
 
@@ -43,12 +51,22 @@ class SellerProfileController extends Controller
 
         $this->authorize('update', $profile);
 
+        $folder = 'kyc/'.$request->user()->id;
+        $entityType = SellerEntityType::from($request->validated('entity_type'));
+
         $oldKtp = $profile->ktp_path;
         $oldNpwp = $profile->npwp_path;
+        $oldCompany = $profile->company_registration_path;
+        $oldArticles = $profile->articles_of_association_path;
+        $oldUbo = $profile->ubo_declaration_path;
 
         $profile->update([
-            'ktp_path' => $request->file('ktp')->store('kyc/'.$request->user()->id, 'local'),
-            'npwp_path' => $request->file('npwp')?->store('kyc/'.$request->user()->id, 'local') ?? $oldNpwp,
+            'entity_type' => $entityType,
+            'ktp_path' => $request->file('ktp')->store($folder, 'local'),
+            'npwp_path' => $request->file('npwp')?->store($folder, 'local') ?? $oldNpwp,
+            'company_registration_path' => $request->file('company_registration')?->store($folder, 'local') ?? $oldCompany,
+            'articles_of_association_path' => $request->file('articles_of_association')?->store($folder, 'local') ?? $oldArticles,
+            'ubo_declaration_path' => $request->file('ubo_declaration')?->store($folder, 'local') ?? $oldUbo,
             'status' => SellerProfileStatus::Pending,
             'reviewed_by' => null,
             'reviewed_at' => null,

@@ -15,6 +15,7 @@ export default function VehicleForm({ vehicleId, initial }: Props) {
   const [brand, setBrand] = useState(initial?.brand ?? "");
   const [model, setModel] = useState(initial?.model ?? "");
   const [year, setYear] = useState(initial?.year?.toString() ?? "");
+  const [vin, setVin] = useState(initial?.vin ?? "");
   const [price, setPrice] = useState(initial?.price ?? "");
   const [mileage, setMileage] = useState(initial?.mileage?.toString() ?? "");
   const [location, setLocation] = useState(initial?.location ?? "");
@@ -42,6 +43,7 @@ export default function VehicleForm({ vehicleId, initial }: Props) {
         brand,
         model,
         year,
+        vin: vin.trim() ? vin.trim().toUpperCase() : null,
         price,
         mileage,
         location,
@@ -131,6 +133,22 @@ export default function VehicleForm({ vehicleId, initial }: Props) {
           />
         </Field>
       </div>
+
+      <Field
+        label="Nomor VIN (opsional, 17 karakter)"
+        error={errors.vin?.[0]}
+      >
+        <input
+          value={vin}
+          onChange={(e) => setVin(e.target.value.toUpperCase())}
+          maxLength={17}
+          minLength={vin.length > 0 ? 17 : undefined}
+          pattern="[A-HJ-NPR-Z0-9]{17}"
+          placeholder="mis. 1HGBH41JXMN109186"
+          title="17 karakter alfanumerik, tanpa huruf I/O/Q"
+          className="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm bg-surface text-on-surface placeholder:text-on-surface-muted focus:border-primary focus:outline-none font-mono uppercase tracking-wider"
+        />
+      </Field>
 
       <Field label="Deskripsi" error={errors.description?.[0]}>
         <textarea

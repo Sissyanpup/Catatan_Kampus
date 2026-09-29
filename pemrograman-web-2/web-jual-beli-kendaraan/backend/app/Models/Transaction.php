@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Enums\EscrowStatus;
+use App\Enums\InsuranceType;
 use App\Enums\PaymentGatewayDriver;
+use App\Enums\PaymentScheme;
 use App\Enums\TransactionPaymentStatus;
 use App\Enums\TransactionPayoutStatus;
 use Database\Factories\TransactionFactory;
@@ -12,14 +14,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[Fillable([
     'vehicle_id', 'buyer_id', 'seller_id', 'amount', 'payment_gateway', 'payment_status',
+    'payment_scheme', 'dp_percent', 'vehicle_price',
+    'insurance_type', 'insurance_premium',
+    'buyer_address', 'buyer_phone', 'buyer_notes',
+    'invoice_number',
+    'bank_transfer_bank', 'bank_transfer_account_number', 'bank_transfer_account_holder',
     'gateway_reference', 'gateway_invoice_url', 'paid_at', 'expires_at',
     'escrow_status', 'buyer_confirmed_at', 'seller_confirmed_at', 'escrow_status_before_dispute',
     'dispute_reason', 'disputed_by', 'disputed_at',
     'dispute_resolution_note', 'dispute_resolved_by', 'dispute_resolved_at',
+    'cancellation_reason', 'cancelled_by', 'cancelled_at',
     'payout_status',
+    'buyer_signature_path', 'buyer_signed_at', 'seller_signature_path', 'seller_signed_at',
 ])]
 class Transaction extends Model
 {
@@ -49,8 +59,13 @@ class Transaction extends Model
     {
         return [
             'amount' => 'decimal:2',
+            'vehicle_price' => 'decimal:2',
+            'dp_percent' => 'decimal:2',
+            'insurance_premium' => 'decimal:2',
             'payment_gateway' => PaymentGatewayDriver::class,
             'payment_status' => TransactionPaymentStatus::class,
+            'payment_scheme' => PaymentScheme::class,
+            'insurance_type' => InsuranceType::class,
             'paid_at' => 'datetime',
             'expires_at' => 'datetime',
             'escrow_status' => EscrowStatus::class,
@@ -58,7 +73,10 @@ class Transaction extends Model
             'seller_confirmed_at' => 'datetime',
             'disputed_at' => 'datetime',
             'dispute_resolved_at' => 'datetime',
+            'cancelled_at' => 'datetime',
             'payout_status' => TransactionPayoutStatus::class,
+            'buyer_signed_at' => 'datetime',
+            'seller_signed_at' => 'datetime',
         ];
     }
 
@@ -95,5 +113,15 @@ class Transaction extends Model
     public function payouts(): HasMany
     {
         return $this->hasMany(TransactionPayout::class)->latest();
+    }
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(TransactionDocument::class)->latest('generated_at');
+    }
+
+    public function shipment(): HasOne
+    {
+        return $this->hasOne(Shipment::class);
     }
 }

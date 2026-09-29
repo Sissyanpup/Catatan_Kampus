@@ -87,6 +87,45 @@ export default async function VehicleDetailPage({
         </dl>
       )}
 
+      {(() => {
+        const vinClean = vehicle.latest_vin_check?.status === "clean";
+        const activePolicy = vehicle.insurance_policies?.find((p) => p.is_active);
+        if (!vinClean && !activePolicy) return null;
+        return (
+          <div className="mt-6 rounded-lg border border-primary/30 bg-primary-container/10 p-4 animate-fade-up animation-delay-400">
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+              Sinyal Kepercayaan
+            </p>
+            <ul className="mt-2 space-y-1.5 text-sm text-on-surface">
+              {vinClean && (
+                <li className="flex items-start gap-2">
+                  <span aria-hidden className="text-success">&#10003;</span>
+                  <span>VIN diverifikasi (bersih)</span>
+                </li>
+              )}
+              {activePolicy && (
+                <li className="flex items-start gap-2">
+                  <span aria-hidden className="text-success">&#10003;</span>
+                  <span>
+                    Diasuransikan: {activePolicy.insurer_name} &mdash;{" "}
+                    {activePolicy.policy_type_label}
+                    {activePolicy.valid_until && (
+                      <>
+                        {" "}
+                        sampai{" "}
+                        {new Intl.DateTimeFormat("id-ID", { dateStyle: "medium" }).format(
+                          new Date(activePolicy.valid_until)
+                        )}
+                      </>
+                    )}
+                  </span>
+                </li>
+              )}
+            </ul>
+          </div>
+        );
+      })()}
+
       {vehicle.seller && (
         <p className="mt-6 text-sm text-on-surface-muted animate-fade-up animation-delay-400">
           Dijual oleh{" "}

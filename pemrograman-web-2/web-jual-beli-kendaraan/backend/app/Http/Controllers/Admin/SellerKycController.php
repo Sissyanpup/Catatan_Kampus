@@ -18,8 +18,12 @@ class SellerKycController extends Controller
 
         $status = $request->query('status', SellerProfileStatus::Pending->value);
 
+        // Eager-load user penuh — partial select (`user:id,name,email,role`) memicu
+        // MissingAttributeException di UserResource yang mengakses `bio`/`avatar_path`/`ktp_number`
+        // karena `Model::preventAccessingMissingAttributes` aktif. Sudah dinormalkan
+        // dengan BuyerKycController.
         $profiles = SellerProfile::query()
-            ->with('user:id,name,email,role')
+            ->with('user')
             ->when($status !== 'all', fn ($query) => $query->where('status', $status))
             ->latest()
             ->paginate(20);

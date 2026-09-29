@@ -22,6 +22,9 @@ class UserResource extends JsonResource
             'bio' => $this->bio,
             'avatar_url' => $this->avatar_path ? Storage::disk('public')->url($this->avatar_path) : null,
             'role' => $this->role,
+            'ktp_number' => $this->ktp_number,
+            'ktp_name' => $this->ktp_name,
+            'has_completed_ktp' => $this->hasCompletedKtp(),
             'seller_profile_status' => $this->whenLoaded('sellerProfile', fn () => $this->sellerProfile?->status),
         ];
     }

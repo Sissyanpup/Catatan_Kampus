@@ -20,11 +20,54 @@ class SellerKycTest extends TestCase
         $seller = User::factory()->create(['role' => UserRole::Seller]);
 
         $response = $this->actingAs($seller)->postJson('/api/seller/kyc', [
+            'entity_type' => 'individu',
             'ktp' => UploadedFile::fake()->image('ktp.jpg'),
         ]);
 
-        $response->assertCreated()->assertJsonPath('data.status', 'pending');
-        $this->assertDatabaseHas('seller_profiles', ['user_id' => $seller->id, 'status' => 'pending']);
+        $response->assertCreated()
+            ->assertJsonPath('data.status', 'pending')
+            ->assertJsonPath('data.entity_type', 'individu');
+        $this->assertDatabaseHas('seller_profiles', [
+            'user_id' => $seller->id,
+            'status' => 'pending',
+            'entity_type' => 'individu',
+        ]);
+    }
+
+    public function test_seller_perusahaan_requires_entity_documents(): void
+    {
+        Storage::fake('local');
+        $seller = User::factory()->create(['role' => UserRole::Seller]);
+
+        // Tanpa dokumen entity → validation gagal untuk perusahaan.
+        $this->actingAs($seller)->postJson('/api/seller/kyc', [
+            'entity_type' => 'perusahaan',
+            'ktp' => UploadedFile::fake()->image('ktp.jpg'),
+        ])->assertUnprocessable()->assertJsonValidationErrors([
+            'company_registration',
+            'articles_of_association',
+            'ubo_declaration',
+        ]);
+    }
+
+    public function test_seller_perusahaan_submits_full_entity_kyc(): void
+    {
+        Storage::fake('local');
+        $seller = User::factory()->create(['role' => UserRole::Seller]);
+
+        $response = $this->actingAs($seller)->postJson('/api/seller/kyc', [
+            'entity_type' => 'perusahaan',
+            'ktp' => UploadedFile::fake()->image('ktp.jpg'),
+            'company_registration' => UploadedFile::fake()->create('nib.pdf', 100),
+            'articles_of_association' => UploadedFile::fake()->create('akta.pdf', 100),
+            'ubo_declaration' => UploadedFile::fake()->create('ubo.pdf', 100),
+        ]);
+
+        $response->assertCreated()->assertJsonPath('data.entity_type', 'perusahaan');
+        $this->assertDatabaseHas('seller_profiles', [
+            'user_id' => $seller->id,
+            'entity_type' => 'perusahaan',
+        ]);
     }
 
     public function test_buyer_cannot_submit_kyc(): void
@@ -33,6 +76,7 @@ class SellerKycTest extends TestCase
         $buyer = User::factory()->create(['role' => UserRole::Buyer]);
 
         $this->actingAs($buyer)->postJson('/api/seller/kyc', [
+            'entity_type' => 'individu',
             'ktp' => UploadedFile::fake()->image('ktp.jpg'),
         ])->assertForbidden();
     }

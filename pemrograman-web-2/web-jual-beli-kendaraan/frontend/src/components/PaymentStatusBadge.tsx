@@ -6,6 +6,7 @@ const LABELS: Record<PaymentStatus, string> = {
   paid: "Lunas",
   failed: "Gagal",
   expired: "Kedaluwarsa",
+  cancelled: "Dibatalkan",
 };
 
 const TONES: Record<PaymentStatus, BadgeTone> = {
@@ -13,6 +14,7 @@ const TONES: Record<PaymentStatus, BadgeTone> = {
   paid: "success",
   failed: "danger",
   expired: "neutral",
+  cancelled: "neutral",
 };
 
 export default function PaymentStatusBadge({ status }: { status: PaymentStatus }) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Payments;
 
+use App\Documents\DocumentGenerator;
 use App\Enums\TransactionPaymentStatus;
 use App\Escrow\EscrowStateMachine;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,7 @@ use Illuminate\Http\Response;
  */
 class XenditWebhookController extends Controller
 {
-    public function __invoke(Request $request, EscrowStateMachine $escrow): Response
+    public function __invoke(Request $request, EscrowStateMachine $escrow, DocumentGenerator $docs): Response
     {
         abort_unless(
             config('payment.xendit.callback_verification_token') !== null
@@ -40,6 +41,8 @@ class XenditWebhookController extends Controller
 
         if ($status === TransactionPaymentStatus::Paid) {
             $escrow->holdFunds($transaction);
+            $docs->generateDepositReceipt($transaction);
+            $docs->generateTaxInvoice($transaction);
         }
 
         return response()->noContent();

@@ -10,7 +10,9 @@ use App\Payments\XenditGateway;
 use App\Payouts\DisbursementGateway;
 use App\Payouts\ManualDisbursementGateway;
 use App\Payouts\XenditDisbursementGateway;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -45,5 +47,21 @@ class AppServiceProvider extends ServiceProvider
         // relations (reviewer, seller) that don't need eager loading outside list endpoints.
         Model::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
         Model::preventAccessingMissingAttributes(! $this->app->isProduction());
+
+        // Override redirect target untuk guest — Laravel default panggil route('login')
+        // yang tidak ada di app SPA ini (bukan blade), sehingga request browser-direct
+        // ke /api/* (mis. admin klik "Lihat KTP" di tab baru saat sesi habis) crash
+        // 500. Kembalikan null untuk request /api/* (biar AuthenticationException
+        // di-render sebagai 401 JSON oleh handler di bootstrap/app.php), atau URL
+        // login frontend untuk browser nav.
+        Authenticate::redirectUsing(function (Request $request): ?string {
+            if ($request->is('api/*') || $request->expectsJson()) {
+                return null;
+            }
+
+            $frontend = rtrim(explode(',', (string) env('FRONTEND_URL', 'http://localhost:3000'))[0], '/');
+
+            return $frontend.'/login';
+        });
     }
 }

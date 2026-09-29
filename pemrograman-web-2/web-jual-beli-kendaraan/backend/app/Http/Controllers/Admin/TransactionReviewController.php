@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Documents\DocumentGenerator;
 use App\Enums\TransactionPaymentStatus;
 use App\Escrow\EscrowStateMachine;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TransactionReviewController extends Controller
 {
-    private const DETAIL_RELATIONS = ['vehicle.photos', 'buyer', 'seller.sellerProfile', 'statusHistories.actor', 'payouts'];
+    private const DETAIL_RELATIONS = ['vehicle.photos', 'buyer', 'seller.sellerProfile', 'statusHistories.actor', 'payouts', 'documents'];
 
     public function index(Request $request): AnonymousResourceCollection
     {
@@ -41,9 +42,13 @@ class TransactionReviewController extends Controller
         return new TransactionResource($transaction->load(self::DETAIL_RELATIONS));
     }
 
-    public function approveHandover(EscrowTransitionRequest $request, Transaction $transaction, EscrowStateMachine $escrow): TransactionResource
+    public function approveHandover(EscrowTransitionRequest $request, Transaction $transaction, EscrowStateMachine $escrow, DocumentGenerator $docs): TransactionResource
     {
         $escrow->approveHandover($transaction, $request->user(), $request->validated('note'));
+
+        // Bill of Sale auto-generated saat admin menyetujui serah-terima (Epic 7):
+        // kedua belah pihak sudah konfirmasi, jadi objek & waktu serah-terima definitif.
+        $docs->generateBillOfSale($transaction->fresh());
 
         return new TransactionResource($transaction->fresh(self::DETAIL_RELATIONS));
     }
@@ -55,11 +60,15 @@ class TransactionReviewController extends Controller
         return new TransactionResource($transaction->fresh(self::DETAIL_RELATIONS));
     }
 
-    public function disburse(DisburseTransactionRequest $request, Transaction $transaction, PayoutService $payouts): TransactionResource
+    public function disburse(DisburseTransactionRequest $request, Transaction $transaction, PayoutService $payouts, DocumentGenerator $docs): TransactionResource
     {
         $this->authorize('manage', Transaction::class);
 
         $payouts->disburse($transaction, $request->user(), $request->validated('reference'), $request->validated('note'));
+
+        // Escrow Disbursement Note auto-generated setelah pencairan berhasil (payout status = paid).
+        // Kalau gagal, PayoutService melempar exception dan baris ini tidak tereksekusi.
+        $docs->generateEscrowDisbursementNote($transaction->fresh(['payouts', 'seller.sellerProfile']));
 
         return new TransactionResource($transaction->fresh(self::DETAIL_RELATIONS));
     }

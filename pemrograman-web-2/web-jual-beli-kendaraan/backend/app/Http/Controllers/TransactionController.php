@@ -33,7 +33,7 @@ class TransactionController extends Controller
     {
         $this->authorize('view', $transaction);
 
-        return new TransactionResource($transaction->load(['vehicle.photos', 'statusHistories.actor']));
+        return new TransactionResource($transaction->load(['vehicle.photos', 'statusHistories.actor', 'documents']));
     }
 
     public function confirmHandover(Request $request, Transaction $transaction, EscrowStateMachine $escrow): TransactionResource
@@ -42,13 +42,13 @@ class TransactionController extends Controller
 
         $escrow->confirmHandover($transaction, $request->user());
 
-        return new TransactionResource($transaction->fresh(['vehicle.photos', 'statusHistories.actor']));
+        return new TransactionResource($transaction->fresh(['vehicle.photos', 'statusHistories.actor', 'documents']));
     }
 
     public function dispute(TransactionDisputeRequest $request, Transaction $transaction, EscrowStateMachine $escrow): TransactionResource
     {
         $escrow->openDispute($transaction, $request->user(), $request->validated('reason'));
 
-        return new TransactionResource($transaction->fresh(['vehicle.photos', 'statusHistories.actor']));
+        return new TransactionResource($transaction->fresh(['vehicle.photos', 'statusHistories.actor', 'documents']));
     }
 }

@@ -71,19 +71,19 @@ Butuh **2 terminal** yang berjalan bersamaan.
 
 ```bash
 cd backend
-php artisan serve --host=0.0.0.0
+php artisan serve
 ```
 
-Backend berjalan di: http://localhost:8000 dan http://192.168.88.253:8000
+Backend berjalan di: http://localhost:8000
 
 ### Terminal 2 — Frontend
 
 ```bash
 cd frontend
-npm run dev -- -H 0.0.0.0
+npm run dev
 ```
 
-Frontend berjalan di: http://localhost:3000 dan http://192.168.88.253:3000
+Frontend berjalan di: http://localhost:3000
 
 ---
 
@@ -109,9 +109,9 @@ Frontend berjalan di: http://localhost:3000 dan http://192.168.88.253:3000
 Sebelum presentasi, lakukan ini secara berurutan:
 
 - [ ] **Buka 2 terminal** di folder root proyek
-- [ ] **Terminal 1**: `cd backend && php artisan serve --host=0.0.0.0`
-- [ ] **Terminal 2**: `cd frontend && npm run dev -- -H 0.0.0.0`
-- [ ] **Buka browser** ke http://localhost:3000 (atau http://192.168.88.253:3000 dari perangkat lain)
+- [ ] **Terminal 1**: `cd backend && php artisan serve`
+- [ ] **Terminal 2**: `cd frontend && npm run dev`
+- [ ] **Buka browser** ke http://localhost:3000
 - [ ] Pastikan tidak ada pesan error di kedua terminal
 - [ ] Login sebagai admin dengan kredensial yang sudah dicatat
 

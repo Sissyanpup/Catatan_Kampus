@@ -8,7 +8,11 @@ import type { Transaction } from "@/lib/types";
 import PaymentStatusBadge from "@/components/PaymentStatusBadge";
 import EscrowStatusBadge from "@/components/EscrowStatusBadge";
 import TransactionStatusHistory from "@/components/TransactionStatusHistory";
-import ConfirmModal from "@/components/ConfirmModal";
+import VdrPanel from "@/components/VdrPanel";
+import ShipmentPanel from "@/components/ShipmentPanel";
+import ShipmentInitForm from "@/components/ShipmentInitForm";
+import SignaturePad from "@/components/SignaturePad";
+import DangerConfirmModal from "@/components/DangerConfirmModal";
 
 export default function SellerTransactionDetailPage({
   params,
@@ -23,6 +27,26 @@ export default function SellerTransactionDetailPage({
   const [disputeReason, setDisputeReason] = useState("");
   const [showDisputeForm, setShowDisputeForm] = useState(false);
   const [showConfirmHandover, setShowConfirmHandover] = useState(false);
+  const [showSignaturePad, setShowSignaturePad] = useState(false);
+  const [isSigning, setIsSigning] = useState(false);
+  const [signatureError, setSignatureError] = useState<string | null>(null);
+
+  async function handleSubmitSignature(dataUrl: string) {
+    setIsSigning(true);
+    setSignatureError(null);
+    try {
+      const { data } = await apiFetch<{ data: Transaction }>(
+        `/api/transactions/${id}/sign`,
+        { method: "POST", body: { signature: dataUrl } }
+      );
+      setTransaction(data);
+      setShowSignaturePad(false);
+    } catch (err) {
+      if (err instanceof ApiError) setSignatureError(err.message);
+    } finally {
+      setIsSigning(false);
+    }
+  }
 
   async function loadTransaction() {
     try {
@@ -201,6 +225,79 @@ export default function SellerTransactionDetailPage({
         )}
       </div>
 
+      <div className="mt-6">
+        <VdrPanel documents={transaction.documents} />
+      </div>
+
+      <div className="mt-6">
+        {transaction.shipment ? (
+          <ShipmentPanel
+            transactionId={transaction.id}
+            shipment={transaction.shipment}
+            userRole="seller"
+            onUpdate={loadTransaction}
+          />
+        ) : (
+          <ShipmentInitForm transactionId={transaction.id} onUpdate={loadTransaction} />
+        )}
+      </div>
+
+      <div className="mt-6 rounded-lg border border-border bg-surface-container p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h2 className="font-display text-lg text-on-surface">Tanda Tangan Digital</h2>
+            <p className="mt-0.5 text-xs text-on-surface-muted">
+              Tanda tangani perjanjian (SPA) & bukti pemindahan hak (Bill of Sale) secara digital.
+            </p>
+          </div>
+          {transaction.seller_signed_at ? (
+            <span className="rounded-md border border-success/40 bg-success/5 px-3 py-1 text-xs text-success">
+              &#10003; Sudah ditandatangani
+            </span>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowSignaturePad(true)}
+              className="btn-gold rounded-md px-4 py-2 text-sm"
+            >
+              Tanda Tangan Sekarang
+            </button>
+          )}
+        </div>
+        <dl className="mt-4 grid grid-cols-2 gap-4 text-xs">
+          <div>
+            <dt className="text-on-surface-muted">Penjual</dt>
+            <dd className="mt-0.5 text-on-surface">
+              {transaction.seller_signed_at
+                ? `Ditandatangani ${new Date(transaction.seller_signed_at).toLocaleString("id-ID")}`
+                : "Belum ditandatangani"}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-on-surface-muted">Pembeli</dt>
+            <dd className="mt-0.5 text-on-surface">
+              {transaction.buyer_signed_at
+                ? `Ditandatangani ${new Date(transaction.buyer_signed_at).toLocaleString("id-ID")}`
+                : "Belum ditandatangani"}
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      {showSignaturePad && (
+        <SignaturePad
+          onSubmit={handleSubmitSignature}
+          onClose={() => {
+            setShowSignaturePad(false);
+            setSignatureError(null);
+          }}
+          isSubmitting={isSigning}
+          errorMessage={signatureError}
+          title="Tanda Tangan sebagai Penjual"
+          intro="Gambar tanda tangan Anda pada kotak di bawah. Tanda tangan hanya bisa disimpan sekali dan tidak dapat diubah."
+        />
+      )}
+
       {transaction.status_history && transaction.status_history.length > 0 && (
         <div className="mt-6">
           <h2 className="text-sm font-semibold text-on-surface">Riwayat Status Escrow</h2>
@@ -211,10 +308,22 @@ export default function SellerTransactionDetailPage({
       )}
 
       {showConfirmHandover && (
-        <ConfirmModal
-          title="Konfirmasi Serah Terima"
-          message="Konfirmasi bahwa Anda sudah menyerahkan kendaraan secara fisik ke buyer?"
-          confirmLabel="Konfirmasi"
+        <DangerConfirmModal
+          title="Konfirmasi Serah Terima Kendaraan"
+          intro={
+            <>
+              Aksi ini menyatakan bahwa kendaraan{" "}
+              <strong className="text-on-surface">{transaction.vehicle.brand} {transaction.vehicle.model}</strong>{" "}
+              telah kamu serahkan secara fisik kepada buyer, lengkap dengan dokumen (STNK/BPKB) dan kunci.
+            </>
+          }
+          consequences={[
+            "Buyer akan diminta mengkonfirmasi penerimaan kendaraan.",
+            "Setelah dikonfirmasi buyer & admin, dana escrow dilepas ke rekening bank kamu.",
+            "Klaim serah-terima palsu dapat menyebabkan akun kamu di-suspend.",
+          ]}
+          confirmWord="SERAHKAN"
+          confirmLabel="Ya, Sudah Diserahkan"
           isSubmitting={isSubmitting}
           onConfirm={handleConfirmHandover}
           onCancel={() => setShowConfirmHandover(false)}

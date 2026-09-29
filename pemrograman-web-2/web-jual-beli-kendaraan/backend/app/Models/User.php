@@ -14,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['name', 'email', 'password', 'role', 'avatar_path', 'bio'])]
+#[Fillable(['name', 'email', 'password', 'role', 'avatar_path', 'bio', 'ktp_number', 'ktp_name', 'ktp_verified_at'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -30,14 +30,25 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'ktp_verified_at' => 'datetime',
             'password' => 'hashed',
             'role' => UserRole::class,
         ];
     }
 
+    public function hasCompletedKtp(): bool
+    {
+        return filled($this->ktp_number) && filled($this->ktp_name);
+    }
+
     public function sellerProfile(): HasOne
     {
         return $this->hasOne(SellerProfile::class);
+    }
+
+    public function buyerProfile(): HasOne
+    {
+        return $this->hasOne(BuyerProfile::class);
     }
 
     public function vehicles(): HasMany

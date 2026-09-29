@@ -14,7 +14,13 @@ return new class extends Migration
         Schema::create('vehicle_documents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vehicle_id')->constrained()->cascadeOnDelete();
-            $table->enum('type', ['stnk', 'bpkb']);
+            $table->enum('type', [
+                'stnk',
+                'bpkb',
+                'service_history',
+                'inspection_report',
+                'certificate_of_authenticity',
+            ]);
             $table->string('path');
             $table->timestamps();
         });

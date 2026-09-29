@@ -13,7 +13,6 @@ class VehicleDocumentController extends Controller
     public function show(Request $request, Vehicle $vehicle, VehicleDocument $document): StreamedResponse
     {
         abort_unless($document->vehicle_id === $vehicle->id, 404);
-        abort_unless($request->user()->isAdmin() || $request->user()->id === $vehicle->seller_id, 403);
 
         return Storage::disk('local')->response($document->path);
     }

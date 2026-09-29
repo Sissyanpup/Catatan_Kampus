@@ -5,6 +5,7 @@ namespace App\Payments;
 use App\Enums\TransactionPaymentStatus;
 use App\Models\Transaction;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 
 /**
@@ -22,10 +23,36 @@ class MockGateway implements PaymentGateway
 
         return new GatewayInvoice(
             reference: $reference,
-            url: rtrim(config('app.frontend_url'), '/')."/checkout/mock/{$reference}",
+            url: $this->buildCheckoutUrl($reference),
             status: TransactionPaymentStatus::Pending,
             expiresAt: $expiresAt,
         );
+    }
+
+    /**
+     * `config('app.frontend_url')` bisa berisi CSV multi-origin (dipakai juga
+     * oleh CORS/Sanctum). Pilih origin yang host-nya cocok dengan Host header
+     * request saat ini — kalau buyer akses backend via `192.168.x`, invoice
+     * juga mesti mengarah ke frontend `192.168.x` bukan `localhost`.
+     * Fallback ke origin pertama kalau tidak ada yang cocok.
+     */
+    private function buildCheckoutUrl(string $reference): string
+    {
+        $frontend = (string) config('app.frontend_url');
+        $origins = array_values(array_filter(array_map('trim', explode(',', $frontend))));
+
+        $requestHost = Request::getHost();
+        $preferred = null;
+        foreach ($origins as $origin) {
+            if (parse_url($origin, PHP_URL_HOST) === $requestHost) {
+                $preferred = $origin;
+                break;
+            }
+        }
+
+        $chosen = $preferred ?? ($origins[0] ?? 'http://localhost:3000');
+
+        return rtrim($chosen, '/')."/checkout/mock/{$reference}";
     }
 
     public function fetchStatus(Transaction $transaction): TransactionPaymentStatus
