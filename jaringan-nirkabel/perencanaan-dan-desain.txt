@@ -1,0 +1,51 @@
+Perencanaan dan Desain Jaringan Nirkabel
+
+Jaringan nirkabel = menghubungkan berbagai perangkat tanpa kabel fisik (wireless), dengan gelombang radio
+Perencanaan perlu, untuk :
+- cakupan sinyal yang sesuai
+- melayani jumlah pengguna
+- bandwidth yang mencukupi
+- meminimalkan onterferensi
+- keandalan jaringan 
+
+Standar dan teknologi wireless
+802.11 n/ac/ax
+
+Tahapan perencanaan jaringan
+1. Analisis kebutuhan
+2. Site survery
+3. Perancangan
+4. Pemilihan perangkat
+5. Implementasi
+6. Pengujian
+
+Analisis Kebutuhan dan Survey Site
+
+Desain Jaringan Nirkabel
+- terdapat topologi. minimal internet - router/switch - AP - users
+
+Faktor Mempengaruhi Desain
+- Luas area jaringan
+- Jumlah pengguna
+- Kondisi lingkungan dan vangunan
+- Jenis bangunan yang digunakan
+- Frekuensi dan channel
+- Kebutuhan bandwidth
+- Tingkat keamanan jaringan
+
+Keamanan Jaringan Nirkabel
+- Enkripsi wpa3 / wpa2
+- Auth user
+- Firewall dan AP
+- Penyembunyian SSID dan MAC Filtering
+- Segmentasi Jaringan (VLAN)
+- Monitoring dan Update Firmware
+
+Tantangan dalam Implementasi
+- Dead zone
+- Interferenci Co-channel
+- Kepadatan pengguna
+- Keterbatasan Anggaran
+
+CATATAN :
+- 

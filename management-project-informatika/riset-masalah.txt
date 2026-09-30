@@ -1,0 +1,36 @@
+Projek TI / TA 
+
+Fenomena hanyalah kejadian yang sudah terjadi
+Jika sebuah fenomena membuat masalah yang harus diselesaikan, barulah engineer bergerak
+
+Engineer bergerak dari riset masalah
+
+Sistem berbicara pada entitas, bukan personal.
+
+Dari masalah, muncullah Tujuan
+dari tujuan, muncullah Metodologi
+dari metodologi, muncullah Big Work / Pekerjaan Besar 
+
+Kita breakdown dari Big Work harus dipecah menjadi WBS
+WBS untuk memecah pekerjaan besar menjadi kerjaan kecil-kecil yang mudah diselesaikan
+
+WBS memiliki :
+- Daftar Tugas
+- Estimasi Durasi
+- Tentukan Ketergantungan
+- Alokasi Sumber Daya 
+- 
+
+Dari WBS, muncullah GunChart
+dari Gunchart, muncul pertanyaan "kapan selesainya?" "bisa dipercepat?" "apa bisa terlambat ga?" -> BAGAN PERT
+Bagan PERT (evaluasi jalur, waktu optimis dan pesimis) mencari jalur kritis. Pada jalur kritis harus dijaga jangan sampai terlambat.
+
+Dari Data Aktivitas, Forward Pass, Backward Pass, Total Float, -> muncullah Critical Path Method
+Hasil akhirnya = Perhitungan probabilitas penyelesaian proyek
+- tabel distribusi normal
+- rumus z-score
+- probabilitas penyelesaian
+
+TUGAS : 
+- ANALISIS PERT, Kapan waktu selesainya, masukkan di proposal (untuk kelompok)
+- Data Aktivitas, Forward Pass, Backward Pass, Total Float. Probabilistik nya < 40 Hari, berapa persen projek bisa diselesiakan < 40 hari (perorangan, soal di foto)
