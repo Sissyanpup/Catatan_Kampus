@@ -19,4 +19,12 @@ Catatan Projek Offline :
 - Semua data asal saja, baik detail KTP, nomor, dan lainnya. Karena ini projek offline mata kuliah, bukan website serius yang dijual ke publik.
 - Inputan form data bisa asal isi seperti foto asal, nama asal, nomor asal, semua data asal bisa langsung ter-ACC, dengan catatan ada waktu tunggu seolah-olah real. Dari sisi admin bisa kelola data users.
 
+2 october 2026
 
+- TO 
+- All Risk, jika ada kerusakan (ASURANSI atau KOMPRI, bisa 0.5 - 1%, masuk ke cicilan (dari derek sampai bengkel) -> peminjaman mobil pengganti)
+- Kalau hanya hilang, 80%
+- ASURANSI tidak mau di grab/gocar kan (ada penumpang, bahkan disewakan. Harus sim pemilik sendirian ketika ada kerusakan), mereka lihai melihat GPS mobil.
+- para asuransi sangat jeli, pada histori pembeli.
+- HARUS breakdown sedetail mungkin dalam ASURANSI, KOMPRI, Keuangan, Harga, Cicilan, Pajak, dan Lainnya.
+- Tambahkan metode Kredit, dibahas terlebih dahulu karena pembahasannya luas.

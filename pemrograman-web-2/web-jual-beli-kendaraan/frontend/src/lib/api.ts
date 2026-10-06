@@ -19,13 +19,26 @@ function readCookie(name: string): string | null {
   return match ? decodeURIComponent(match.split("=").slice(1).join("=")) : null;
 }
 
-async function ensureCsrfCookie(): Promise<void> {
-  if (readCookie("XSRF-TOKEN")) return;
+function deleteCookie(name: string): void {
+  // Hapus di host saat ini (frontend) sekaligus kemungkinan domain cross-port (host-only).
+  // Browser cuma menerima penghapusan untuk pasangan domain/path persis yang dipakai saat set,
+  // jadi kita coba beberapa kombinasi path "/" tanpa domain eksplisit — cukup untuk cookie
+  // host-only yang di-set backend Sanctum.
+  document.cookie = `${name}=; Max-Age=0; path=/`;
+}
 
+async function fetchCsrfCookie(): Promise<void> {
+  // Hapus XSRF-TOKEN basi dulu supaya server pasti kirim ulang nilai yang segar.
+  deleteCookie("XSRF-TOKEN");
   await fetch(`${API_URL}/sanctum/csrf-cookie`, {
     credentials: "include",
     headers: { Accept: "application/json" },
   });
+}
+
+async function ensureCsrfCookie(): Promise<void> {
+  if (readCookie("XSRF-TOKEN")) return;
+  await fetchCsrfCookie();
 }
 
 type ApiFetchOptions = {
@@ -33,13 +46,7 @@ type ApiFetchOptions = {
   body?: FormData | Record<string, unknown>;
 };
 
-export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): Promise<T> {
-  const method = options.method ?? "GET";
-
-  if (method !== "GET") {
-    await ensureCsrfCookie();
-  }
-
+function buildHeaders(options: ApiFetchOptions): { headers: Record<string, string>; body: BodyInit | undefined } {
   const headers: Record<string, string> = { Accept: "application/json" };
   const xsrfToken = readCookie("XSRF-TOKEN");
   if (xsrfToken) headers["X-XSRF-TOKEN"] = xsrfToken;
@@ -52,12 +59,30 @@ export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): 
     body = JSON.stringify(options.body);
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
-    method,
-    credentials: "include",
-    headers,
-    body,
-  });
+  return { headers, body };
+}
+
+export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): Promise<T> {
+  const method = options.method ?? "GET";
+  const isMutating = method !== "GET";
+
+  if (isMutating) {
+    await ensureCsrfCookie();
+  }
+
+  const sendRequest = async () => {
+    const { headers, body } = buildHeaders(options);
+    return fetch(`${API_URL}${path}`, { method, credentials: "include", headers, body });
+  };
+
+  let response = await sendRequest();
+
+  // Token XSRF basi (misal server restart / session di-regenerate) menyebabkan 419.
+  // Refetch cookie lalu retry sekali supaya alur login tidak kandas karena token lama.
+  if (response.status === 419 && isMutating) {
+    await fetchCsrfCookie();
+    response = await sendRequest();
+  }
 
   if (response.status === 204) {
     return undefined as T;

@@ -1,0 +1,19 @@
+Cybercrime yakni tindak kejahatan yang dilakukan dengan memanfaatkan atau jaringan seabagai :
+- alat 
+- tempat
+- akses
+
+Modus Cybercrime Akses dan Sistem
+- Hacking (mengakses tanpa izin)
+- Cracking (membobol sistem untuk merusak atau mencuri)
+- Defacing (mengubah tampilan isi situs web tanpa izin)
+- DDoS Attcak (membanjiri server dengan trafik palsu hingga lumpuh)
+- Malware [virus, worm, trojan, ransomeware] (software berbahaya untuk merusak atau mencuri data)
+
+Modus Cybercrime Data dan Manusia
+- Phishing (menipu korban lewat email atau situs palsu untuk mencuri data login)
+- Carding (penyalahgunaan data kartu kredit milik orang lain)
+- Identity Theft (pencurian identitas digital seseorang)
+- Social Engineering (manipulasi psikologis agar korban memberi akses/informasi)
+- Cyberbullying / Cyberstalking (pelecehan atau intimidasi lewat dunia maya)
+
