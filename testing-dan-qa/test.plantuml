@@ -1,0 +1,181 @@
+@startuml
+interface Login {
+  -username : string
+  -password : string
+}
+
+class controllerLogin {
+  +validasi(username, password)
+}
+
+interface Main {
+  +UIMenuDataPengguna()
+  +UIMenuDataSupplier()
+  +UIMenuDataToko()
+  +UIMenuDataHakAkses()
+  +UIMenuDataKebijakan()
+  +UIMenuDataKurir()
+  +UIMenuDataProduk()
+  +UIMenuDataPengaturan()
+  +UIMenuDataLaporanKinerja()
+}
+
+' ===== Controllers =====
+class controllerPengguna {
+  +insert()
+  +edit()
+  +delete()
+  +viewlaporan()
+}
+class controllerSupplier {
+  +insert()
+  +edit()
+  +delete()
+  +viewlaporan()
+}
+class controllerToko {
+  +insert()
+  +edit()
+  +delete()
+  +viewlaporan()
+}
+class controllerHakAkses {
+  +insert()
+  +edit()
+  +delete()
+}
+class controllerKebijakan {
+  +insert()
+  +edit()
+  +delete()
+  +viewlaporan()
+}
+class controllerKurir {
+  +insert()
+  +edit()
+  +delete()
+  +viewlaporan()
+}
+class controllerProduk {
+  +insert()
+  +edit()
+  +delete()
+  +viewlaporan()
+}
+class controllerPengaturan {
+  +edit()
+}
+class controllerLaporanKinerja {
+  +viewlaporan()
+}
+
+' ===== Entities =====
+class Tb_Admin {
+  -id_admin : int
+  -username : string
+  -password : string
+  -nama : string
+  -foto : string
+  -id_hak_akses : int
+}
+class Tb_Supplier {
+  -id_supplier : int
+  -nama_supplier : string
+  -alamat : string
+  -no_telepon : string
+  -email : string
+  -nama_pic : string
+  -status : string
+}
+class Tb_Toko {
+  -id_toko : int
+  -nama_toko : string
+  -alamat : string
+  -no_telepon : string
+  -kode_cabang : string
+  -status : string
+}
+class Tb_HakAkses {
+  -id_hak_akses : int
+  -nama_hak_akses : string
+  -deskripsi : string
+  -status : string
+}
+class Tb_Kebijakan {
+  -id_kebijakan : int
+  -judul_kebijakan : string
+  -deskripsi : string
+  -tanggal_berlaku : date
+  -status : string
+}
+class Tb_Kurir {
+  -id_kurir : int
+  -nama_kurir : string
+  -no_telepon : string
+  -alamat : string
+  -jasa_ekspedisi : string
+  -status : string
+}
+class Tb_Produk {
+  -id_produk : int
+  -nama_produk : string
+  -kategori : string
+  -harga : int
+  -stok : int
+  -satuan : string
+  -status : string
+  -id_supplier : int
+  -id_toko : int
+}
+class Tb_Pengaturan {
+  -id_pengaturan : int
+  -nama_toko : string
+  -alamat_toko : string
+  -no_telepon : string
+  -email : string
+  -mata_uang : string
+  -pajak : int
+}
+class Tb_LaporanKinerja {
+  -id_laporan : int
+  -periode : date
+  -total_penjualan : int
+  -total_transaksi : int
+  -keterangan : string
+  -id_toko : int
+  -id_produk : int
+}
+
+' ===== Navigation: Login -> Main -> Controllers =====
+Login -- Main
+controllerLogin -- Login
+controllerLogin -- Main
+
+Main -- controllerPengguna
+Main -- controllerSupplier
+Main -- controllerToko
+Main -- controllerHakAkses
+Main -- controllerKebijakan
+Main -- controllerKurir
+Main -- controllerProduk
+Main -- controllerPengaturan
+Main -- controllerLaporanKinerja
+
+' ===== Controller -> Entity =====
+controllerPengguna -- Tb_Admin
+controllerSupplier -- Tb_Supplier
+controllerToko -- Tb_Toko
+controllerHakAkses -- Tb_HakAkses
+controllerKebijakan -- Tb_Kebijakan
+controllerKurir -- Tb_Kurir
+controllerProduk -- Tb_Produk
+controllerPengaturan -- Tb_Pengaturan
+controllerLaporanKinerja -- Tb_LaporanKinerja
+
+' ===== Entity <-> Entity (foreign key / relasi data nyata) =====
+Tb_Admin -- Tb_HakAkses
+Tb_Produk -- Tb_Supplier
+Tb_Produk -- Tb_Toko
+Tb_LaporanKinerja -- Tb_Toko
+Tb_LaporanKinerja -- Tb_Produk
+@enduml
