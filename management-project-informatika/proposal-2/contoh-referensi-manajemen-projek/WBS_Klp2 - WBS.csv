@@ -1,0 +1,53 @@
+,,,,,,,,,,,,,,,
+,WORK BREAKDOWN STRUCTURE (WBS),,,,,,,,,,,,,,
+,Rancang Bangun Sistem Presensi Berbasis Web Intranet On-Premise Menggunakan Metode Waterfall pada Jaringan Lokal Kampus Viktor UNPAM,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,Nama Proyek,,: Sistem Presensi Berbasis Web Intranet On-Premise - Kampus Viktor UNPAM,,,,,,,,,,,,
+,Metodologi,,: Waterfall,,,,,,,,,,,,
+,Kelompok,,": Kelompok 2 - Teknik Informatika, Fakultas Ilmu Komputer, Universitas Pamulang",,,,,,,,,,,,
+,Anggota,,1). Muhammad Zirlda Prairi,,,,,,,,,,,,
+,,,2). Rizky Zehans Onasis,,,,,,,,,,,,
+,,,3). ,,,,,,,,,,,,
+,,,4). ,,,,,,,,,,,,
+,Tahun Akademik,,: 2026,,,,,,,,,,,,
+,Tanggal Mulai Proyek,,: 28-Sep-2026,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,No. WBS,Level,Uraian Pekerjaan (Task Description),Deliverable / Output,Dependensi,Tipe Dependensi,Prioritas,Sumber Daya (PIC),Estimasi Biaya (Rp),Status,Progress (%),Durasi (Hari),Tanggal Mulai,Tanggal Selesai,Catatan
+,1,1,FASE 1 - ANALISIS KEBUTUHAN (REQUIREMENT ANALYSIS),Dokumen SRS (Software Requirement Specification),-,-,Tinggi,Tim Analis Sistem,"Rp500.000,00",Sedang Berjalan,7%,10,28-Sep-2026,09-Oct-2026,"Fase awal, menentukan seluruh kebutuhan fungsional & non-fungsional sistem"
+,1.1,2,Identifikasi masalah presensi manual di Kampus Viktor UNPAM,Dokumen identifikasi masalah,-,-,Tinggi,Tim Analis Sistem,"Rp150.000,00",Sedang Berjalan,2%,2,28-Sep-2026,29-Sep-2026,Mengacu pada hasil analisis masalah kelompok
+,1.2,2,"Analisis kebutuhan pengguna (mahasiswa, dosen, admin)",Daftar kebutuhan fungsional per peran,1.1,FS,Tinggi,Tim Analis Sistem,"Rp100.000,00",Sedang Berjalan,34%,2,30-Sep-2026,01-Oct-2026,Wawancara/kuesioner singkat ke calon pengguna
+,1.3,2,"Analisis kebutuhan data (mahasiswa, dosen, matkul, kelas, jadwal, presensi)",Daftar entitas & atribut data,1.1,FS,Tinggi,Tim Analis Sistem,"Rp100.000,00",Belum Dimulai,0%,2,02-Oct-2026,05-Oct-2026,Dasar untuk perancangan basis data di Fase 2
+,1.4,2,"Analisis kebutuhan non-fungsional (keamanan, hak akses, jaringan intranet)",Daftar kebutuhan non-fungsional,1.2,FS,Sedang,Tim Analis Sistem,"Rp100.000,00",Belum Dimulai,0%,2,06-Oct-2026,07-Oct-2026,Termasuk kebutuhan performa & ketersediaan jaringan
+,1.5,2,Penyusunan dan validasi dokumen SRS,Dokumen SRS final (disetujui dosen pembimbing),"1.2, 1.3, 1.4",FS,Tinggi,Project Manager / Ketua Kelompok,"Rp50.000,00",Belum Dimulai,0%,2,08-Oct-2026,09-Oct-2026,Validasi/persetujuan sebelum masuk tahap desain
+,2,1,FASE 2 - PERANCANGAN SISTEM (SYSTEM DESIGN),Dokumen Desain Sistem (DDS),1,FS,Tinggi,Tim Desainer/Arsitek Sistem,"Rp500.000,00",Sedang Berjalan,25%,14,12-Oct-2026,29-Oct-2026,Menerjemahkan SRS menjadi rancangan teknis sistem
+,2.1,2,Perancangan basis data (ERD & skema relasi),ERD dan skema basis data,1.5,FS,Tinggi,Tim Desainer/Arsitek Sistem,"Rp100.000,00",Sedang Berjalan,25%,3,12-Oct-2026,14-Oct-2026,Mengacu pada entitas data di 1.3
+,2.2,2,Perancangan arsitektur sistem & topologi jaringan intranet on-premise,Diagram arsitektur & topologi jaringan,2.1,FS,Tinggi,Tim Jaringan/Infrastruktur,"Rp200.000,00",Sedang Berjalan,25%,3,15-Oct-2026,19-Oct-2026,Menentukan skema server on-premise di jaringan kampus
+,2.3,2,Perancangan alur sistem (use case diagram & DFD),"Use case diagram, DFD",2.1,FS,Sedang,Tim Desainer/Arsitek Sistem,"Rp50.000,00",Sedang Berjalan,25%,3,20-Oct-2026,22-Oct-2026,-
+,2.4,2,Perancangan hak akses & mekanisme autentikasi (mahasiswa/dosen/admin),Skema role-based access control,2.3,FS,Tinggi,Tim Desainer/Arsitek Sistem,"Rp50.000,00",Sedang Berjalan,25%,2,23-Oct-2026,26-Oct-2026,Mendukung kebutuhan keamanan di 1.4
+,2.5,2,Perancangan antarmuka pengguna (UI/UX) untuk tiap peran,Wireframe / mockup UI,2.3,FS,Sedang,Tim Desainer/Arsitek Sistem,"Rp100.000,00",Sedang Berjalan,25%,3,27-Oct-2026,29-Oct-2026,Tampilan sederhana & mudah dipahami pengguna
+,3,1,FASE 3 - IMPLEMENTASI (IMPLEMENTATION),Aplikasi sistem presensi berfungsi,2,FS,Tinggi,Tim Developer,"Rp1.600.000,00",Sedang Berjalan,11%,24,30-Oct-2026,02-Dec-2026,Tahap pengkodean & pembangunan sistem
+,3.1,2,Setup infrastruktur server on-premise & jaringan intranet kampus,Server & jaringan siap digunakan,2.2,FS,Tinggi,Tim Jaringan/Infrastruktur,"Rp1.500.000,00",Sedang Berjalan,44%,3,30-Oct-2026,03-Nov-2026,Termasuk konfigurasi IP lokal & keamanan jaringan
+,3.2,2,Pembuatan basis data sesuai rancangan ERD,Basis data terimplementasi,3.1,FS,Tinggi,Tim Developer,"Rp0,00",Sedang Berjalan,44%,2,04-Nov-2026,05-Nov-2026,-
+,3.3,2,Pengembangan modul autentikasi & hak akses pengguna,Modul login & role access,3.2,FS,Tinggi,Tim Developer,"Rp0,00",Belum Dimulai,0%,3,06-Nov-2026,10-Nov-2026,-
+,3.4,2,Pengembangan modul presensi mahasiswa,Modul presensi (input kehadiran),3.3,FS,Tinggi,Tim Developer,"Rp0,00",Belum Dimulai,0%,4,11-Nov-2026,16-Nov-2026,Fitur utama sistem
+,3.5,2,Pengembangan modul pemantauan kehadiran untuk dosen,Modul pemantauan kehadiran per kelas,3.4,FS,Sedang,Tim Developer,"Rp0,00",Belum Dimulai,0%,3,17-Nov-2026,19-Nov-2026,-
+,3.6,2,"Pengembangan modul pengelolaan data admin (mahasiswa, dosen, matkul, kelas, jadwal)",Modul manajemen data master,3.3,FS,Sedang,Tim Developer,"Rp0,00",Belum Dimulai,0%,4,20-Nov-2026,25-Nov-2026,-
+,3.7,2,Pengembangan modul rekapitulasi & laporan kehadiran,Modul rekapitulasi & cetak laporan,"3.4, 3.5",FS,Sedang,Tim Developer,"Rp0,00",Belum Dimulai,0%,3,26-Nov-2026,30-Nov-2026,-
+,3.8,2,Integrasi seluruh modul sistem,Sistem presensi terintegrasi,"3.6, 3.7",FS,Tinggi,Tim Developer,"Rp100.000,00",Belum Dimulai,0%,2,01-Dec-2026,02-Dec-2026,Pengujian awal integrasi sebelum QA
+,4,1,FASE 4 - PENGUJIAN (TESTING),Laporan hasil pengujian sistem,3,FS,Tinggi,Tim Penguji (QA),"Rp200.000,00",Sedang Berjalan,8%,16,03-Dec-2026,22-Dec-2026,Memastikan sistem sesuai kebutuhan sebelum rilis
+,4.1,2,Unit testing tiap modul - memeriksa struktur kode & logika program secara internal,Laporan white box testing (code path/coverage),3.8,FS,Tinggi,Tim White Box,"Rp0,00",Sedang Berjalan,2%,2,03-Dec-2026,04-Dec-2026,-
+,4.2,2,Integration testing - menguji koneksi antar modul & database,Laporan integration testing,4.1,FS,Tinggi,Tim Grey Box,"Rp0,00",Belum Dimulai,0%,2,07-Dec-2026,08-Dec-2026,-
+,4.3,2,"System/functional testing - menguji skenario end-to-end (presensi, login, rekap) dari sisi pengguna tanpa melihat kode",Laporan black box testing (test case pass/fail),4.2,FS,Tinggi,Tim Black Box,"Rp0,00",Sedang Berjalan,21%,2,09-Dec-2026,10-Dec-2026,-
+,4.4,2,Performance/load testing - menguji ketahanan sistem saat diakses banyak mahasiswa bersamaan di jaringan intranet,Laporan uji performa & beban,4.3,FS,Sedang,Tim Performa,"Rp0,00",Sedang Berjalan,43%,2,11-Dec-2026,14-Dec-2026,-
+,4.5,2,"Security testing (ofensif) - mensimulasikan serangan untuk menemukan celah (login, injeksi, hak akses)",Laporan pengujian keamanan ofensif,4.3,FS,Tinggi,Tim Red,"Rp0,00",Belum Dimulai,0%,2,15-Dec-2026,16-Dec-2026,Melibatkan perwakilan pengguna nyata
+,4.6,2,"Security testing (defensif) - memantau, mendeteksi, dan merespons hasil serangan Tim Red",Laporan pertahanan & mitigasi keamanan,4.5,FS,Tinggi,Tim Blue,"Rp0,00",Belum Dimulai,0%,2,17-Dec-2026,18-Dec-2026,
+,4.7,2,Regression testing - menguji ulang fitur setelah perbaikan bug dari hasil testing sebelumnya,Laporan regresi (fitur lama tetap berjalan normal),"4.4, 4.6",FS,Sedang,Tim Regresi,"Rp0,00",Belum Dimulai,0%,2,19-Dec-2026,20-Dec-2026,
+,4.8,2,"User Acceptance Testing (UAT) bersama mahasiswa, dosen, dan admin",Berita acara UAT,4.7,FS,Tinggi,Seluruh Anggota Kelompok,"Rp200.000,00",Belum Dimulai,0%,2,21-Dec-2026,22-Dec-2026,
+,5,1,FASE 5 - PEMELIHARAAN & PENUTUPAN PROYEK (MAINTENANCE & CLOSURE),Sistem berjalan & dokumentasi proyek lengkap,4,FS,Sedang,Project Manager / Ketua Kelompok,"Rp300.000,00",Sedang Berjalan,16%,8,23-Dec-2026,6-Jan-2027,Serah terima sistem & penutupan proyek
+,5.1,2,Deployment sistem ke jaringan intranet Kampus Viktor UNPAM,Sistem live di jaringan kampus,4.5,FS,Tinggi,Tim Jaringan/Infrastruktur,"Rp100.000,00",Belum Dimulai,0%,2,23-Dec-2026,24-Dec-2026,-
+,5.2,2,"Pelatihan penggunaan sistem bagi mahasiswa, dosen, dan admin",Materi pelatihan & berita acara,5.1,FS,Sedang,Seluruh Anggota Kelompok,"Rp150.000,00",Sedang Berjalan,23%,2,25-Dec-2026,26-Dec-2026,-
+,5.3,2,Penyusunan dokumentasi teknis & manual pengguna,Dokumentasi sistem & user manual,5.1,FS,Sedang,Tim Analis Sistem,"Rp50.000,00",Sedang Berjalan,56%,2,23-Dec-2026,24-Dec-2026,-
+,5.4,2,Pemeliharaan sistem & perbaikan bug pasca-implementasi,Laporan pemeliharaan sistem,5.1,FS,Rendah,Tim Developer,"Rp0,00",Belum Dimulai,0%,1,28-Dec-2026,29-Dec-2026,Bersifat berkelanjutan setelah go-live
+,5.5,2,Evaluasi proyek & penyusunan laporan akhir kelompok,Laporan akhir proyek,"5.2, 5.3, 5.4",FS,Tinggi,Project Manager / Ketua Kelompok,"Rp0,00",Belum Dimulai,0%,1,5-Jan-2027,6-Jan-2027,Dikumpulkan sebagai laporan tugas kelompok
+,,,,,,,,,,,,,,,
+,TOTAL PROYEK,,,,,,,,"Rp3.100.000,00",,"13,45%",72,28-Sep-2026,6-Jan-2027,
