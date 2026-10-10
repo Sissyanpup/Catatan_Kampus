@@ -160,7 +160,10 @@ Kesenjangan utama: Kampus Viktor UNPAM sudah memiliki jaringan WiFi dengan 10–
   - **Pengelola jaringan UNPAM**: penerima rancangan dan rekomendasi.
 - **B3.** Lingkup teknis: pengukuran parameter QoS; perencanaan kapasitas dan kanal AP; peninjauan konfigurasi DHCP dan sesi hotspot; manajemen bandwidth dengan jaminan minimum dan prioritas lalu lintas akademik **[USULAN]**.
 - **B4.** Metode NDLC. Tahap _Analysis_, _Design_, dan _Simulation Prototyping_ dikerjakan penuh. Tahap _Implementation_, _Monitoring_, dan _Management_ berupa rancangan dan rekomendasi **[USULAN]**.
-- **B5.** Simulasi menggunakan perangkat lunak gratis, misalnya MikroTik CHR, GNS3, atau Cisco Packet Tracer **[USULAN]**.
+- **B5.** Pembuktian rancangan memakai tiga lapis uji **[USULAN]**:
+  - **simulasi** dengan perangkat lunak gratis (MikroTik CHR di GNS3, Cisco Packet Tracer) untuk logika QoS dan antrean;
+  - **purwarupa** di perangkat milik tim, **MikroTik hAP ax²** (router + AP WiFi 6 dua pita), dengan SSID uji tersendiri untuk pengaturan nirkabel dan hotspot;
+  - **uji lapangan** bersama mahasiswa relawan di jaringan WiFi UNPAM tanpa mengubah konfigurasinya.
 
 **Asumsi yang menjadi risiko [ASUMSI]:**
 
@@ -174,7 +177,8 @@ Kesenjangan utama: Kampus Viktor UNPAM sudah memiliki jaringan WiFi dengan 10–
 
 - **B6.** Tidak mengubah konfigurasi perangkat jaringan produksi UNPAM tanpa izin pengelola.
 - **B7.** Tidak membangun aplikasi baru dan tidak mengubah portal satu.unpam.ac.id maupun portal FTI.
-- **B8.** Tidak menambah kapasitas langganan internet dan tidak mengadakan perangkat baru. Bila perhitungan kapasitas menunjukkan kekurangan AP, hasilnya disampaikan sebagai rekomendasi.
+- **B8.** Tidak menambah kapasitas langganan internet dan tidak mengadakan perangkat baru. Perangkat uji yang dipakai adalah **milik tim** (MikroTik hAP ax²), sehingga tidak ada pengadaan. AP, switch, dan server UNPAM sudah ada sejak awal **[FAKTA-L]** dan tidak diganti. Bila perhitungan kapasitas menunjukkan kekurangan AP, hasilnya disampaikan sebagai rekomendasi.
+- **B8a.** Hasil uji di hAP ax² menunjukkan **pola dan arah perbaikan**, bukan angka kinerja persis AP UNPAM, karena kelas dan model perangkatnya dapat berbeda. Menyalakan AP uji di gedung kampus dilakukan dengan izin pengelola, pada kanal yang tidak dipakai AP sekitar, dan dengan daya rendah **[USULAN]**.
 - **B9.** Tidak menangani sinyal seluler di dalam gedung (wewenang operator seluler).
 - **B10.** Tidak mengubah skema atau tarif paket langganan WiFi UNPAM; rancangan hanya mengatur cara bandwidth dibagi.
 - **B11.** Pengalihan jalur lokal portal FTI dengan _split-horizon DNS_ hanya dimasukkan bila servernya terbukti berada di jaringan Kampus Viktor **[MENUNGGU DATA]**. Jika tidak, hal ini menjadi pengembangan lanjutan.

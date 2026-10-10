@@ -134,16 +134,21 @@ Kombinasi yang paling mungkin: **A** (prioritas lalu lintas `*.unpam.ac.id`) unt
   - [ ] 3.7 Rancangan manajemen bandwidth & QoS (prioritas `*.unpam.ac.id`)
   - [ ] 3.8 Topologi usulan (to-be)
   - [ ] 3.9 Skenario simulasi & skenario uji (sebelum vs sesudah)
-- [ ] **`BAB_04_Metode_Solusi.md`**
-      NDLC, WBS (Level 1–4), control account, matriks RACI, manajemen risiko (termasuk risiko izin pengelola jaringan).
-- [ ] **`BAB_05_Estimasi_Waktu.md`**
-      PERT tiga titik, jaringan aktivitas & jalur kritis (CPM), probabilitas selesai 40 hari, Gantt chart (PlantUML).
-- [ ] **`BAB_06_Estimasi_Biaya.md`**
-      Biaya perangkat, tenaga kerja, PERT biaya, contingency & management reserve, cost baseline. _(Use Case Points/COCOMO II kurang cocok untuk proyek jaringan; diganti estimasi bottom-up dari WBS.)_
-- [ ] **`BAB_07_S_Curve_dan_EVM.md`**
-      Periodisasi biaya, S-Curve (PV, EV, AC), CPI, SPI, EAC. Kode Python (matplotlib).
-- [ ] **`BAB_08_Executive_Summary.md`**
-      Ditulis paling akhir.
+- [ ] **`BAB_04_Metode_Solusi.md`** _(dikerjakan bertahap)_
+  - [ ] 4.1 NDLC → **periksa dulu**
+  - [ ] 4.2 WBS 3 level, **32 WP**, dependensi FS (graf dicek: tanpa siklus, satu titik akhir 7.5). Tahap 3 = tiga lapis uji: CHR/GNS3 → **purwarupa hAP ax² milik tim (WP 3.4)** → uji lapangan relawan di AP UNPAM (WP 3.5) → **periksa dulu**
+  - [ ] 4.3 Control account: 5 CA (CA-01–CA-05), EVM mingguan, EV 0/100 & 50/50 (standar EVM PMI), toleransi CPI/SPI 0,9 (kebijakan proyek) → **periksa dulu**
+  - [ ] 4.4 RACI: PM Rizky, Analis Dzaky, Perancang Zirlda, Penguji Vigie + kolom Pengelola; 1 A per WP (dicek), beban R 10–14 WP/orang → **periksa dulu**
+  - [ ] 4.5 Risiko: 15 risiko (3 Tinggi: R-04 data topologi, R-05 izin ukur, R-11 target NFR), skala P×D 1–3, matriks; contingency 10% (contoh modul) → **periksa dulu**
+- [x] **`BAB_05_Estimasi_Waktu.md`** _(draf; O/M/P = [ASUMSI] skala mahasiswa, menunggu koreksi penanggung jawab WP)_
+      CPM murni: TE 35,00 hari kerja, P(≤40) 99,55%. Setelah resource leveling: opsi A (RACI tetap) 46,67 hari / 0,04%; **opsi B (alih tugas 2.5→Dzaky, 2.6→Vigie, 3.3→Zirlda, Zirlda C di 3.4) 39,17 hari / 67,26%** [rekomendasi]. Tenggat aman 90%: 42 hari kerja. Gantt harian (mulai Senin 12-10-2026 [ASUMSI]).
+      **Opsi B disetujui tim** → RACI 4.4 sudah diperbarui (2.5 Dzaky R, 2.6 Vigie R, 3.3 Zirlda R, 3.4 Zirlda C). Bab 5 berisi: tabel aktivitas O/M/P (5.2), CPM murni (5.3–5.4), leveling + 5 ketergantungan sumber daya (5.5), **jadwal baseline** ES/EF/LS/LF/TF (5.6), **diagram PERT activity-on-node 6 nilai per kotak** (5.7), Gantt (5.8), negosiasi (5.9).- [ ] **`BAB_06_Estimasi_Biaya.md`**
+      **Keputusan:** PERT tiga titik untuk biaya per WP (modul bagian 3), dijumlah bottom-up + contingency → cost baseline. UCP & COCOMO II tidak dipakai (mengukur ukuran perangkat lunak; proyek ini didominasi kerja lapangan, perancangan & simulasi jaringan).
+      - [x] Draf ditulis _(harga = [ASUMSI], menunggu cek tim)_: tarif UMK Tangsel 2026 Rp5.247.870 ÷ 152 = Rp34.525/jam × 3,5 jam/hari; perangkat milik anggota tidak dibebankan; bensin dari waktu PP (Rizky & Dzaky 2 jam, Zirlda & Vigie 1 jam) × Pertalite Rp10.000 → ±Rp285 rb; estimasi Rp13.667.125; contingency 10% → **cost baseline Rp15.033.837**; management reserve 5% → total anggaran Rp15.717.194; **biaya tunai ±Rp2.217.619**; BAC per CA-01–CA-05.
+- [x] **`BAB_07_S_Curve_dan_EVM.md`** _(draf)_
+      PV mingguan 8 minggu dari jadwal baseline Bab 5.6 × biaya WP Bab 6 (BAC Rp13.667.125; cost baseline Rp15.033.837 sebagai garis batas). EV/AC = **[ILUSTRASI]** s.d. status minggu ke-4 (izin terlambat 2 hari R-05, lapangan +15%): SPI 0,898 (korektif), CPI 0,920 (dipantau), EAC Rp14.853.192; lalu **diteruskan sebagai estimasi tanpa tindakan korektif sampai selesai** (minggu ke-9, hari kerja ke-41,17; AC akhir Rp14.507.542 < cost baseline; CPI akhir 0,942). Grafik: `gambar/bab7_s_curve.svg`; kode matplotlib di 7.7.
+- [x] **`BAB_08_Executive_Summary.md`** _(draf)_
+      1 halaman, bahasa awam (modul bagian 12): masalah, solusi, manfaat, 4 milestone, total Rp15,7 juta (tunai ±Rp2,2 juta, tanpa biaya bulanan baru), S-Curve ringkas `gambar/bab8_s_curve_ringkas.svg`, 3 rekomendasi. Diletakkan di **awal** proposal saat digabung.
 
 ---
 

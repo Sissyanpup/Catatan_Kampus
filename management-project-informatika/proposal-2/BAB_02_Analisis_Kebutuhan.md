@@ -125,11 +125,12 @@ Kebutuhan fungsional di sini adalah **fungsi yang harus dilakukan oleh rancangan
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | -------------------- |
 | FR-22 | Membangun topologi saat ini (_as-is_) dan topologi usulan (_to-be_) di simulator.                                                                               | M         | [USULAN]             |
 | FR-23 | Menjalankan skenario uji sebelum–sesudah dengan parameter, beban, dan alat ukur yang sama.                                                                      | M         | [USULAN]             |
+| FR-27 | Menguji pengaturan nirkabel, hotspot, dan QoS usulan pada purwarupa **MikroTik hAP ax²** milik tim dengan SSID uji tersendiri: kurva kapasitas (jumlah klien vs throughput & _delay_), lebar kanal & pita, batas klien, ambang sinyal, serta batas _idle_/_keepalive_ hotspot. | M | [USULAN] |
 | FR-24 | Menghasilkan skrip konfigurasi siap pakai beserta langkah pembatalan (_rollback_) dan dokumen rekomendasi untuk pengelola jaringan.                             | M         | [USULAN]             |
 | FR-25 | Mengarahkan domain portal FTI ke IP lokal (_split-horizon DNS_) bila servernya berada di jaringan Kampus Viktor.                                                | W         | [MENUNGGU DATA]      |
 | FR-26 | Menerapkan rancangan ke jaringan produksi dan memantau hasilnya secara langsung (tahap _Implementation_ dan _Monitoring_ NDLC).                                  | W         | [USULAN] — butuh izin (B6) |
 
-Ringkasan: **26 kebutuhan fungsional**, terdiri dari 13 wajib (M), 9 sebaiknya ada (S), 2 boleh ada (C), dan 2 tidak dikerjakan sekarang (W).
+Ringkasan: **27 kebutuhan fungsional**, terdiri dari 14 wajib (M), 9 sebaiknya ada (S), 2 boleh ada (C), dan 2 tidak dikerjakan sekarang (W). _FR-27 ditambahkan setelah keputusan memakai hAP ax²; nomornya tidak disisipkan agar rujukan FR lain tetap sama._
 
 ---
 
@@ -231,16 +232,19 @@ Harga dan jumlah dihitung pada Bab 6 (Estimasi Biaya).
 
 | Komponen                          | Spesifikasi minimum usulan                                    | Keterangan                                                          | Sumber    |
 | --------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------- | --------- |
-| Laptop pengukuran & simulasi      | 2 unit; RAM ≥ 8 GB, WiFi dual-band (2,4/5 GHz)                | Milik anggota; dipakai untuk `ping`, `iperf3`, dan simulator         | [USULAN]  |
+| Laptop pengukuran & simulasi      | Milik setiap anggota (4 unit); RAM ≥ 8 GB, WiFi dual-band (2,4/5 GHz) | Dipakai untuk `ping`, `iperf3`, dan simulator; tidak dibebankan ke biaya proyek | [FAKTA-L] |
 | Ponsel Android                    | 1–2 unit                                                       | Aplikasi WiFi Analyzer; uji gejala putus-nyambung                    | [USULAN]  |
-| Router uji (opsional)             | Router kecil yang mendukung QoS/antrean (misalnya kelas MikroTik hAP) | Uji konfigurasi QoS di perangkat nyata skala kecil sebelum rekomendasi | [USULAN]  |
-| AP, router, dan uplink kampus     | Sudah ada                                                      | Tidak ada pengadaan dalam proyek (B8); hanya diukur                 | [FAKTA-L] |
+| **MikroTik hAP ax²**              | 1 unit **milik Zirlda** (anggota tim); router + AP WiFi 6 dua pita, RouterOS v7  | Purwarupa jaringan uji (FR-27): SSID uji, hotspot, DHCP, antrean/QoS; tanpa pengadaan (B8) | [FAKTA-L] |
+| Kabel LAN                         | 1–2 buah                                                        | Laptop server `iperf3` disambung kabel ke hAP, agar uji kapasitas murni nirkabel dan tidak butuh internet | [USULAN]  |
+| Perangkat mahasiswa relawan       | Ponsel/laptop milik relawan pada jam kelas padat                | Beban nyata untuk uji purwarupa (WP 3.4) dan uji lapangan (WP 3.5); tanpa pengadaan | [USULAN]  |
+| AP, switch, router/server kampus, uplink | Sudah ada                                               | Tidak diganti dan tidak ada pengadaan (B8); hanya diukur dan dioptimalkan konfigurasinya | [FAKTA-L] |
 
 ### 2.8.2 Perangkat Lunak
 
 | Komponen                     | Usulan                                         | Alasan                                                                 | Sumber   |
 | ---------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------- | -------- |
 | Simulasi router & QoS        | MikroTik CHR di GNS3 atau VirtualBox           | Gratis; konfigurasi sama dengan RouterOS yang umum dipakai di kampus  | [USULAN] |
+| Konfigurasi purwarupa        | RouterOS v7 di hAP ax², Winbox / WebFig        | Gratis; skrip yang sama diuji di CHR dan di perangkat nyata           | [USULAN] |
 | Gambar topologi              | Cisco Packet Tracer / PlantUML                 | Gratis; topologi _as-is_ dan _to-be_                                    | [USULAN] |
 | Pengukuran kinerja           | `ping`, `tracert`, `iperf3`, speedtest         | Gratis; hasil dapat diulang dengan cara yang sama                      | [USULAN] |
 | Survei WiFi                  | WiFi Analyzer (Android), `netsh wlan` (Windows) | Gratis; kanal, sinyal, dan BSSID per lokasi                           | [USULAN] |
@@ -255,8 +259,8 @@ Harga dan jumlah dihitung pada Bab 6 (Estimasi Biaya).
 
 | Masalah (Bab 1)                                             | Prioritas | Kebutuhan Fungsional           | Kebutuhan Non-Fungsional    |
 | ----------------------------------------------------------- | --------- | ------------------------------ | --------------------------- |
-| M1 Dosen terhambat membuka presensi & validasi di kelas     | Tinggi    | FR-02, 16, 17, 21, 25          | NFR-01, 02, 03, 04, 05, 08  |
-| M2 AP kelebihan beban, koneksi putus-nyambung               | Tinggi    | FR-03, 04, 07–15               | NFR-05, 06, 10, 11          |
+| M1 Dosen terhambat membuka presensi & validasi di kelas     | Tinggi    | FR-02, 16, 17, 21, 25, 27      | NFR-01, 02, 03, 04, 05, 08  |
+| M2 AP kelebihan beban, koneksi putus-nyambung               | Tinggi    | FR-03, 04, 07–15, 27           | NFR-05, 06, 10, 11          |
 | M3 Bandwidth tanpa jaminan & tanpa prioritas akademik       | Sedang    | FR-06, 16–20                   | NFR-07, 08, 09              |
 | M4 Belum ada data kinerja jaringan                          | Sedang    | FR-01–06, 22, 23               | NFR-12, 14                  |
 | M5 Tidak ada jalur cadangan selain WiFi kampus              | Rendah    | (tidak langsung; dijawab lewat M1–M2) | NFR-05                |
@@ -315,12 +319,13 @@ end note
 
 ## 2.11 Kesimpulan Bab
 
-Kebutuhan proyek dirumuskan menjadi **26 kebutuhan fungsional** (13 wajib, 9 sebaiknya ada, 2 boleh ada, 2 tidak dikerjakan sekarang) dan **14 kebutuhan non-fungsional**. Inti kebutuhannya adalah:
+Kebutuhan proyek dirumuskan menjadi **27 kebutuhan fungsional** (14 wajib, 9 sebaiknya ada, 2 boleh ada, 2 tidak dikerjakan sekarang) dan **14 kebutuhan non-fungsional**. Inti kebutuhannya adalah:
 
 1. **Pengukuran baseline** yang membedakan hambatan nirkabel dan hambatan uplink, sebagai dasar perancangan dan pembanding hasil.
 2. **Perencanaan kapasitas dan kanal AP** untuk ±2.200 perangkat per lantai, ditambah peninjauan DHCP dan sesi hotspot, agar koneksi dosen tidak terputus selama sesi kuliah.
 3. **Manajemen bandwidth dan QoS** yang mempertahankan batas paket silver/gold, menambahkan jaminan minimum, dan memprioritaskan lalu lintas portal akademik.
 4. **Target kinerja terukur**: _delay_ ≤ 150 ms, _jitter_ ≤ 75 ms, _packet loss_ ≤ 3%, waktu muat portal ≤ 3 detik, dan tanpa pemutusan selama satu sesi kuliah.
+5. **Pembuktian tiga lapis**: simulasi (CHR/GNS3), purwarupa di **hAP ax²** milik tim, dan uji lapangan bersama relawan di WiFi UNPAM.
 
 Kebutuhan ini menjadi masukan **Bab 3 (Perancangan Solusi)**, dimulai dari **topologi jaringan saat ini (_as-is_)**.
 

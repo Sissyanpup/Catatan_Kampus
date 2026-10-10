@@ -7,7 +7,7 @@
 > - **[ASUMSI]** = belum dapat dipastikan; perlu data dari tim atau kampus.
 > - **[MENUNGGU DATA]** = diisi setelah Pra-Tugas pengukuran (lihat `00_Kerangka_dan_Progres.md`).
 
-Bab ini adalah tahap **_Design_** dan persiapan **_Simulation Prototyping_** pada metode NDLC. Masukannya adalah kebutuhan pada Bab 2 (FR-01 s.d. FR-26, NFR-01 s.d. NFR-14). Keluarannya adalah rancangan jaringan yang dapat disimulasikan, diuji terhadap target Bab 2, dan diserahkan kepada pengelola jaringan sebagai rekomendasi.
+Bab ini adalah tahap **_Design_** dan persiapan **_Simulation Prototyping_** pada metode NDLC. Masukannya adalah kebutuhan pada Bab 2 (FR-01 s.d. FR-27, NFR-01 s.d. NFR-14). Keluarannya adalah rancangan jaringan yang dapat disimulasikan, diuji terhadap target Bab 2, dan diserahkan kepada pengelola jaringan sebagai rekomendasi.
 
 Bab ini dikerjakan **bertahap**. Setiap subbab diperiksa tim sebelum lanjut ke subbab berikutnya.
 
@@ -204,7 +204,7 @@ Aturan mengikuti format use case dan activity diagram yang sudah disetujui tim p
 | Kebutuhan          | Alasan                                                                                               |
 | ------------------ | ---------------------------------------------------------------------------------------------------- |
 | FR-01–FR-06        | Kegiatan pengukuran oleh Kelompok 2 (tahap _Analysis_), bukan layanan yang dipakai aktor.            |
-| FR-22, FR-24       | Keluaran proyek (simulasi, skrip, dokumen), bukan interaksi aktor dengan jaringan.                   |
+| FR-22, FR-24, FR-27 | Keluaran proyek (simulasi, purwarupa hAP ax², skrip, dokumen), bukan interaksi aktor dengan jaringan. |
 | FR-25, FR-26       | Prioritas **W** (tidak dikerjakan pada proyek ini).                                                  |
 
 > **Cara generate:** letakkan kursor di dalam blok kode lalu tekan `Alt+D` di VS Code. Setiap blok menghasilkan satu gambar (satu halaman).
