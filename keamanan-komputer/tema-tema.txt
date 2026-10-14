@@ -1,0 +1,18 @@
+Pengantar keamanan komputer :
+- Definisi urgensi dan ruang lingkup keamanan komputer
+- Jenis-jenis ancaman
+- kebijakan keamanan
+
+Kriptografi dan keamanan data :
+- Konsep dasar Kriptografi
+- Teknik pengamanan data saat disimpan dan saat ditransmisikan
+
+Keamanan jaringan dan server :
+- Arsitektur jaringan yang aman dan implementasi segmentasi firewall
+- sistem deteksi
+
+1. Proses identifikasi dan otentifikasi saat login merupakan aspek penting dalam keamanan komputer. Jelaskan perbedaannya dan berikan contoh nyata di perusahaan
+2. Anda bekerja sebagai IT security analyze di sebuah bank digital. Saat ini bank sedang mengimplementasikan sistem login dengan enkripsi password. Rancang alur proses login aman mulai dari input password di sisi user hingga validasi di server. Jelaskan bagaimana kriptografi diterapkan pada setiap tahapannya.
+3. Anda bekerja sebagai IT di sebuah perusahaan yang sedang berkembang pesat. Perusahaan tersebut baru saja mengalami serangan mallware yang menyebabkan beberapa komputer tidak bisa digunakan. Analisislah langkah-langkah strategis apa yang akan anda lakukan untuk mengamankan komputer dan sistem perusahaan agar serangan serupa tidak terulang kembali. Jelaskan alasan dari setiap langkah. 
+
+**Kerjakan di kertas Polio, bawa minggu depan**
