@@ -1,0 +1,45 @@
+Projek ini merupakan proposal rencana projek informatika, terkait optimasi (tambahkan penjelasan optimasi itu apa maksudnya nanti) topologi akses point dan manajemen bandwidth yang ada di UNPAM Viktor.
+
+Jangan dibuat proposal untuk teknis; yang memiliki istilah kode, faktor faktor yang melebar, dan bahasa yang terlalu teknis. Dibuat format proposal sesimple mungkin. Ada contoh file yang salah (sudah dirombak dosen) "/home/bethapup/Documents/Catatan_Kampus/management-project-informatika/proposal-3/contoh-proposal-yang-salah-perlu-dirombak.pdf". Kenapa salah, karena formatnya terlalu teknis, orang awam sulit untuk memahami, auto ditolak ini proposal. Terlihat sangat AI. Data (fakta yang terjadi dan dicatat) sangat sedikit menjadi lemah, penjelasan banyak yang tidak masuk akal. Faktor, masalah, dan solusi pembahasannya merambat ke faktor lain seperti website portal gedung dll sehingga tidak fokus pada masalah utama.
+
+Data-data perlu dikumpulkan, baik berupa catatan, kuisioner, skreenshoot, data angka yang terkumpul, waktu jam tanggal yang jelas, skema, dan lainnya. 
+
+Fokus pada masalah yang tertera di judul, jangan melebar ke faktor lain walaupun terlihat berkaitan.
+
+Executive summary harus ada 5 hal dalam bentuk naratif, bukan teknis (tidak boleh ada data atau penjelasan pasti. Karena yang membaca adalah orang awam non IT) :
+1. masalah
+2. Solusi
+3. metode
+4. Estimasi waktu pengerjaan
+5. Estimasi biaya
+Diletakkan setelah cover, terdapat beberapa tanda tangan seperti PM dan lainnya.
+
+Hal hal yang bersifat estimasi adalah ESTIMASI, bukan kepastian. Hindari itu.
+
+Proposal berisi daripada :
+analisis masalah yang berisi naratif, langsung sebutkan datanya secara naratif dan jelas, juga konsisten. Sedikit namun konsisten dan jelas untuk pembaca awam 
+analisis kebutuhan
+perancangan daripada masalah yang muncul dari gap keinginan dengan kenyataan.
+metode yang digunakan untuk melakukan solusinya
+estimasi waktu
+estimasi biaya
+S-curve evm
+
+terdapat wbs juga, seperti contoh /home/bethapup/Documents/Catatan_Kampus/management-project-informatika/proposal-3/contoh-wbs.csv
+masukkan analisis perancangannya (jika web seperti UML, ERD, metodenya, dll). bisa pakai plantUML di file md masing-masing yang nanti di generate.
+
+Anggota :
+Dzaky Alfareza - 231011400504
+Rizky Zehan’s Onassis - 231022400496
+Muhammad Zirlda Prairi - 231011402293 (utama)
+Vigie Afrilza Wibowo - 231011402415
+
+Buatkan beberapa file md dahulu per bab nya. Step eksekusi perlahan, dan bersifat diskusi agar kita pantau bersama. 
+
+INTINYA :
+- Proposal harus mudah dibaca, dilarang ada kodifikasi. Karena pembaca adalah orang awam yang bukan ahli literasi, hanya orang rata-rata Indonesia.
+- Asumsi atau Klaim harus disandari dengan Data actual.
+- Alasan yang bersifat logis untuk manusia awam.
+- Proposal adalah projek awal, bukan laporan.
+
+gunakan skill-bahasa-inti.
