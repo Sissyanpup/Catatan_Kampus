@@ -1,0 +1,8 @@
+Teknologi Penyimpanan
+
+Kemampuan sistem komputer dalam menyimpan, mempertahankan, dan mengambil kembali data.
+Ada primary dan ada secondary. 
+
+Primary : ram, cpu, cache
+secondary : ssd, hdd, tape, optical disc
+
