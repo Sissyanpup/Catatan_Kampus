@@ -1,0 +1,21 @@
+Sebuah perusahaan PT Nusa data sistem, menyediakan layanan anlitik data, punya rencana untuk memperbaharui sistem, saat ini menggunakan workstation yang masih konvernsional (jadul) akibatnya proses pengolahan data dan layanan sering mengalami gangguan. Anda sebagai manajer IT diminta untuk mengatasi sistem komputer yang sekarang untuk uograde ke high tech dan buat konsep langkah-langkahnya.
+
+1. Menganalisis kebutuhan sistem
+- kebutuhan fungsional
+- kebutuhan operasional dan bisnis
+- kebutuhan data
+
+Jangan lupakan apa alasan pemilihan dari:
+- Prosesor
+- RAM
+- Storage
+
+2. Melakukan analisa dampak migrasi HDD ke SSD. Narasikan perbedaan (komparasi) teknologi keduanya, performa, kebutuhan, fitur, (termasuk jelaskan nanti hdd masih tersimpan data walau terhapus hardcode, tetapi ssd bisa hilang total selamanya dengan software hardcode)
+
+3. Teknik manajemen memori, segmentasi, analisis. Jelaskan apa itu segmentasi, vue, dan lain lain.
+
+4. peran sistem i/o dan protokol bus. Menjelaskan bagaimana cara kerja mereka, dari I/O, protokol GUI, protokol bus. nvme, sata, dan lain lain.
+
+5. Buat kesimpulan sesuai bahasa masing-masing dari ke-empat uraian diatas.
+
+NOTE = Kesimpulan di Bab 5 adalah jawaban dari rumusan masalah atau analisis masalah di bab 1.
