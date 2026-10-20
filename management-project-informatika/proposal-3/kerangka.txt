@@ -42,4 +42,4 @@ INTINYA :
 - Alasan yang bersifat logis untuk manusia awam.
 - Proposal adalah projek awal, bukan laporan.
 
-gunakan skill-bahasa-inti.
+gunakan skill-bahasa-inti. Bahasa yang jelas dan mudah dipahami.

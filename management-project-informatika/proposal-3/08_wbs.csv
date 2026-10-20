@@ -1,0 +1,46 @@
+,,,,,,,,,,,,,,,
+,WORK BREAKDOWN STRUCTURE (WBS),,,,,,,,,,,,,,
+,Optimasi Topologi Access Point dan Manajemen Bandwidth di Gedung A Kampus Viktor UNPAM,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,Nama Proyek,,: Optimasi Topologi Access Point dan Manajemen Bandwidth - Gedung A Kampus Viktor UNPAM,,,,,,,,,,,,
+,Metodologi,,: NDLC (Network Development Life Cycle),,,,,,,,,,,,
+,Kelompok,,": Kelompok 2 - Teknik Informatika, Fakultas Ilmu Komputer, Universitas Pamulang",,,,,,,,,,,,
+,Anggota,,1). Muhammad Zirlda Prairi (Manajer Proyek),,,,,,,,,,,,
+,,,2). Dzaky Alfareza,,,,,,,,,,,,
+,,,3). Rizky Zehan's Onassis,,,,,,,,,,,,
+,,,4). Vigie Afrilza Wibowo,,,,,,,,,,,,
+,Tahun Akademik,,: 2026,,,,,,,,,,,,
+,Tanggal Mulai Proyek,,": 09-Nov-2026 (asumsi, setelah proposal disetujui)",,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,No. WBS,Level,Uraian Pekerjaan (Task Description),Deliverable / Output,Dependensi,Tipe Dependensi,Prioritas,Sumber Daya (PIC),Estimasi Biaya (Rp),Status,Progress (%),Durasi (Hari),Tanggal Mulai,Tanggal Selesai,Catatan
+,1,1,TAHAP 1 - PENGUKURAN AWAL,Laporan kondisi awal,-,-,Tinggi,Muhammad Zirlda Prairi,"Rp1.467.500,00",Belum Dimulai,0%,16,09-Nov-2026,30-Nov-2026,
+,1.1,2,Pengajuan izin tertulis ke Lembaga Pengembangan Teknologi Informasi UNPAM,Surat izin disetujui,-,-,Tinggi,Muhammad Zirlda Prairi,"Rp160.000,00",Belum Dimulai,0%,6,09-Nov-2026,16-Nov-2026,Menunggu jawaban pihak kampus
+,1.2,2,"Penyiapan alat dan aturan pengukuran (HP, akun Silver dan Gold, situs uji, tabel rekap)",Daftar alat dan tabel rekap siap,-,-,Sedang,Rizky Zehan's Onassis,"Rp430.000,00",Belum Dimulai,0%,2,09-Nov-2026,10-Nov-2026,Bisa berjalan bersamaan dengan 1.1
+,1.3,2,Wawancara pengelola jaringan dan permintaan data resmi,Ringkasan wawancara dan data resmi,1.1,FS,Tinggi,Muhammad Zirlda Prairi,"Rp200.000,00",Belum Dimulai,0%,4,17-Nov-2026,20-Nov-2026,"Kalau data ditolak, dicatat sebagai batasan"
+,1.4,2,"Pengukuran kecepatan dan waktu tunggu semua lantai, jam sepi dan ramai",Rekap hasil ukur kondisi awal,"1.1, 1.2",FS,Tinggi,Rizky Zehan's Onassis,"Rp350.000,00",Belum Dimulai,0%,6,17-Nov-2026,24-Nov-2026,Lima hari kerja berturut-turut agar mencakup Selasa dan Jumat
+,1.5,2,Pemeriksaan kanal access point dan kekuatan sinyal tiap ruang,Peta kanal dan sinyal tiap lantai,1.4,SS,Tinggi,Dzaky Alfareza,"Rp95.000,00",Belum Dimulai,0%,4,17-Nov-2026,20-Nov-2026,Dikerjakan bersamaan dengan 1.4
+,1.6,2,Penyebaran dan penutupan kuesioner pengguna,Rekap jawaban kuesioner,1.4,SS,Sedang,Vigie Afrilza Wibowo,"Rp87.500,00",Belum Dimulai,0%,6,17-Nov-2026,24-Nov-2026,Dikerjakan bersamaan dengan 1.4
+,1.7,2,Penyusunan laporan kondisi awal,Laporan kondisi awal Gedung A,"1.3, 1.4, 1.5, 1.6",FS,Tinggi,Vigie Afrilza Wibowo,"Rp145.000,00",Belum Dimulai,0%,4,25-Nov-2026,30-Nov-2026,Titik pemeriksaan 1
+,2,1,TAHAP 2 - PERANCANGAN,Dokumen rancangan disetujui,1,FS,Tinggi,Muhammad Zirlda Prairi,"Rp412.500,00",Belum Dimulai,0%,9,01-Dec-2026,11-Dec-2026,
+,2.1,2,Penyusunan pembagian kanal dan kekuatan pancaran per access point,Rancangan kanal dan pancaran,1.7,FS,Tinggi,Dzaky Alfareza,"Rp47.500,00",Belum Dimulai,0%,4,01-Dec-2026,04-Dec-2026,-
+,2.2,2,Penetapan angka aturan pembagian kecepatan dan antrean,Rancangan aturan pembagian,1.7,FS,Tinggi,Rizky Zehan's Onassis,"Rp32.500,00",Belum Dimulai,0%,3,01-Dec-2026,03-Dec-2026,Bersamaan dengan 2.1
+,2.3,2,Pemeriksaan kapasitas internet terhadap seluruh jatah terjamin,Hitungan kecukupan kapasitas,2.2,FS,Tinggi,Muhammad Zirlda Prairi,"Rp17.500,00",Belum Dimulai,0%,2,04-Dec-2026,07-Dec-2026,"Kalau tidak cukup, dilaporkan ke kampus"
+,2.4,2,Pembahasan dan persetujuan rancangan bersama pengelola,Dokumen rancangan disetujui,"2.1, 2.3",FS,Tinggi,Muhammad Zirlda Prairi,"Rp315.000,00",Belum Dimulai,0%,4,08-Dec-2026,11-Dec-2026,Titik pemeriksaan 2
+,3,1,TAHAP 3 - PERCONTOHAN DI LANTAI 7,Laporan percontohan lantai 7,2,FS,Tinggi,Muhammad Zirlda Prairi,"Rp1.270.000,00",Belum Dimulai,0%,19,14-Dec-2026,21-Jan-2027,
+,3.1,2,Penyimpanan salinan pengaturan lama lantai 7,Salinan pengaturan lama,2.4,FS,Tinggi,Rizky Zehan's Onassis,"Rp30.000,00",Belum Dimulai,0%,1,14-Dec-2026,14-Dec-2026,Bersama IT Support
+,3.2,2,Penerapan pengaturan kanal dan pancaran di lantai 7,Lantai 7 memakai pengaturan baru,3.1,FS,Tinggi,Dzaky Alfareza,"Rp70.000,00",Belum Dimulai,0%,2,15-Dec-2026,16-Dec-2026,"Di luar jam kuliah ramai, bersama IT Support"
+,3.3,2,Penerapan aturan pembagian kecepatan di lantai 7,Aturan pembagian aktif di lantai 7,3.2,FS,Tinggi,Rizky Zehan's Onassis,"Rp60.000,00",Belum Dimulai,0%,2,17-Dec-2026,18-Dec-2026,"Di luar jam kuliah ramai, bersama IT Support"
+,3.4,2,Pengukuran ulang lantai 7: cara pembagian lama dan cara antrean baru,Rekap perbandingan lantai 7,3.3,FS,Tinggi,Rizky Zehan's Onassis,"Rp900.000,00",Belum Dimulai,0%,10,04-Jan-2027,15-Jan-2027,Satu pekan untuk tiap cara pembagian
+,3.5,2,Evaluasi hasil percontohan dan perbaikan rancangan,Laporan percontohan lantai 7,3.4,FS,Tinggi,Muhammad Zirlda Prairi,"Rp210.000,00",Belum Dimulai,0%,4,18-Jan-2027,21-Jan-2027,Titik pemeriksaan 3; perkiraan pesimis sudah memuat satu putaran perbaikan
+,4,1,TAHAP 4 - PENERAPAN KE LANTAI LAIN,Seluruh Gedung A memakai pengaturan baru,3,FS,Tinggi,Muhammad Zirlda Prairi,"Rp225.000,00",Belum Dimulai,0%,6,22-Jan-2027,29-Jan-2027,
+,4.1,2,Penyimpanan salinan pengaturan lama lantai 1 sampai 6,Salinan pengaturan lama,3.5,FS,Tinggi,Rizky Zehan's Onassis,"Rp35.000,00",Belum Dimulai,0%,2,22-Jan-2027,25-Jan-2027,Bersama IT Support
+,4.2,2,"Penerapan pengaturan baru di lantai 1 sampai 6, satu lantai demi satu lantai",Seluruh lantai memakai pengaturan baru,4.1,FS,Tinggi,Dzaky Alfareza,"Rp95.000,00",Belum Dimulai,0%,4,26-Jan-2027,29-Jan-2027,"Di luar jam kuliah ramai, bersama IT Support"
+,4.3,2,Pemeriksaan cepat setelah penerapan di tiap lantai,Catatan pemeriksaan tiap lantai,4.2,SS,Sedang,Rizky Zehan's Onassis,"Rp95.000,00",Belum Dimulai,0%,4,26-Jan-2027,29-Jan-2027,Bersamaan dengan 4.2
+,5,1,TAHAP 5 - PENGUKURAN AKHIR,Laporan perbandingan sebelum dan sesudah,4,FS,Tinggi,Muhammad Zirlda Prairi,"Rp757.500,00",Belum Dimulai,0%,10,01-Feb-2027,12-Feb-2027,
+,5.1,2,"Pengukuran akhir seluruh gedung, jam sepi dan ramai",Rekap hasil ukur kondisi akhir,"4.2, 4.3",FS,Tinggi,Rizky Zehan's Onassis,"Rp525.000,00",Belum Dimulai,0%,6,01-Feb-2027,08-Feb-2027,Titik dan jam sama dengan 1.4
+,5.2,2,Penyebaran ulang kuesioner pengguna,Rekap kuesioner akhir,5.1,SS,Sedang,Vigie Afrilza Wibowo,"Rp87.500,00",Belum Dimulai,0%,6,01-Feb-2027,08-Feb-2027,Bersamaan dengan 5.1
+,5.3,2,Penyusunan laporan perbandingan sebelum dan sesudah,Laporan perbandingan,"5.1, 5.2",FS,Tinggi,Vigie Afrilza Wibowo,"Rp145.000,00",Belum Dimulai,0%,4,09-Feb-2027,12-Feb-2027,Titik pemeriksaan 4
+,6,1,TAHAP 6 - SERAH TERIMA KEPADA PENGELOLA,Panduan pengelola dan laporan akhir,4,FS,Tinggi,Muhammad Zirlda Prairi,"Rp407.500,00",Belum Dimulai,0%,14,01-Feb-2027,18-Feb-2027,
+,6.1,2,Penyusunan panduan pengelola,Panduan pengaturan access point dan pembagian kecepatan,4.2,FS,Sedang,Vigie Afrilza Wibowo,"Rp97.500,00",Belum Dimulai,0%,4,01-Feb-2027,04-Feb-2027,Bisa dimulai sambil pengukuran akhir berjalan
+,6.2,2,Penjelasan singkat kepada petugas IT Support,Daftar hadir dan catatan penjelasan,6.1,FS,Sedang,Muhammad Zirlda Prairi,"Rp70.000,00",Belum Dimulai,0%,2,05-Feb-2027,08-Feb-2027,-
+,6.3,2,Penyusunan laporan akhir dan serah terima,Laporan akhir dan berita acara serah terima,"5.3, 6.2",FS,Tinggi,Muhammad Zirlda Prairi,"Rp240.000,00",Belum Dimulai,0%,4,15-Feb-2027,18-Feb-2027,Titik pemeriksaan 5
