@@ -1,0 +1,44 @@
+RISC and CISC
+28 oct 2026
+
+Prinsipnya adalah 
+Reduced Instruction Set Computer bekerja lebih lebih lambar, sederhana tradisional
+Complex Instruction Set Computer bekerja lebih cepat, lebih kompleks.
+
+ISA (Ubstruction Set Architecture) = apa yang dilihat oleh Software
+Bagaimana ISA tersebut diinstruksikan di hardwarenya.
+
+Komparasi RISC dan CISC analisis performa. 3 Faktor yang memengaruhi.
+- Instruction Count (IC)
+- Cycle Per Instruction (CPI) 
+- Clock (T) - detik
+
+CISC biasanya IC nya lebih sedikit | RISC 
+CISC biasanya PIC lebih banyak
+CISC biasanya T lebih lambat 
+
+Waktu CPU = IC x CPI x T
+T = (IC x CPI) / CPU
+
+CPU Cycles = IC x CPI
+CPU Time = CPU Cycles / CPU Clock(Hz)
+CPU Clock = 
+
+CISC biasanya 600.000 IC, sedangkan RISC biasanya 1.000.000 IC
+
+Menghitung Speedup
+Speedup = Waktu mesin lambat / Waktu mesin cepat
+Pengurangan Waktu
+Exec Time = (Waktu mesin lambat - Waktu mesin cepat) x 100% 
+Speedup untuk berapa kali lipat lambat ke cepat, sementara pengurangan waktu untuk persentase terhadap waktu yang dibutuhkan untuk eksekusi dari kedua prosesor.
+Latihan :
+
+Diketahui sebuah program dijalankan pada 2 prosesor, CISC dan RISC. Jumlah instruksi pada CISC adalah 500 instruksi, RISC 800 instruksi. CPI rata-ratanya untuk CISC [2 digit nim akhir anda], sedangakan RISC [1 digit nim akhir anda].Clock Rate untuk CISC 1.5GHz, untuk RISC 2GHz.
+
+Pertanyaannya, 
+1. Hitunglah total siklus masing-masing prosesor. 
+2. Hitung waktu eksekusi program dalam satuan nanosecond.
+3. Tentukan prosesor mana yang memiliki kinerja lebih baik.
+4. Hitunglah presentasi pengurangan waktu eksekusi dari prosesor yang lebih lambat ke prosesor yang lebih cepat (speedup). 
+
+Tulis tangan di kertas minggu depan
