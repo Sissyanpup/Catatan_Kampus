@@ -31,6 +31,7 @@ Speedup = Waktu mesin lambat / Waktu mesin cepat
 Pengurangan Waktu
 Exec Time = (Waktu mesin lambat - Waktu mesin cepat) x 100% 
 Speedup untuk berapa kali lipat lambat ke cepat, sementara pengurangan waktu untuk persentase terhadap waktu yang dibutuhkan untuk eksekusi dari kedua prosesor.
+
 Latihan :
 
 Diketahui sebuah program dijalankan pada 2 prosesor, CISC dan RISC. Jumlah instruksi pada CISC adalah 500 instruksi, RISC 800 instruksi. CPI rata-ratanya untuk CISC [2 digit nim akhir anda], sedangakan RISC [1 digit nim akhir anda].Clock Rate untuk CISC 1.5GHz, untuk RISC 2GHz.
@@ -41,4 +42,4 @@ Pertanyaannya,
 3. Tentukan prosesor mana yang memiliki kinerja lebih baik.
 4. Hitunglah presentasi pengurangan waktu eksekusi dari prosesor yang lebih lambat ke prosesor yang lebih cepat (speedup). 
 
-Tulis tangan di kertas minggu depan
+Tulis tangan di kertas minggu depan.

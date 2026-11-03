@@ -1,0 +1,59 @@
+Cyber Law dan Asas / 
+
+Cyber Law
+- sebuah aturan hukum yang mengatur aktivitas di ruang siber (segala aktivitas pengguna internet, hardware, software, hingga teknologi dan sosial informatika)
+- cakupan : transaksi elektronik, perlindungan data, hak cipta digital, kejahatan siber, dan privasi.
+- di Indonesia payung hukum utamanya adalah UU ITE 
+
+Latar Belakang 
+- cepatnya transformasi digital.
+- eskalasi kejahatan siber.
+- kebutuhan kepastian hukum.
+- sifat lintas batas (cross-border). Pembatasan hukum dalam kasus internet.
+
+Ruang Lingkup Cyber Law
+- kejahatan siber / cybercrime
+- transaksi dan perdagangan elektronik (e-commerce)
+- tanda tangan dan dokumen elektronik.
+- perlindungan data pribadi dan privasi.
+- hak kekayaan intelektual di dunia digital.
+- etika bermedia sosial dan penyebaran informasi.
+
+Dasar Hukum di Indonesia
+- UU No. 11 Tahun 2008 tentang informasi dan transaksi elektronik (UU ITE)
+- UU No. 19 Tahun 2016 (perubahan pertama)
+- UU No. 1 Tahun 2024 (perubahan kedua) 
+- UU No. 7 Tahun 2022 tentang perlindungan data pribadi (UU PDP)
+
+UU ITE
+- peraturan resmi yang mengatur siber
+- mengatur hak kewajiban dan larangan bagi pengguna maupun penyelenggara
+- ketentuan perdata dan pidana
+
+ASAS UU ITE (pasal 3)
+- kepastian hukum
+- manfaat
+- kehati-hatian
+- iktikad baik
+- kebebasan memilih teknologi atau netral teknologi
+
+TUJUAN UU ITE
+- mencerdaskan kehidupan bangsa
+- mengembangkan perdagangan dan perekonomian nasional
+- meningkatkan efektivitas dan efisiensi
+- membuka kesempatan seluas-lauasnya bagi pengembang 
+- memberikan keadilan rasa aman
+
+DILARANG
+- konten kesusilaan
+- judol
+- penghinaan dan pencemaran nama baik
+- pemerasan dan pengancaman
+- penyebaran berita bohong / hoaks
+- akses ilegal, peretasan, penyadapan, perusakan
+
+KAITAN ETIKA 
+- profesional di bidang IT wajib menjaga kerahasiaan dan keamanan data
+- menaati hukum dan tidak menyalahgunakan teknologi
+- Bertanggungjawab atas informasi yang dibuat dan dikembangkan
+- menjunjung tinggi kejujuran integritas dan profesinalisme
