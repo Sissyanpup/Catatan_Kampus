@@ -20,9 +20,10 @@ Ruang Lingkup Cyber Law
 - etika bermedia sosial dan penyebaran informasi.
 
 Dasar Hukum di Indonesia
+- bersumber atau mengambil beberapa referensi UU pada negara lain. Contohnya dari UU PBB (sebagai rujukan utama), singapura. 
 - UU No. 11 Tahun 2008 tentang informasi dan transaksi elektronik (UU ITE)
 - UU No. 19 Tahun 2016 (perubahan pertama)
-- UU No. 1 Tahun 2024 (perubahan kedua) 
+- UU No. 1 Tahun 2024 (perubahan kedua)
 - UU No. 7 Tahun 2022 tentang perlindungan data pribadi (UU PDP)
 
 UU ITE
