@@ -1,0 +1,36 @@
+Teknologi dan Tren Arsitektur Komputer Modern
+
+Beyond Moore (Komputasi Masa Depan)
+
+1. Computer Quantum
+- menggunakan sistem fisik mekanika kuantum. 
+- unit dasar adalah Qubit
+- measurement Probabilistik
+- entanglement korelasi kuantum antar Qubit
+
+2. Neuromorphic Computing\
+- mengadaptasi prinsip organisasi dan dinamika jaringan saraf bilogis ke dalam perangkat keras dan model Komputasi
+- neuron, synapse, spike, dan plasticity
+
+3. In-Memory Computing
+- IMC/CIM mengeksekusi operasi tertentu di dalam array memori.
+- PIM / Processing-in-memory mencakup logika yang ditempatkan dekat atau di dalam modul memori
+- komputasi secara lebih local
+
+4. Photonic Computing
+- memanfaatkan foton untuk membawa memanipulasi atau memproses informasi. Fokus praktis terdekat adalah interkoneksi optik dan akselerator fotonik
+
+Perbandingan Empat Paradigma 
+
+Kesimpulannya adalah terkait TTAKM
+- kemajuan komputer tidak lagi datang dari membuat transistor makin kecil, tapi dari cara komputer itu dirancang dan disusun
+
+Arah kemajuan baru
+- banyak pekerja bekerja paralel, bukan satu pekerja bekerja super cepat 
+- alat khusus untuk tugas khusus 
+- mengurangi perpindahan data 
+- paradigma baru untuk masa depan 
+
+- efisiensi energi resource sama pentingnya dengan kecepatan
+- keamanan harus dipikirkan sejak desain chip (awal sekali)
+- teknologi baru umumnya melengkapi, bukan menggantikan

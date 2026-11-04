@@ -1,0 +1,48 @@
+4 nov 26
+Quality Assurance 
+Pengujian Black Box dan White Box
+
+12R Framework for IT Projects
+- right requirements. 
+business needs, user requirements, dan stackholder. Dibuat menjadi sistem requirements daripada 3 hal tersebut.
+sistem terdapat functional requirements dan non-functional requirements
+mungkin dari 2 masalah memiliki 1 solusi. Namun tidak mungkin 1 masalah 2 solusi (adapun alternatif harus dipilih satu)
+- right solution
+solusi yang cocok, tepat, sesuai masalah
+- right plan 
+dari solusi yang tepat -> perencanaan yang tepat
+- right resources
+dari planning yang tepat -> sumberdaya yang tepat
+- right time 
+ketepatan dalam menggunakan waktu dan penjadwalan
+- right cost 
+ketepatan biaya dari penjadwalan yang tepat
+- right quality 
+kualitas yang tepat, dengan melewati pengujian-pengujian yang tepat
+- right risk
+ketepatan risiko. Dalam suatu hal pasti ada celah. Yang diperhatikan adalah fokus pada letak risiko tersebit. ada yang dihiraukan, ada yang harus ditutup total ASAP, tergantung functionalnya maupun non-functionalnya
+- right change
+perubahan yang tepat. Namun harus sesuai dengan kondisi, batasan, dan kesepakatan.
+- right stakeholder
+pemangku kepentingan yang tepat. Sasaran projek yang harus tepat siapa.
+- right benefit
+manfaat dan nilai yang tepat.
+- right scope
+batasan ruang lingkup yang tepat.
+
+Developer vs Tester di Projek TI
+pov dev = bagaimana masalah ini mendapatkan solusi
+pov tester = bagaimana solusi ini bisa menjadi masalah
+
+Tester atau Penguji harus pernah melalui pengujian atau Developer
+
+Black-Box Testing, ialah testing sebuah box hitam yang tidak terlihat, yang dimana ketika diinput maka HARUS memiliki output yang diharapkan.
+Equivalence Partitioning (EP)
+Use Case Testing 
+User Acceptance Test (UAT), memverifikasi yang harus mengacu pada kebutuhan bisnis dan siap digunakan 
+White-Box Testing, ialah memeriksa seluruh isiannya. function, data, controller, alur sistem. (harus penguji yang kompeten). Ada teknik path, dll.
+Conditional Testing (white-box)
+API Testing (Gray-Box Testing, karena bukan di dalam sistem bukan juga di luar sistem). Termasuk Database testing, Security testing.
+Usability Testing, memverifikasi kemudahan pemakaian oleh user (termasuk black-box testing)
+
+TUGAS 

@@ -1,0 +1,24 @@
+Tugas Kelompok
+
+Membuat PROPOSAL BISNIS terkait system informasi [minimarket] (Tidak sama dengan proposal skripsi)
+- Beritahu kelebihan
+- Harga Sistem (hanya software, dan paket software + hardware)
+- Buat table, massa pengerjaan berapa lama (table sederhana seperti table Waktu skripsi) dari projek 0 hingga client bisa memakainya full.
+- Use Case HANYA SATU, namun banyak actor digabung, kiri kanan seimbang.
+- Login, Beranda, Logout dibikin satu.
+- Class Diagram HANYA SATU, namun Main_[Actor] digabung dari Beranda hingga UI_Logout. Dengan class bisa dengan judul missal data_anggota.
+- Activity dan Sequence 
+1. Nama Lengkap NIM (Actor)
+-- Activity Diagram Login - Logout (Setiap setelah diagram, diberi penjelasan alurnya sampai selesai, dengan Bahasa sederhana. Dengan harap proposal ke klient awam akan paham. Klient yang tidak mengerti apa itu diagram)
+-- Sequence Diagram Login - Logout (Setiap setelah diagram, diberi penjelasan alurnya sampai selesai, dengan Bahasa sederhana. Dengan harap proposal ke klient awam akan paham. Klient yang tidak mengerti apa itu diagram)
+2. Nama Lengkap NIM (Actor)
+-- Activity Diagram Login - Logout (Setiap setelah diagram, diberi penjelasan alurnya sampai selesai, dengan Bahasa sederhana. Dengan harap proposal ke klient awam akan paham. Klient yang tidak mengerti apa itu diagram)
+-- Sequence Diagram Login - Logout (Setiap setelah diagram, diberi penjelasan alurnya sampai selesai, dengan Bahasa sederhana. Dengan harap proposal ke klient awam akan paham. Klient yang tidak mengerti apa itu diagram)
+n. Nama Lengkap NIM (Actor) ....
+
+- Logo tidak harus unpam
+- nama perusahaan bebas
+
+Catatan per 4 nov 26
+- Sequence yang ditanya adalah SD data karyawan
+- Add absensi sudah "boleh"
