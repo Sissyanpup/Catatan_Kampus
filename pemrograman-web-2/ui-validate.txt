@@ -1,0 +1,92 @@
+Desain UI hingga Validasi dan Pengolahan Data
+- html, css, javascript, php 
+
+Form Utama 
+- ialah antarmuka awal yang menjadi pusat interaksi pengguna yang mengisi, melihat, dan mengirim data.
+- contoh; form login, regis mahasiswa, input data pelanggan, form transaksi, dashboard andminstrasi.
+Komponen Form yang Baik 
+- Judul dan petunjuk pengisian harus jelas.
+- Label untuk setiap konteks input dan penanda kolom wajib.
+- pilihan jenis input yang tepat: text, email, pilihan, tanggal, password, dll.
+- tombol aksi yang mudah dipahami: simpan, reset, kembali, dll.
+- pesan validasi, status proses, dan umpan balik pengguna
+
+Alur Data
+pengguna - browser - validasi - server - database - respons - tampilan 
+Peran Teknologi 
+html: struktur
+css: desain dan responsif 
+javascript: interaksi dan validasi 
+php:
+mysql:
+
+Desain UI yang Baik 
+- label ekspilisit
+- spasi dan hierarki rapi 
+- warna tombol konsisten 
+- mobile-friendly 
+- validasi / konfirmasi informatif 
+
+Prinsip UX dan Aksesibilitas 
+- gunakan label yang terhubung ke inputan (for, id)
+- ketersediaan tombol navigasi keyboard dan fokus yang terlihat.
+- gunakan kontras warna yang cukup. 
+- tampilkan kesalahan dengan penjelasan berupa teks, bukan warna saja.
+- minimalkan jumlah kolom yang tidak diperlukan.
+
+Keamanan Form Web 
+- jangan percaya data dari browser; validasi ulang di server.
+- gunakan https pada sistem produksi, yang produktif.
+- gunakan prepared statement saat menyimpan ke database.
+- lakukan escaping pada output untuk mencegah XSS.
+- gunakan autentikasi, otorisasi, dan proteksi csrf bila diperlukan.
+
+Metode Get dan Post 
+GET 
+- data dikirim melalui url.
+- 
+- dapat di-bookmark
+POST 
+- data dikirim di body request 
+- cocok untuk mengim form 
+- enkripsi di html
+- 
+
+Sistem Pengolahan Data 
+- fitur CRUD
+- integrasi database; koneksi pdo ke mysql, prepared statement, tabel (misal mahasiswa), pencarian dan pagination, login dan hak akses.
+
+KEAMANAN WEBSITE
+
+Sistem Hak AKses Pengguna 
+- Role-Based Access Controll (RBAC)
+- auth, otorisasi, 
+
+Hak Akses Diperlukan 
+- melindungi data
+- membatasi fitur sesuai tanggung jawab pengguna 
+- mencegah perubahan atau penghapusan tanpa izin 
+- mendukung audit dan prinsip least privilage 
+
+Autentikasi dan Otorisasi 
+- Auth: siapa anda? -> login, password, session
+- Otorisasi: apa yang boleh anda lakukan -> izin fitur
+- login berhasil tidak berarti boleh membuka semua halaman
+- pemeriksaan izin wajib dilakukan di server 
+
+Konsep RBAC 
+- pengguna diberi satu atau beberapa role (idealnya 1 man 1 role)
+- role memiliki kumpulan permission
+- contoh: admin -> kelola pengguna, editor -> mengedi artikel, user -> baca 
+- permission lebih fleksibel daripada memeriksa nama role di semua halaman.
+
+Matriks Hak Akses (diantaranya, tergantung sistem)
+- aturan akses data milik sendiri perlu diperiksa secara terpisah 
+
+Alur Login dan Akses 
+- pengguna mengisi form login 
+- server mem-verifikasi password_hash di database 
+- server meregenerasi ID session dan menyimpan identitas
+- setiap request ada cek dan permission 
+- tolak dengan http 403 jika tidak berwenang 
+

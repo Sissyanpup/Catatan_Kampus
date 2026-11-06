@@ -32,5 +32,5 @@ Hasil akhirnya = Perhitungan probabilitas penyelesaian proyek
 - probabilitas penyelesaian
 
 TUGAS : 
-- ANALISIS PERT, Kapan waktu selesainya, masukkan di proposal (untuk kelompok)
+- ANALISIS PERT, Kapan waktu selesainya, masukkan di proposal (untuk kelompok, projek kelompok)
 - Data Aktivitas, Forward Pass, Backward Pass, Total Float. Probabilistik nya < 40 Hari, berapa persen projek bisa diselesiakan < 40 hari (perorangan, soal di foto)

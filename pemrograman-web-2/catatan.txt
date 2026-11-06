@@ -1,0 +1,7 @@
+logika pada PHP
+
+Operator Aritmatika
+Operasi AND OR XOR NOT
+Operator Bitwise untuk bilangan biner 
+Operator Itenari
+Operator String

@@ -26,5 +26,6 @@ Catatan Projek Offline :
 - Kalau hanya hilang, 80%
 - ASURANSI tidak mau di grab/gocar kan (ada penumpang, bahkan disewakan. Harus sim pemilik sendirian ketika ada kerusakan), mereka lihai melihat GPS mobil.
 - para asuransi sangat jeli, pada histori pembeli.
-- HARUS breakdown sedetail mungkin dalam ASURANSI, KOMPRI, Keuangan, Harga, Cicilan, Pajak, dan Lainnya.
+- HARUS breakdown sedetail mungkin dalam ASURANSI, KOMPRI, Keuangan, Harga, Cicilan, Pajak, dan Lainnya (menghindari tiba tiba nembak harga asal, dan konsumen awam paham rinciannya).
 - Tambahkan metode Kredit, dibahas terlebih dahulu karena pembahasannya luas.
+- Ada hal Tenor
