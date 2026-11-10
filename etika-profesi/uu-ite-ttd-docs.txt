@@ -1,0 +1,60 @@
+10 Nov 2026
+UU ITE: Informasi, Dokumen, Tanda Tangan ELektronik, dan Perbuatan yang Dilarang
+
+Informasi elektronik = satu atau sekumpulan data elektronik (tulisan, suara, gambar, EDI, email, telegram, kode, peta, perforasi,dll) yang telah diolah dan memiliki arti
+Dokumen Elektronik = setiap informasi elektronik yang dibuat, dikirim, diterima, disimpan, dalam bentuk digital, elektromagnetik, optik, ditampilkan, didengar melalui komputer atau sistem elektronik. 
+Sistem elektronik = serangkaian perangkat dan prosedure elektronik untuk mempersiapkan, mengumpulkan, megolah, menganalisis, menyimpan, menampilkan, dan menyebarkan informasi elektronik
+
+Informasi dan Dokumen Elektronik sebagai Alat Bukti
+- info/dokumen elektronik dan hasil cetaknya : alat bukti hukum yang sah (yang sesuai UU ITE)
+- log sistem, email, rekaman digital
+Kecuali:
+- Surat yang menurut UU harus dibuat tertulis.
+- Dokumen yang menurut UU harus berbentuk akta notaril / akta PPAT 
+
+Tanda Tangan Elektronik 
+- adalah tanda tangan yang terdiri atas informasi elektronik yang dilekatkan, terasosiasi, atau terkait dengan informasi elektronik lainnya, yang menggunakan sebagai alat verfikasi dan autentiksai.
+TTE memiliki kekuatan hukum dan akibat hukum yang sah jika :
+
+Jenis TTE dan Sertif Elektronik
+- TTE Sertifikasi = dibuat dengan jasa penyelenggara sertifikasi elektronik PSre berinduk di indoneisa, memiliki kekuatan hukum kuat. Contoh; Kartu Keluarga
+- TTE tidak tersertifikasi = dibuat tanpa jasa PSrE, kekuatan pembuktiannya lebih lemah.
+- Jika ada perubahan bisa dilihat dari META file, size file, isi biner file. 
+- TTE bukan hanya lock siapa yang TTD, namun juga seluruh isian file nya. sehingga terlihat jika ada perubahan sedikit saja.
+
+Perbuatan yang Dilarang (konteks: Konten)
+- kesusilaan 
+- penghinaan dan pencemaran nama baik 
+- pemerasan atau pengancaman 
+- berita bohong 
+- ujaran kebencian (SARA) 
+
+contoh uu 1/2024 : penghinaan tidak dipidana jika untuk kepentingan umum atau pembelaan diri 
+
+(konteks: Sistem dan Data)
+- akses ilegal 
+- penyadapan atau intersepsi 
+- perubahan, perusakan, pengrusakan data 
+- gangguan sistem 
+- penyalahgunaan perangkat 
+- pemalsuan data 
+
+Sanksi dan Risiko 
+(gambaran umum)
+- konten yang melanggar = penjara beberapa tahun dan/atau denda ratusan juta hingga miliaran rupiah
+- akses ilegal = penjara beberapa belas tahun dan/atau denda ratusan juta hingga miliaran rupiah
+- gangguan sistem / pemalsuan data = penjara lebih berat, terutama jika menimbulkan kerugian besar
+wajib dirujuk ke teks UU terbaru 
+
+Cara mengurangi risiko hukum 
+- pikir dahulu sebelum mengunggah 
+- verifikasi informasi sebelum share 
+- jangan akses sistem tanpa izin tertulis 
+- dokumentasikan izin (misal ingin uji penetrasi)
+- gunakan kanal resmi jika ada pengaduan, bukan langsung post di medsos
+- simpan bukti digital dengan benar (screenshot, log, URL, etc.)
+- pahami UU PDP saat mengelola data terutama data pribadi dan sensitif 
+
+Note :
+- saat presentasi, bukan hanya membaca slide, namun ada pengayaan.
+- berikan contoh kasus nyata, bisa lempar pertanyaan ke audience, dll.
