@@ -1,0 +1,9 @@
+Cloud Computing 
+Penyimpanan yang berbasis luas, komputasi, internet, terintegrasi.
+
+Mengidentifikasi pengertian cloud computing dan contoh 
+menganalisis mengenali ancaman keamanan dan dampaknya terhadap data dan layanan
+menerapkan teknik yang mengurangi risiko keamanan tersebut 
+
+Cloud adalaha model yang menyediakan sumberdaya komputasi. Basisdata, aplikasi, server, hingga backup melalui internet. Contohnya penyimpanan berbagi dokumen email hosting web dll.
+
