@@ -1,0 +1,173 @@
+CATATAN KULIAH: TESTING PADA PROYEK INFORMATIKA
+================================================================
+
+Testing = proses memeriksa apakah perangkat lunak berjalan sesuai
+kebutuhan dan menemukan kesalahan (bug) sebelum dipakai pengguna.
+
+Testing bisa dikelompokkan dari beberapa sudut pandang:
+  A. Berdasarkan pendekatan ("box")
+  B. Berdasarkan level pengujian
+  C. Berdasarkan tujuan (fungsional / non-fungsional)
+  D. Berdasarkan perubahan kode
+  E. Berdasarkan cara eksekusi
+
+
+----------------------------------------------------------------
+A. BERDASARKAN PENDEKATAN ("BOX")
+----------------------------------------------------------------
+
+1. BLACK-BOX TESTING
+   Definisi : Menguji tanpa melihat isi/kode. Sistem dianggap kotak
+              hitam: ketika diberi input, HARUS menghasilkan output
+              yang diharapkan.
+   Penguji  : Tidak perlu paham kode.
+
+   Teknik:
+   a. Equivalence Partitioning (EP)
+      Input dibagi ke dalam kelompok (partisi) yang dianggap
+      berperilaku sama. Cukup uji satu wakil per kelompok.
+      Contoh: form umur valid 17-60 -> partisi: <17 (invalid),
+              17-60 (valid), >60 (invalid). Uji 10, 30, 70.
+   b. Boundary Value Analysis (BVA)
+      Menguji nilai di batas partisi (pasangan EP).
+      Contoh: 16, 17, 18 dan 59, 60, 61.
+   c. Decision Table
+      Kombinasi kondisi input dipetakan ke aksi/hasil.
+   d. State Transition
+      Menguji perubahan status sistem akibat suatu kejadian.
+      Contoh: pesanan: dibuat -> dibayar -> dikirim -> selesai.
+   e. Use Case Testing
+      Skenario pengujian diturunkan dari use case (alur
+      penggunaan dari sudut pandang aktor).
+
+   Yang juga termasuk black-box:
+   - User Acceptance Test (UAT): memverifikasi sistem sesuai
+     kebutuhan bisnis dan siap digunakan. (Ini LEVEL pengujian,
+     bukan teknik. Lihat bagian B.)
+   - Usability Testing: memverifikasi kemudahan pemakaian oleh
+     user. (Termasuk non-fungsional. Lihat bagian C.)
+
+
+2. WHITE-BOX TESTING
+   Definisi : Memeriksa seluruh isi: function, data, controller,
+              alur sistem (logika internal).
+   Penguji  : Harus kompeten / paham kode.
+
+   Teknik coverage:
+   a. Statement Coverage : setiap baris kode dijalankan minimal 1x.
+   b. Branch/Decision Coverage : setiap cabang (if/else, switch)
+      bernilai true dan false minimal 1x.
+   c. Condition Coverage ("Conditional Testing") : setiap kondisi
+      atomik dalam ekspresi (A && B) diuji true dan false.
+   d. Path Coverage / Path Testing : setiap jalur eksekusi yang
+      mungkin dari awal sampai akhir diuji (biasanya memakai
+      control flow graph dan cyclomatic complexity).
+
+
+3. GRAY-BOX TESTING
+   Definisi : Gabungan black-box dan white-box. Penguji mengetahui
+              sebagian struktur internal, tetapi tidak seluruh kode.
+              Posisinya "bukan di dalam sistem, bukan juga di luar".
+
+   Contoh:
+   a. API Testing : penguji tahu endpoint, request, response,
+      status code, tanpa melihat seluruh kode.
+   b. Database Testing : memeriksa data, skema, relasi, constraint.
+   c. Security Testing : bisa di ketiga box:
+        - penetration test tanpa akses kode  -> black-box
+        - pengujian dengan akses sebagian    -> gray-box
+        - code review keamanan               -> white-box
+      (Jika dosen mengajarkan sebagai gray-box, ikuti slide dosen.)
+
+
+----------------------------------------------------------------
+B. BERDASARKAN LEVEL PENGUJIAN
+----------------------------------------------------------------
+
+1. Unit Testing
+   Menguji unit terkecil (satu fungsi/method/modul).
+   Biasanya oleh developer, bersifat white-box.
+
+2. Integration Testing
+   Menguji interaksi antar-modul.
+   Pendekatan: top-down, bottom-up, sandwich, big bang.
+
+3. System Testing
+   Menguji seluruh sistem sebagai satu kesatuan terhadap
+   spesifikasi kebutuhan.
+
+4. Acceptance Testing
+   Validasi oleh pengguna/klien sebelum sistem dipakai.
+   Varian:
+   - UAT (User Acceptance Test)
+   - Alpha Testing (internal, di lingkungan pengembang)
+   - Beta Testing (pengguna nyata, di lingkungan sebenarnya)
+   - Business Acceptance Test (BAT)
+   - Operational Acceptance Test (OAT)
+
+
+----------------------------------------------------------------
+C. BERDASARKAN TUJUAN
+----------------------------------------------------------------
+
+1. Functional Testing
+   Memastikan fitur bekerja sesuai kebutuhan fungsional.
+
+2. Non-Functional Testing
+   - Usability Testing : kemudahan pemakaian oleh user
+   - Performance Testing:
+       * Load testing      : beban normal/yang diharapkan
+       * Stress testing    : beban melebihi batas
+       * Spike testing     : lonjakan beban mendadak
+       * Endurance/Soak    : beban lama dalam waktu panjang
+       * Scalability       : kemampuan tumbuh seiring beban
+   - Security Testing : kerentanan, otentikasi, otorisasi
+   - Compatibility Testing : browser, OS, perangkat berbeda
+   - Reliability / Recovery Testing : ketahanan dan pemulihan
+   - Accessibility Testing : keterjangkauan bagi pengguna
+     berkebutuhan khusus
+
+
+----------------------------------------------------------------
+D. BERDASARKAN PERUBAHAN KODE
+----------------------------------------------------------------
+
+- Regression Testing : memastikan perubahan/perbaikan tidak
+  merusak fitur yang sebelumnya berjalan.
+- Smoke Testing : cek cepat dan dangkal, apakah build layak
+  diuji lebih lanjut.
+- Sanity Testing : cek terarah dan sempit setelah perbaikan kecil.
+- Retesting (Confirmation) : uji ulang bug yang sudah diperbaiki.
+
+
+----------------------------------------------------------------
+E. BERDASARKAN CARA EKSEKUSI
+----------------------------------------------------------------
+
+- Manual Testing vs Automated Testing
+- Static Testing : review kode/dokumen tanpa menjalankan program
+- Dynamic Testing : program dijalankan lalu diamati hasilnya
+
+
+----------------------------------------------------------------
+RINGKASAN CEPAT
+----------------------------------------------------------------
+
+Jenis                | Box        | Inti
+---------------------|------------|------------------------------
+Equivalence Partit.  | Black      | Uji wakil tiap kelompok input
+Boundary Value       | Black      | Uji nilai di batas partisi
+Use Case Testing     | Black      | Skenario dari use case
+UAT                  | Black      | User verifikasi kebutuhan bisnis
+Usability Testing    | Black      | Kemudahan pemakaian
+Statement/Branch     | White      | Cakupan baris/cabang kode
+Condition Coverage   | White      | Tiap kondisi true/false
+Path Testing         | White      | Semua jalur eksekusi
+API Testing          | Gray       | Uji endpoint tanpa seluruh kode
+Database Testing     | Gray       | Uji data, skema, relasi
+Security Testing     | Black/Gray/White | Tergantung akses penguji
+
+
+Catatan: jika slide/buku dosen berbeda dalam pengelompokan
+(misalnya "6 jenis testing"), jadikan materi dosen sebagai patokan
+utama untuk ujian.

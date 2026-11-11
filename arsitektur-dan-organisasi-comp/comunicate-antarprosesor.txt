@@ -1,0 +1,67 @@
+Komunikasi Antarprosesor dan Sistem Multiprosesor
+
+Mengapa beralih ke Multicore
+- jika single core memiliki kendala; powerwall (overheat), ilp wall (dependensi bottleneck), memory wall (bottleneck data access)
+- solusi = TLP thread level parallelism
+
+1. Multiprosesor
+(multi = banyak, prosesor = unit prosesing atau CPU) 
+- tugas dibagi dan dikerjakan bersamaan
+
+2. Komunikasi Antarprosesor
+- bertukar data memberi sinyal dan menyelaraskan kerja
+- koordinasi dan saling berkomunikasi
+- tanpaa koordinasi = tugas bertabrakan dan saling menunggu 
+
+banyak prosesor + komunikasi = kerjasama yang terarah, satu tim efektif
+
+Dua cara berkomunikasi 
+1. shared memory
+- banyak CPU hanya 1 memory 
+- satu ruang alamat UMA atau NUMA
+- load / store 
+- mudah diprogram. skalabilitas terbatas
+
+2. message passing 
+- memori per cpu (2 atau lebih)
+- send / recieve
+- skalaibiltas, sulit diprogram 
+
+UMA = Uniform memory access
+- latensi sama, interkoneksi bersama, satu alamat 
+
+NUMA = Non-uniform memory access
+- local lebih cepat
+- memori per cpu 
+
+Jaringan interkoneksi
+Model :
+- bus 
+- crossbar 
+- mesh 
+- torus 
+- hypercube 
+- fat tree 
+ukuran : diameter * bisection width * degree * biaya 
+bus murah rawan bottleneck, crossbar cepat namun mahal 
+
+tiga masalah utama :
+- koherensi cache, snooping=MSI/MESI, directory sistem besar, menjaga salinan data antar-cache 
+- konsitensi memori, mengatur urutan yang terlihat prosesor lain, sequential*TSO*Relaxed, memory fance 
+- syncronisasi, Operasi atomik: TAS, CAS, LL/SC 
+
+Beberapa faktor :
+- bagaimana prosesor tersusun? arsitektur
+- bagaiamana data dipertukarkan? model komunikasi 
+- bagaimana mencegah tabrakan kerja (deadlock)? sinkronisasi
+- bagaimana mereka terhubung? jaringan interkoneksi
+- koherensi dan konsistensi 
+- analisis kinerja 
+
+Kesimpulan
+- melampaui batas prosesor tunggal 
+- komunikasi menentukan kinerja 
+- dua model komunikasi 
+- interkoneksi adalah kompromi 
+- data harus tetap benar 
+- percepatan memiliki batas 
