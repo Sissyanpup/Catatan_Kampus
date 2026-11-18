@@ -1,0 +1,96 @@
+Sistem Operasi Perangkat Komputer
+
+Menghubungkan CPU, memori, dan I/O dengan cara kerja sistem operasi
+aplikasi, kernel SO, perangkat keras
+
+6 Fungsi Utama :
+- Prosesor
+- memori 
+- I/O dan driver 
+- penyimpanan dan sistem berkas 
+- proteksi keamanan 
+- antarmuka pengguna dan jaringan 
+
+Beberapa Layer Sistem Komputer 
+- aplikasi 
+librari pustaka 
+sistem operasi kernel 
+ISA 
+mikro 
+
+5 Fitur Utama 
+- mode privilage 
+- interrupt dan exception 
+- timer 
+- MMU (management memory unit)
+- instruksi atmoik, sinkroniasi multicore dll. 
+Fitur pelengkap : DMA, Virtualisasi
+
+Mode Privilage 
+- mode user 
+- mode kernel
+arsitek : x86-64, dll 
+
+interrupt exception dan trap 
+6 Langkah interrupt 
+- Permintaan 
+- cpu menerima 
+- masuk kernel 
+- tentukan penangnan 
+- jalankan sr 
+-
+
+System Call 
+Alur permintaan layanan :
+- panggil fungsi pustaka 
+- siapkan register 
+Mode User -> Kernel 
+- masuk ke penangnanan
+- validasi 
+- kembalikan hasil
+
+timer
+berkaitanan dengan penjadwalan, kendali CPU kepada kernel secara berkala
+- timer berakhir
+
+DMA dan 
+
+Intruksi atomik dan 
+
+Dukungan Virtualisasi 
+
+Menejemen Prosesor 
+- proses dan juga catatan di program komputer 
+- ruang alamat proses ada 4
+- PCB : catatan keadaan proses 
+- perpindahan status proses 
+
+Context Switch 
+
+Penjadwalan CPU 
+algoritma : fcfs, sjf, srtf, round robin, mfq
+
+MMU 
+
+Manajemen I/O dan Penyimpanan 
+3 teknik transfer 
+- polling 
+- interrupt driver 
+- DMA (direct memory access)
+
+Lapisan Perangkat Lunak Io
+- aplikasi 
+- kernel : subsistem berkas jaringan, device driver  
+- perangkat keras : controller, perangkat I/O
+
+- buffering
+- catching 
+- polling 
+
+Sistem Operasi 
+- desktop ; windows macOS linux, MMU GPU Prosesor multicore 
+- server cloud ; linux, w server, NUMA NIC cepat dukungan virtualisasi 
+- HP tablet ; android ios, soc arm pengelolaan daya core heterogen 
+- embedded iot ; freertos zephyr, mikrokontroller ram kecil mpu
+- sistem real time; rtos linux preempt_rt, latensi iterrupt yang dapat diprediksi
+

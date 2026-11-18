@@ -22,3 +22,9 @@ n. Nama Lengkap NIM (Actor) ....
 Catatan per 4 nov 26
 - Sequence yang ditanya adalah SD data karyawan
 - Add absensi sudah "boleh"
+
+Bikin nama file pdf nya : Tugas_Testing_QA_[kelas]_Kelompok[n]_TugasNomor[n]
+
+Noted untuk Sequence Diagram :
+- Aktor hanya satu panah klik ke MainMenu, sisanya semua baik terusan maupun return, akhirnya hanya ke MainMenu untuk return nya, bukan ke actor lagi (tidak menembus ke actor).
+- CHECK AHMAD DINIL Kembali, gambarnya sudah benar, tinggal alurnya saja.
