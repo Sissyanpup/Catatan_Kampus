@@ -1,0 +1,4 @@
+﻿mss==10.2.0
+packaging==26.3
+pillow==13.0.0
+pytesseract==0.3.13
