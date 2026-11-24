@@ -1,0 +1,33 @@
+24 November 2026
+Sertifikasi Produk dan Sertifikasi Profesi
+
+3 sertifikasi; produk (barang/jasa, ke perangkat lunaknya, objek barangnya, seperti komputer printer dll), sistem(SMO, lebih ke manajerial di organisasinya), profesi (individu)
+- misal perbankan, setiap aplikasi ada pembagian role sesuai jabatan di perusahaan tersebut. 
+
+Sertifikasi Produk :
+- SNI = mutu keselamatan produk, diterbitkan oleh LSPro terakreditasi KAN 
+- Sertifikasi Perangkat Telekomunikasi = perangkat jaringan wajib lolos uji dan sertifikasi postel sebelum dijual 
+- Common Criteria (ISO/IEC 15408) = evaluasi keamana produk TI (OS, firewall, smart card, dll) secara internasional
+- Sertifikasi Halal, CE, dsb. = persyaratan pasar tertentu 
+Perlu memenuhi semua sertifikasi sebelum produknya dijual 
+
+Sertifikasi Sistem Manajemen
+menilai organisasi, bukan satu produk 
+- ISO/IEC 27001 = Sistem manajemen keamanan informasi /SMKI
+- ISO 9001 = Sistem manajemen mutu
+- ISO/IEC 20000 = manajemen layanan TI 
+- ISO/IEC 27701 = manajemen informasi privasi, perlindungan data pribadi 
+- ISO 22301 = manajemen keberlangsungan bisnis
+
+Sertifikasi Profesi 
+- Profesi = LSP berlisensi BNSP = SKKNI; ISO/IEC 17024
+- Produk = LSPro = ISO/IEC 17065
+- sistem manajemen = LS (Lembaga Sertifikasi) = ISO/IEC 17021 
+- Akreditasi lembaga = KAN (Komite Akreditasi Nasional) = mengakreditasi LSPro, LS, labolatorium 
+- Standarisasi = BSN (Badan Standarisasi Nasional) = menetapkan SNI 
+
+Sertifikasi Profesi Tingkat Lanjut 
+- insinyur profesional = PII (persatuan insinyur indonesia)
+- Profesional TI = keanggotaan ACM, IEEE, APTIKOM, IPKIN
+- Auditor Sistem Informasi = CISA (ISACA)
+- Pengelola Keamanan Informasi = CISM, CISSP
